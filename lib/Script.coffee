@@ -3,13 +3,17 @@ Phase = require './ScriptPhase'
 Project = require './Project'
 path = require 'path'
 fs = require 'fs'
+GreetingPlugin = require './plugins/GreetingPlugin'
+PluginsRegistry = require './PluginsRegistry'
 
 class Script extends CoffeeDsl
   constructor : ( {@scriptFile} = {} ) ->
-    console.log @scriptFile
     throw new Error "Missing option: scriptFile" unless @scriptFile
     super()
     @_ext = {}
+    @pluginsRegistry = new PluginsRegistry()
+    @plugins = {}
+    #@plugins.greeting = new GreetingPlugin()
     @context.push @_ext
     @phase = Phase.Initial
     @loadScript()
@@ -42,6 +46,7 @@ class Script extends CoffeeDsl
   configure : =>
     @initialize() unless @initialized
     @phase = Phase.Configuration
+    @configurePlugins()
     @evaluate @contents
     @configured = true
     @emit 'phase', @phase
@@ -53,8 +58,20 @@ class Script extends CoffeeDsl
 
   done : =>
 
+  configurePlugins : =>
+    for own k,v of @plugins
+      v.apply @project
+
   ext : ( f ) => f()
 
+  apply : ( opts ) =>
+    if opts?.plugin
+      name = opts.plugin
+      unless @pluginsRegistry.has name
+        throw new Error "No such plugin: #{name}"
+      ctor = @pluginsRegistry.get name
+      plugin = @plugins[ name ] = new ctor()
+      plugin.apply @project
 
   task : ( name, opts, f ) =>
     if Array.isArray name
@@ -66,6 +83,8 @@ class Script extends CoffeeDsl
 
   methodMissing : ( name ) => ( args... ) =>
     #console.log "method missing: #{name}, #{JSON.stringify args}"
+    val = @project.methodMissing name, args...
+    return val if val?
     return [ name ] unless args.length
     args = args[ 0 ] if args.length is 1
     [ name, args ]

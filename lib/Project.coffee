@@ -6,6 +6,7 @@ Path = require './Path'
 ScriptPhase = require './ScriptPhase'
 p = require './util/prop'
 TaskContainer = require './TaskContainer'
+ExtensionContainer = require './ExtensionContainer'
 TaskGraphExecutor = require './TaskGraphExecutor'
 
 module.exports = class Project extends EventEmitter
@@ -44,6 +45,9 @@ module.exports = class Project extends EventEmitter
     @version = "0.1.0"
     @_prop = {}
     @_taskContainer = new TaskContainer()
+    @extensions = new ExtensionContainer()
+    @extensions.add 'greeting', @_greeting
+
     if @parent
       @_path = new Path @parent.absoluteProjectPath name
       @depth = @parent.depth + 1
@@ -76,7 +80,7 @@ module.exports = class Project extends EventEmitter
     nodes = (@_taskContainer.node t for t in @_defaultTasks)
     executor.add nodes
     executor.determineExecutionPlan()
-    #console.log _.map executor.executionQueue, (x) -> x.task.name
+    console.log _.map executor.executionQueue, ( x ) -> x.task.name
     for t in executor.executionQueue
       t.execute()
 
@@ -91,14 +95,13 @@ module.exports = class Project extends EventEmitter
       @emit 'property', name, val, old
     @
 
-  buildTaskGraph : =>
-
   addTask : ( name, opts, configure ) =>
     opts ?= {}
     opts.name = name
     opts.project = @
     if configure?
-      cfg = ( task ) => => @script.context.runWith (-> configure(task)), task
+      runWith = @script.context.runWith
+      cfg = ( task ) -> -> runWith (-> configure(task)), task
     @_taskContainer.create opts, cfg
 
   compareTo : ( other ) =>
@@ -107,6 +110,11 @@ module.exports = class Project extends EventEmitter
     return -1 if @path < other.path
     return 1 if @path > other.path
     0
+
+  methodMissing : ( name, args... ) =>
+    return unless @extensions.has name
+    @script.context.runWith args[ 0 ], @extensions.get name
+    true
 
   _set : ( name, val ) ->
     old = @[ name ]

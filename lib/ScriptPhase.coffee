@@ -4,4 +4,4 @@ module.exports = {
   Configuration : 'Configuration'
   Execution : 'Execution'
   Done : 'Done'
-}
+};

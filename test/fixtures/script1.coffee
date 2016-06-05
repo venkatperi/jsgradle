@@ -1,7 +1,12 @@
 description = 'test project'
 version = '0.2.0'
 
-defaultTasks 't5'
+apply plugin : 'greeting'
+
+defaultTasks 'hello', 't5'
+
+greeting ->
+  name = 'world'
 
 task copy(type : Copy), ( t )->
   println "configuring task: #{t.name}, type: #{t.type}, path: #{t.path}"
