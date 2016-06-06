@@ -1,14 +1,14 @@
+Q = require 'q'
 _ = require 'lodash'
 {EventEmitter} = require 'events'
-Task = require './../task/Task'
-TaskFactory = require './../task/TaskFactory'
-Path = require './../Path'
+TaskFactory = require '../task/TaskFactory'
+Path = require './Path'
 ScriptPhase = require './ScriptPhase'
-p = require './../util/prop'
-TaskContainer = require './../task/TaskContainer'
-ExtensionContainer = require './../ext/ExtensionContainer'
-TaskGraphExecutor = require './../TaskGraphExecutor'
-PluginsRegistry = require '../PluginsRegistry'
+p = require '../util/prop'
+TaskContainer = require '../task/TaskContainer'
+ExtensionContainer = require '../ext/ExtensionContainer'
+TaskGraphExecutor = require './TaskGraphExecutor'
+PluginsRegistry = require './PluginsRegistry'
 
 module.exports = class Project extends EventEmitter
 
@@ -45,9 +45,9 @@ module.exports = class Project extends EventEmitter
     @description = "project #{@name}"
     @version = "0.1.0"
     @_prop = {}
-    @_taskContainer = new TaskContainer()
-    @extensions = new ExtensionContainer()
     @pluginsRegistry = new PluginsRegistry()
+    @tasks = new TaskContainer()
+    @extensions = new ExtensionContainer()
     @plugins = {}
 
     if @parent
@@ -74,18 +74,20 @@ module.exports = class Project extends EventEmitter
   initialize : =>
 
   configure : =>
-    for own name,t of @_taskContainer.taskInfo
-      t.configure()
+    @tasks.each ( t ) -> t.configure()
 
   execute : =>
-    executor = new TaskGraphExecutor(@_taskContainer)
-    nodes = (@_taskContainer.node t for t in @_defaultTasks)
+    executor = new TaskGraphExecutor(@tasks)
+    nodes = (@tasks.get t for t in @_defaultTasks)
     executor.add nodes
     executor.determineExecutionPlan()
     console.log _.map executor.executionQueue, ( x ) -> x.task.name
     runWith = @script.context.runWith
+    prev = Q(true)
     for t in executor.executionQueue
-      t.execute runWith
+      do ( t ) =>
+        prev = prev.then -> t.execute runWith
+    prev
 
   defaultTasks : ( tasks... ) =>
     @_defaultTasks = tasks
@@ -115,10 +117,10 @@ module.exports = class Project extends EventEmitter
     opts ?= {}
     opts.name = name
     opts.project = @
+    opts.runWith = runWith = @script.context.runWith
     if f?
-      runWith = @script.context.runWith
       cfg = ( task ) -> -> runWith (-> f(task)), task
-    @_taskContainer.create opts, cfg
+    @tasks.create opts, cfg
 
   compareTo : ( other ) =>
     diff = @depth - other.depth
@@ -129,6 +131,7 @@ module.exports = class Project extends EventEmitter
 
   methodMissing : ( name, args... ) =>
     return unless @extensions.has name
+    console.log name
     @script.context.runWith args[ 0 ], @extensions.get name
     true
 

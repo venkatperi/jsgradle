@@ -1,24 +1,21 @@
 fs = require 'fs'
 path = require 'path'
 _ = require 'lodash'
+Collection = require '../util/Collection'
 
 pluginRegex = /(\w+)Plugin\.coffee/
 
-class PluginsRegistry
+class PluginsRegistry extends Collection
   constructor : ->
-    @items = new Map()
-    @loadInternal()
+    super convertName : ( x ) -> _.lowerFirst x
+    @_loadInternal()
 
-  loadInternal : =>
-    dir = path.join __dirname, 'plugins'
+  _loadInternal : =>
+    dir = path.join __dirname, '../plugins'
     files = _.filter fs.readdirSync(dir), ( x ) -> x.match pluginRegex
     for f in files
       name = f.match(pluginRegex)[ 1 ]
       plugin = require path.join dir, f
-      @items.set _.lowerFirst(name), plugin
-
-  has : ( name ) => @items.has name
-
-  get : ( name ) => @items.get name
+      @add name, plugin
 
 module.exports = PluginsRegistry

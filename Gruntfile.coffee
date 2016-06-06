@@ -3,7 +3,7 @@ src = [ 'lib/**/*.coffee', 'index.coffee' ]
 dist = 'dist'
 
 config = ( grunt ) ->
-  tasks :
+  items :
     coffee :
       options : { sourceMap : false, bare : true, force : true }
       dist : { expand : true, src : src, dest : dist, ext : '.js' }
@@ -16,7 +16,7 @@ config = ( grunt ) ->
         'no_trailing_whitespace' :
           level : 'warn'
 
-    watch : { coffee : { tasks : [ 'coffee' ], files : src } }
+    watch : { coffee : { items : [ 'coffee' ], files : src } }
 
     exec :
       readme: {cmd: 'atomdoc-md -o . -n README.md .'}
@@ -31,8 +31,8 @@ config = ( grunt ) ->
 
 doConfig = ( cfg ) -> ( grunt ) ->
   opts = cfg grunt
-  pkg = opts.tasks.pkg = grunt.file.readJSON "package.json"
-  grunt.initConfig opts.tasks
+  pkg = opts.items.pkg = grunt.file.readJSON "package.json"
+  grunt.initConfig opts.items
   opts.load ?= []
   dev = Object.keys pkg.devDependencies
   deps = (f for f in dev when f.indexOf('grunt-') is 0)
@@ -40,6 +40,6 @@ doConfig = ( cfg ) -> ( grunt ) ->
   grunt.loadNpmTasks t for t in opts.load
 
   for own name, tasks of opts.register
-    grunt.registerTask name, tasks
+    grunt.registerTask name, items
 
 module.exports = doConfig config

@@ -19,10 +19,14 @@ describe 'Script', ->
     s.project.description.should.equal 'test project'
     s.project.version.should.equal '0.2.0'
 
-  it 'execute', ->
+  it 'execute',  (done) ->
     s = new Script scriptFile : path.join __dirname, 'fixtures', 'script1.coffee'
     s.execute()
-    s.project.name.should.equal 'script1'
-    s.project.description.should.equal 'test project'
-    s.project.version.should.equal '0.2.0'
+    .then ->
+      s.project.name.should.equal 'script1'
+      s.project.description.should.equal 'test project'
+      s.project.version.should.equal '0.2.0'
+      console.log 'done'
+      done()
+    .fail done
 

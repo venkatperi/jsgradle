@@ -1,6 +1,6 @@
 SEP = ':'
 
-prop = require './util/prop'
+prop = require './../util/prop'
 
 isAbsolute = ( path ) ->
   path.indexOf(SEP) is 0

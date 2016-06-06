@@ -8,8 +8,14 @@
   "preferGlobal": false,
   "description": "NEEDS DESCRIPTION",
   "dependencies": {
+    "glob": "^7.0.3",
     "guava-cache": "^0.7.0",
-    "multimap": "^1.0.2"
+    "heterarchy": "^1.0.5",
+    "mixto": "^1.0.0",
+    "mkdirp": "^0.5.1",
+    "multimap": "^1.0.2",
+    "ncp": "^2.0.0",
+    "q": "^1.4.1"
   },
   "bundleDependencies": [],
   "main": "dist/index",

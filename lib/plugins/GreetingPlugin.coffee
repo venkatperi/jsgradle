@@ -9,8 +9,10 @@ class GreetingPlugin extends Plugin
     return if @configured
     super project
     project.extensions.add 'greeting', @greeting
+    
     project.task 'hello', null, ( t ) =>
-      t.doFirst =>
+      t.doFirst (p) =>
         console.log "hello #{@greeting.name}"
+        p.resolve()
 
 module.exports = GreetingPlugin

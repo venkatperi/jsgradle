@@ -1,6 +1,6 @@
 assert = require 'assert'
 should = require 'should'
-Path = require '../lib/Path'
+Path = require '../lib/project/Path'
 
 describe 'Path', ->
 

@@ -49,7 +49,7 @@ class TaskGraphExecutor extends EventEmitter
         #dependsOnTasks = context.getDependencies task
         dependsOnTasks = node.dependsOn
         for t in dependsOnTasks
-          targetNode = @container.node t
+          targetNode = @container.get t
           node.addDependencySuccessor targetNode
           if !visiting.has targetNode
             queue.splice 0, 0, targetNode

@@ -1,6 +1,7 @@
 os = require 'os'
 p = require './../util/prop'
-Path = require './../Path'
+Path = require './../project/Path'
+Action = require './Action'
 
 class Task
 
@@ -20,10 +21,11 @@ class Task
     get : -> @_didWork
     set : ( v ) -> @_set '_didWork', v
 
-  constructor : ( {@name, @project, @description, @type} ) ->
+  constructor : ( {@name, @project, @description, @type, @runWith} ) ->
     @_dependencies = []
     @actions = []
     @_onlyIfSpec = []
+    #if @project?
     @_path = new Path @project._path.absolutePath @name
 
   dependsOn : ( paths... ) =>
@@ -32,16 +34,26 @@ class Task
 
   doFirst : ( action ) =>
     throw new Error "Action must not be null" unless action?
-    @actions.splice(0, 0, action)
+    @actions.splice 0, 0, new Action action
+    @
+
+  doFirstSync : ( action ) =>
+    throw new Error "Action must not be null" unless action?
+    @actions.splice 0, 0, new Action action, false
     @
 
   doLast : ( action ) =>
     throw new Error "Action must not be null" unless action?
-    @actions.push action
+    @actions.push new Action action
+    @
+
+  doLastSync : ( action ) =>
+    throw new Error "Action must not be null" unless action?
+    @actions.push new Action action, false
     @
 
   configure : ( fn ) =>
-    fn.call @
+    fn.call @ if fn?
 
   onlyIf : ( fn ) =>
     @_onlyIfSpec.push fn
@@ -59,7 +71,10 @@ class Task
       @[ name ] = val
       @emit 'change', name, val, old
     @
+    
+  doConfigure : =>
 
-  toString: => "task #{@name}"
+  toString : =>
+    "task #{@name}"
 
 module.exports = Task

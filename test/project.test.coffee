@@ -14,7 +14,7 @@ describe 'Project', ->
     proj.name.should.equal 'test'
     proj.depth.should.equal 0
 
-  describe 'tasks', ->
+  describe 'items', ->
     beforeEach ->
       proj = new Project name : 'test'
 

@@ -1,6 +1,8 @@
 assert = require 'assert'
 Task = require './Task'
 prop = require './../util/prop'
+Q = require 'q'
+P = require '../util/P'
 
 STATE = {
   Unknown : 'Unknown',
@@ -67,11 +69,16 @@ class TaskInfo
   configure : =>
     @configurator @task if @configurator?
 
-  execute : (run) =>
-    #@startExecution()
+  execute : ( run ) =>
+    prev = Q(true)
     for a in @task.actions
-      run a, @task
-  #@finishExecution()
+      do ( a ) ->
+        prev = prev
+        .then ->
+          p = new P()
+          run (-> a.f p), p
+          p.promise
+    prev
 
   startExecution : =>
     assert @isReady
@@ -125,7 +132,7 @@ class TaskInfo
 
   removeShouldRunAfterSuccessor : ( n ) => @shouldSuccessors.delete n
 
-  toString: => "TaskInfo(#{@task.toString()})"
+  toString : => "TaskInfo(#{@task.toString()})"
 
 module.exports = TaskInfo
   

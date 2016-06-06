@@ -1,24 +1,17 @@
 TaskFactory = require './TaskFactory'
-TaskCollection = require './TaskCollection'
+Collection = require '../util/Collection'
 TaskInfo = require './TaskInfo'
 
-class TaskContainer extends TaskCollection
+class TaskContainer extends Collection
 
   constructor : ->
     super()
-    @taskInfo = {}
 
   create : ( opts, configure ) =>
     task = TaskFactory.create opts
-    if @has opts.name
-      throw new Error "Task already exists: #{opts.name}"
-    @add task
     node = new TaskInfo task, opts
-    @taskInfo[ opts.name ] = node
     node.configurator = configure task  if configure?
+    @add opts.name, node
     task
-
-  node : ( name ) =>
-    @taskInfo[ name ]
 
 module.exports = TaskContainer

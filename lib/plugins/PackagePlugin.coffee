@@ -7,8 +7,6 @@ class PackagePlugin extends Plugin
       description : undefined
       keywords : []
       preferGlobal : false
-      config : {}
-      directories : {}
       homepage : undefined
       bugs : {}
       license : undefined
@@ -17,9 +15,6 @@ class PackagePlugin extends Plugin
       main : undefined
       bin : undefined
       repository : {}
-      dependencies : {}
-      bundleDependencies : []
-      devDependencies : {}
       scripts : {}
       man : []
       dist : {}
@@ -28,7 +23,11 @@ class PackagePlugin extends Plugin
 
   apply : ( project ) =>
     super project
-    project.extensions.add @name, @package
-    
+    project.extensions.add 'pkg', @package
+
+    project.task 'pkg', null, ( t ) =>
+      t.doFirst (p) =>
+        console.log "pkg: #{@package.description}"
+        p.resolve()
 
 module.exports = PackagePlugin

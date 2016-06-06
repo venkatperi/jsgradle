@@ -48,7 +48,8 @@ class Script extends CoffeeDsl
   execute : =>
     @configure() unless @configured
     @phase = Phase.Execution
-    @emit 'phase', @phase
+    #@emit 'phase', @phase
+    @project.execute()
 
   done : =>
 
