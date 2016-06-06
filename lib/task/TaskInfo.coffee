@@ -1,6 +1,6 @@
 assert = require 'assert'
 Task = require './Task'
-prop = require './util/prop'
+prop = require './../util/prop'
 
 STATE = {
   Unknown : 'Unknown',
@@ -67,9 +67,10 @@ class TaskInfo
   configure : =>
     @configurator @task if @configurator?
 
-  execute : =>
+  execute : (run) =>
     #@startExecution()
-    a() for a in @task.actions
+    for a in @task.actions
+      run a, @task
   #@finishExecution()
 
   startExecution : =>

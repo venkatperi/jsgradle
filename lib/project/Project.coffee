@@ -1,13 +1,14 @@
 _ = require 'lodash'
 {EventEmitter} = require 'events'
-Task = require './Task'
-TaskFactory = require './TaskFactory'
-Path = require './Path'
+Task = require './../task/Task'
+TaskFactory = require './../task/TaskFactory'
+Path = require './../Path'
 ScriptPhase = require './ScriptPhase'
-p = require './util/prop'
-TaskContainer = require './TaskContainer'
-ExtensionContainer = require './ExtensionContainer'
-TaskGraphExecutor = require './TaskGraphExecutor'
+p = require './../util/prop'
+TaskContainer = require './../task/TaskContainer'
+ExtensionContainer = require './../ext/ExtensionContainer'
+TaskGraphExecutor = require './../TaskGraphExecutor'
+PluginsRegistry = require '../PluginsRegistry'
 
 module.exports = class Project extends EventEmitter
 
@@ -46,7 +47,8 @@ module.exports = class Project extends EventEmitter
     @_prop = {}
     @_taskContainer = new TaskContainer()
     @extensions = new ExtensionContainer()
-    @extensions.add 'greeting', @_greeting
+    @pluginsRegistry = new PluginsRegistry()
+    @plugins = {}
 
     if @parent
       @_path = new Path @parent.absoluteProjectPath name
@@ -81,8 +83,9 @@ module.exports = class Project extends EventEmitter
     executor.add nodes
     executor.determineExecutionPlan()
     console.log _.map executor.executionQueue, ( x ) -> x.task.name
+    runWith = @script.context.runWith
     for t in executor.executionQueue
-      t.execute()
+      t.execute runWith
 
   defaultTasks : ( tasks... ) =>
     @_defaultTasks = tasks
@@ -95,13 +98,26 @@ module.exports = class Project extends EventEmitter
       @emit 'property', name, val, old
     @
 
-  addTask : ( name, opts, configure ) =>
+  apply : ( opts ) =>
+    if opts?.plugin
+      name = opts.plugin
+      unless @pluginsRegistry.has name
+        throw new Error "No such plugin: #{name}"
+      ctor = @pluginsRegistry.get name
+      plugin = @plugins[ name ] = new ctor()
+      plugin.apply @
+
+  task : ( name, opts, f ) =>
+    if Array.isArray name
+      f = opts
+      [name,opts] = name
+    [f, opts] = [ opts ] unless f?
     opts ?= {}
     opts.name = name
     opts.project = @
-    if configure?
+    if f?
       runWith = @script.context.runWith
-      cfg = ( task ) -> -> runWith (-> configure(task)), task
+      cfg = ( task ) -> -> runWith (-> f(task)), task
     @_taskContainer.create opts, cfg
 
   compareTo : ( other ) =>

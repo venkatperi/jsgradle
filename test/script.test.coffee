@@ -1,7 +1,7 @@
 path = require 'path'
 assert = require 'assert'
 should = require 'should'
-Script = require '../lib/Script'
+Script = require '../lib/project/Script'
 
 describe 'Script', ->
 

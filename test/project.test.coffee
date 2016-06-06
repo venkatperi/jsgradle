@@ -1,6 +1,6 @@
 assert = require 'assert'
 should = require 'should'
-Project = require '../lib/Project'
+Project = require '../lib/project/Project'
 
 proj = undefined
 

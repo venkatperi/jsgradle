@@ -1,6 +1,6 @@
 os = require 'os'
-p = require './util/prop'
-Path = require './Path'
+p = require './../util/prop'
+Path = require './../Path'
 
 class Task
 
