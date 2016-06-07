@@ -31,7 +31,7 @@ describe 'Script', ->
     .then -> s.configure()
     .then -> s.execute()
     .then ->
-      s.project.name.should.equal 'script1'
+      s.project.name.should.equal 'proj1'
       s.project.description.should.equal 'test project'
       s.project.version.should.equal '0.2.0'
       console.log 'done'

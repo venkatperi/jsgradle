@@ -11,7 +11,7 @@ greeting ->
 task copy(type : Copy), ( t )->
   println "configuring task: #{t.name}, type: #{t.type}, path: #{t.path}"
 
-  from '../../lib', ->
+  from 'lib', ->
     include '**/*.coffee'
     exclude '**/T*.coffee'
 

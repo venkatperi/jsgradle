@@ -36,7 +36,7 @@ class CopyTask extends multi Task, CopySpec
           prev = prev
           .then -> glob pat, cwd : dir
           .then ( list ) ->
-            res[ t ].push (path.join s.src, i for i in list)
+            res[ t ].push (path.join dir, i for i in list)
 
     prev.then ->
       _.difference _.flatten(res.includes), _.flatten(res.excludes)
