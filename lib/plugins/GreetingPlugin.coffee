@@ -1,7 +1,9 @@
 Plugin = require './Plugin'
+log = require('../util/logger') 'GreetingPlugin'
 
 class GreetingPlugin extends Plugin
   constructor : ->
+    log.v 'ctor()'
     @greeting =
       name : 'noname'
 
@@ -9,10 +11,11 @@ class GreetingPlugin extends Plugin
     return if @configured
     super project
     project.extensions.add 'greeting', @greeting
-    
+
     project.task 'hello', null, ( t ) =>
-      t.doFirst (p) =>
+      log.v 'configuring'
+      t.doFirst =>
         console.log "hello #{@greeting.name}"
-        p.resolve()
+      log.v 'done config'
 
 module.exports = GreetingPlugin

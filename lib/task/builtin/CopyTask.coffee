@@ -4,8 +4,8 @@ Task = require '../Task'
 CopySpec = require './copy/CopySpec'
 {multi} = require 'heterarchy'
 glob = require '../../util/glob'
-ncp = require '../../util/ncp'
 path = require 'path'
+eventbus = require('../../util/Eventbus')()
 
 class CopyTask extends multi Task, CopySpec
 
@@ -13,29 +13,34 @@ class CopyTask extends multi Task, CopySpec
     opts.type = 'Copy'
     super opts
 
-    @doFirst ( p ) =>
-      res =
-        includes : []
-        excludes : []
-      prev = Q(true)
-      for s in @sources
-        do( s ) =>
-          dir = path.join @project.projectDir, s.src
-          for t in [ 'includes', 'excludes' ]
-            do ( t ) =>
-              for pat in s[ t ]
-                do ( pat ) =>
-                  prev = prev.then -> glob pat, cwd : dir
-                  .then ( list ) -> res[ t ].push list
+    eventbus.on 'afterEvaluate', =>
+      @initialized = @createActions()
+      
+    @doFirst  =>
 
-      prev.then =>
-        final = _.difference _.flatten(res.includes), _.flatten(res.excludes)
-        ncp final, @destinations[ 0 ], (err, res) ->
-          console.log err if err?
-          p.done()
-      .done()
+  createActions : =>
+    dest = @destinations[ 0 ]
+    @resolveSourceFiles()
+    .then ( files ) ->
+      console.log files
+       
 
-  doConfigure : =>
-    super()
+  resolveSourceFiles : =>
+    res =
+      includes : []
+      excludes : []
+    prev = Q(true)
+    baseDir = @project.projectDir
+    @sources.forEach ( s ) ->
+      dir = path.join baseDir, s.src
+      [ 'includes', 'excludes' ].forEach ( t ) ->
+        s[ t ].forEach ( pat ) ->
+          prev = prev
+          .then -> glob pat, cwd : dir
+          .then ( list ) ->
+            res[ t ].push (path.join dir, i for i in list)
+
+    prev.then ->
+      _.difference _.flatten(res.includes), _.flatten(res.excludes)
 
 module.exports = CopyTask

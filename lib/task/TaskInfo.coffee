@@ -1,8 +1,10 @@
 assert = require 'assert'
-Task = require './Task'
 prop = require './../util/prop'
-Q = require 'q'
-P = require '../util/P'
+log = require('../util/logger') 'TaskInfo'
+SeqX = require '../util/SeqX'
+{multi} = require 'heterarchy'
+{EventEmitter} = require 'events'
+Clock = require '../util/Clock'
 
 STATE = {
   Unknown : 'Unknown',
@@ -15,7 +17,7 @@ STATE = {
   Skipped : 'Skipped'
 }
 
-class TaskInfo
+class TaskInfo extends multi EventEmitter, SeqX
   #@STATE : STATE
 
   prop @, 'isRequired', get : -> @state is STATE.ShouldRun
@@ -50,7 +52,7 @@ class TaskInfo
 
   constructor : ( @task, opts ) ->
     @state = STATE.Unknown
-    @configurator = undefined
+    @configurators = []
     @dependencyPredecessors = new Set()
     @dependencySuccessors = new Set()
     @mustSuccessors = new Set()
@@ -65,20 +67,26 @@ class TaskInfo
         d = d()[ 0 ] if d if typeof d is 'function'
         @dependsOn.push d
 
-
   configure : =>
-    @configurator @task if @configurator?
+    tag = "configuring #{@task.path}"
+    log.v tag
+    task = @task
+    runp = task.project.runp
+    @configurators.forEach ( c ) =>
+      @_seq -> runp c, [ task ], [ task ]
 
-  execute : ( run ) =>
-    prev = Q(true)
-    for a in @task.actions
-      do ( a ) ->
-        prev = prev
-        .then ->
-          p = new P()
-          run (-> a.f p), p
-          p.promise
-    prev
+    @_seq -> log.v tag, 'done'
+
+  execute : =>
+    tag = "executing #{@task.path}"
+    log.v tag
+    @clock = new Clock()
+    task = @task
+    runp = task.project.runp
+    task.actions.forEach ( a ) =>
+      @_seq -> runp a.exec, [ task ], [ task ]
+
+    @_seq => log.v tag, 'done: ', @clock.pretty()
 
   startExecution : =>
     assert @isReady

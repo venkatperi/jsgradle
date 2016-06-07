@@ -1,4 +1,5 @@
 Q = require 'q'
+log = require('./logger') 'P'
 
 class P
   constructor : ->
@@ -11,5 +12,11 @@ class P
   reject : ( v ) => @defer.reject v
   fail : ( v ) => @defer.reject v
   error : ( v ) => @defer.reject new Error v
+
+  async : =>
+    log.v 'async'
+    @asyncCalled = true
+    resolve : @defer.resolve
+    reject : @defer.reject
 
 module.exports = P

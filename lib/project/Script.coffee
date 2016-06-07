@@ -1,62 +1,29 @@
+Q = require 'q'
 path = require 'path'
 fs = require 'fs'
 CoffeeDsl = require 'coffee-dsl'
 Phase = require './ScriptPhase'
 Project = require './Project'
+log = require('../util/logger') 'Script'
+walkup = require 'node-walkup'
+SeqX = require '../util/SeqX'
+{multi} = require 'heterarchy'
 
-class Script extends CoffeeDsl
+readFile = Q.denodeify fs.readFile
+
+class Script extends multi CoffeeDsl, SeqX
   constructor : ( {@scriptFile} = {} ) ->
     throw new Error "Missing option: scriptFile" unless @scriptFile
     super()
-    @_ext = {}
-    @context.push @_ext
+    @symbols.sleep = ( time, fn ) -> setTimeout fn, time
     @phase = Phase.Initial
-    @loadScript()
+    @on 'error', ( err ) =>
+      console.log err
+      throw err
+    @_seq @_loadScript
 
-  loadScript : =>
-    @contents = fs.readFileSync @scriptFile, 'utf8'
-
-  nextPhase : =>
-    switch @phase
-      when Phase.Initial
-        @initialize()
-      when Phase.Initialization
-        @configure()
-      when Phase.Configuration
-        @execute()
-      when Phase.Execution
-        @done()
-
-  initialize : =>
-    @phase = Phase.Initialization
-    parts = path.parse @scriptFile
-    @project = new Project
-      script : @
-      name : parts.name,
-      projectDir : parts.dir,
-    @context.push @project
-    @initialized = true
-    @emit 'phase', @phase
-
-  configure : =>
-    @initialize() unless @initialized
-    @phase = Phase.Configuration
-    @evaluate @contents
-    @configured = true
-    @emit 'phase', @phase
-
-  execute : =>
-    @configure() unless @configured
-    @phase = Phase.Execution
-    #@emit 'phase', @phase
-    @project.execute()
-
-  done : =>
-
-  ext : ( f ) => f()
-  
   methodMissing : ( name ) => ( args... ) =>
-    #console.log "method missing: #{name}, #{JSON.stringify args}"
+    log.d "method missing: #{name}, #{JSON.stringify args}"
     val = @project.methodMissing name, args...
     return val if val?
     return [ name ] unless args.length
@@ -64,7 +31,43 @@ class Script extends CoffeeDsl
     [ name, args ]
 
   propertyMissing : ( name ) ->
-    #console.log "property missing: #{name}"
+    log.d "property missing: #{name}"
     name
+
+  initialize : => @_seq @_initialize
+  configure : => @_seq @_configure
+  execute : => @_seq @_execute
+
+  _loadScript : =>
+    log.v 'loadScript:', @scriptFile
+    readFile @scriptFile, 'utf8'
+    .then ( contents ) =>
+      @contents = contents
+
+  _initialize : =>
+    log.v 'initialize'
+    @phase = Phase.Initialization
+    @project = @_createProject()
+    @context.push @project
+    @project.initialize()
+
+  _createProject : =>
+    parts = path.parse @scriptFile
+    project = new Project
+      script : @
+      name : parts.name,
+      projectDir : parts.dir,
+    project
+
+  _configure : =>
+    log.v 'configure'
+    @phase = Phase.Configuration
+    @evaluate @contents
+    @project.configure()
+
+  _execute : =>
+    log.v 'execute'
+    @phase = Phase.Execution
+    @project.execute()
 
 module.exports = Script

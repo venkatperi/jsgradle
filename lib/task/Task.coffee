@@ -25,7 +25,6 @@ class Task
     @_dependencies = []
     @actions = []
     @_onlyIfSpec = []
-    #if @project?
     @_path = new Path @project._path.absolutePath @name
 
   dependsOn : ( paths... ) =>
@@ -52,8 +51,7 @@ class Task
     @actions.push new Action action, false
     @
 
-  configure : ( fn ) =>
-    fn.call @ if fn?
+  configure : ( p ) =>
 
   onlyIf : ( fn ) =>
     @_onlyIfSpec.push fn
@@ -71,7 +69,7 @@ class Task
       @[ name ] = val
       @emit 'change', name, val, old
     @
-    
+
   doConfigure : =>
 
   toString : =>

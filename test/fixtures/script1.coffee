@@ -2,15 +2,11 @@ description = 'test project'
 version = '0.2.0'
 
 apply plugin : 'greeting'
-apply plugin : 'package'
 
-defaultTasks 'hello', 'pkg', 't5'
+defaultTasks 'hello', 't5'
 
 greeting ->
   name = 'world'
-
-pkg ->
-  description = 'abc'
 
 task copy(type : Copy), ( t )->
   println "configuring task: #{t.name}, type: #{t.type}, path: #{t.path}"
@@ -22,39 +18,26 @@ task copy(type : Copy), ( t )->
   into 'dist'
   exclude '**/*.bak'
 
-  doFirst ->
-    println t.name + ' 1'
-    done()
-    
-  doFirst ->
-    println t.name + ' 2'
-    done()
-    
-  doLast ->
-    println t.name + ' 3'
-    done()
+  doFirst -> println t.name + ' 1'
+  doFirst -> println t.name + ' 2'
+  doLast -> println t.name + ' 3'
 
 task t2(dependsOn : copy), ( t )->
   println "configuring task: #{t.name}, type: #{t.type}"
   doFirst ->
+    {resolve} = async()
     println t.name + ' 1'
-    done()
+    sleep 1000, resolve
 
 task t3(dependsOn : copy), ( t )->
   println "configuring task: #{t.name}, type: #{t.type}"
-  doFirst ->
-    println t.name + ' 1'
-    done()
+  doFirst -> println t.name + ' 1'
 
 task t4(dependsOn : t3), ( t )->
   println "configuring task: #{t.name}, type: #{t.type}"
-  doFirst ->
-    println t.name + ' 1'
-    done()
+  doFirst -> println t.name + ' 1'
 
 task t5(dependsOn : [ t4, t2 ]), ( t )->
   println "configuring task: #{t.name}, type: #{t.type}"
-  doFirst ->
-    println t.name + ' 1'
-    done()
-
+  doFirst -> println t.name + ' 1'
+    

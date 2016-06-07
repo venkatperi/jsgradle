@@ -68,7 +68,6 @@ class TaskGraphExecutor extends EventEmitter
     nodeQueue = _.map @entryTasks,
       ( x ) -> taskInfo : x, visitingSegment : i++
 
-    visitingSegmentCounter = nodeQueue.length
     visitingNodes = new Multimap()
     path = []
 

@@ -10,7 +10,7 @@ class TaskContainer extends Collection
   create : ( opts, configure ) =>
     task = TaskFactory.create opts
     node = new TaskInfo task, opts
-    node.configurator = configure task  if configure?
+    node.configurators.push configure if configure?
     @add opts.name, node
     task
 

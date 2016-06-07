@@ -15,7 +15,10 @@
     "mkdirp": "^0.5.1",
     "multimap": "^1.0.2",
     "ncp": "^2.0.0",
-    "q": "^1.4.1"
+    "node-walkup": "^1.1.1",
+    "pretty-hrtime": "^1.0.2",
+    "q": "^1.4.1",
+    "taglog": "^1.1.0"
   },
   "bundleDependencies": [],
   "main": "dist/index",

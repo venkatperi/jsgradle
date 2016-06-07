@@ -25,9 +25,10 @@ class PackagePlugin extends Plugin
     super project
     project.extensions.add 'pkg', @package
 
-    project.task 'pkg', null, ( t ) =>
-      t.doFirst (p) =>
+    project.task 'pkg', null, ( t, p ) =>
+      t.doFirst ( p ) =>
         console.log "pkg: #{@package.description}"
         p.resolve()
+      p.done()
 
 module.exports = PackagePlugin

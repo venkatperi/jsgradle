@@ -1,54 +1,59 @@
-Q = require 'q'
 _ = require 'lodash'
+{multi} = require 'heterarchy'
 {EventEmitter} = require 'events'
 TaskFactory = require '../task/TaskFactory'
 Path = require './Path'
 ScriptPhase = require './ScriptPhase'
-p = require '../util/prop'
+P = require '../util/P'
+prop = require '../util/prop'
 TaskContainer = require '../task/TaskContainer'
 ExtensionContainer = require '../ext/ExtensionContainer'
 TaskGraphExecutor = require './TaskGraphExecutor'
 PluginsRegistry = require './PluginsRegistry'
+log = require('../util/logger') 'Project'
+SeqX = require '../util/SeqX'
+Clock = require '../util/Clock'
 
-module.exports = class Project extends EventEmitter
+module.exports = class Project extends multi EventEmitter, SeqX
 
-  p @, 'path', get : -> @_path.fullPath
+  prop @, 'path', get : -> @_path.fullPath
 
-  p @, 'rootDir', get : -> @_rootDir
+  prop @, 'rootDir', get : -> @_rootDir
 
-  p @, 'buildDir', get : -> @_buildDir
+  prop @, 'buildDir', get : -> @_buildDir
 
-  p @, 'buildFile', get : -> @_buildFile
+  prop @, 'buildFile', get : -> @_buildFile
 
-  p @, 'childProjects', get : ->
+  prop @, 'childProjects', get : ->
 
-  p @, 'allProjects', get : ->
+  prop @, 'allProjects', get : ->
 
-  p @, 'subProjects', get : ->
+  prop @, 'subProjects', get : ->
 
-  p @, 'description',
+  prop @, 'description',
     get : -> @_description
     set : ( v ) -> @_set '_description', v
 
-  p @, 'version',
+  prop @, 'version',
     get : -> @_version
     set : ( v ) -> @_set '_version', v
 
-  p @, 'status',
+  prop @, 'status',
     get : -> @_status
     set : ( v ) -> @_set '_status', v
 
   constructor : ( {@name, @parent, @projectDir, @script} = {} ) ->
     throw new Error "Project name must be defined" unless @name?
-    @rootProject = parent?.rootProject or @
+    log.v 'ctor()', @name
 
-    @description = "project #{@name}"
-    @version = "0.1.0"
-    @_prop = {}
+    @rootProject = parent?.rootProject or @
+    @description ?= "project #{@name}"
+    @version ?= "0.1.0"
     @pluginsRegistry = new PluginsRegistry()
     @tasks = new TaskContainer()
     @extensions = new ExtensionContainer()
     @plugins = {}
+    @_prop = {}
 
     if @parent
       @_path = new Path @parent.absoluteProjectPath name
@@ -57,37 +62,28 @@ module.exports = class Project extends EventEmitter
       @depth = 0
       @_path = new Path [ @name ], true
 
-    @script.on 'phase', @phase
-
-  phase : ( p ) =>
-    @_phase = p
-    switch @_phase
-      when ScriptPhase.Initialization
-        return @initialize()
-      when ScriptPhase.Configuration
-        return @configure()
-      when ScriptPhase.Execution
-        return @execute()
-      when ScriptPhase.Done
-        @done()
-
   initialize : =>
+    log.v 'initialize'
 
   configure : =>
-    @tasks.each ( t ) -> t.configure()
+    log.v 'configure project', @name
+    @tasks.forEach ( t ) =>
+      @_seq => @runp t.configure
+
+    @._seq => log.v 'configure project done', @name
 
   execute : =>
+    tag = "executing #{@path}"
+    log.v tag
+    @clock = new Clock()
     executor = new TaskGraphExecutor(@tasks)
     nodes = (@tasks.get t for t in @_defaultTasks)
     executor.add nodes
     executor.determineExecutionPlan()
-    console.log _.map executor.executionQueue, ( x ) -> x.task.name
-    runWith = @script.context.runWith
-    prev = Q(true)
-    for t in executor.executionQueue
-      do ( t ) =>
-        prev = prev.then -> t.execute runWith
-    prev
+    log.i 'tasks:', _.map executor.executionQueue, ( x ) -> x.task.name
+    executor.executionQueue.forEach ( t ) =>
+      @_seq t.execute
+    @_seq => log.v tag, 'done: ', @clock.pretty()
 
   defaultTasks : ( tasks... ) =>
     @_defaultTasks = tasks
@@ -120,7 +116,7 @@ module.exports = class Project extends EventEmitter
     opts.runWith = runWith = @script.context.runWith
     if f?
       cfg = ( task ) -> -> runWith (-> f(task)), task
-    @tasks.create opts, cfg
+    @tasks.create opts, f
 
   compareTo : ( other ) =>
     diff = @depth - other.depth
@@ -131,9 +127,23 @@ module.exports = class Project extends EventEmitter
 
   methodMissing : ( name, args... ) =>
     return unless @extensions.has name
-    console.log name
+    log.v 'methodMissing:', name
     @script.context.runWith args[ 0 ], @extensions.get name
     true
+
+  runp : ( fn, args = [], ctx = [] ) =>
+    p = new P()
+    args.push p
+    run = @script.context.runWith
+    try
+      list = [ (-> fn.apply null, args) ]
+      list = list.concat ctx
+      list.push p
+      ret = run.apply @script.context, list
+      p.resolve ret unless p.asyncCalled
+    catch err
+      p.reject err
+    p.promise
 
   _set : ( name, val ) ->
     old = @[ name ]
