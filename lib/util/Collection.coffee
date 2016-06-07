@@ -21,7 +21,6 @@ class Collection extends EventEmitter
 
   matching : ( f ) =>  _.filter @items, f
 
-  each : ( f ) => @items.forEach f
   forEach : ( f ) => @items.forEach f
 
 module.exports = Collection

@@ -68,6 +68,7 @@ class TaskInfo extends multi EventEmitter, SeqX
         @dependsOn.push d
 
   configure : =>
+    clock = new Clock()
     tag = "configuring #{@task.path}"
     log.v tag
     task = @task
@@ -75,18 +76,29 @@ class TaskInfo extends multi EventEmitter, SeqX
     @configurators.forEach ( c ) =>
       @_seq -> runp c, [ task ], [ task ]
 
-    @_seq -> log.v tag, 'done'
+    @_seq -> log.v tag, 'done:', clock.pretty
 
   execute : =>
     tag = "executing #{@task.path}"
     log.v tag
-    @clock = new Clock()
+    clock = new Clock()
     task = @task
     runp = task.project.runp
     task.actions.forEach ( a ) =>
       @_seq -> runp a.exec, [ task ], [ task ]
+    @_seq => log.v tag, 'done: ', clock.pretty
 
-    @_seq => log.v tag, 'done: ', @clock.pretty()
+  onAfterEvaluate : =>
+    clock = new Clock()
+    tag = "onAfterEvaluate #{@task.path}"
+    log.v tag
+    task = @task
+    runp = task.project.runp
+    @_seq -> runp task.onAfterEvaluate, [], [ task ]
+    task.actions.forEach ( a ) =>
+      if a.onAfterEvaluate?
+        @_seq -> runp a.onAfterEvaluate, [], [ task ]
+    @_seq => log.v tag, 'done:', clock.pretty
 
   startExecution : =>
     assert @isReady

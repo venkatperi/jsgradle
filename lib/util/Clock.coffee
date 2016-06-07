@@ -1,11 +1,13 @@
 pretty = require 'pretty-hrtime'
+prop = require './prop'
 
 class Clock
+
+  prop @, 'time', get : -> process.hrtime @start
+
+  prop @, 'pretty', get : -> pretty @time
+
   constructor : () ->
     @start = process.hrtime()
-
-  time : => process.hrtime @start
-
-  pretty : => pretty @time()
 
 module.exports = Clock

@@ -66,16 +66,18 @@ module.exports = class Project extends multi EventEmitter, SeqX
     log.v 'initialize'
 
   configure : =>
-    log.v 'configure project', @name
-    @tasks.forEach ( t ) =>
-      @_seq => @runp t.configure
-
-    @._seq => log.v 'configure project done', @name
+    clock = new Clock()
+    tag = "configuring #{@path}"
+    log.v tag
+    @tasks.forEach ( t ) => @_seq => @runp t.configure
+    @onAfterEvaluate()
+    @_seq =>
+      log.v tag, 'done', clock.pretty
 
   execute : =>
     tag = "executing #{@path}"
     log.v tag
-    @clock = new Clock()
+    clock = new Clock()
     executor = new TaskGraphExecutor(@tasks)
     nodes = (@tasks.get t for t in @_defaultTasks)
     executor.add nodes
@@ -83,7 +85,7 @@ module.exports = class Project extends multi EventEmitter, SeqX
     log.i 'tasks:', _.map executor.executionQueue, ( x ) -> x.task.name
     executor.executionQueue.forEach ( t ) =>
       @_seq t.execute
-    @_seq => log.v tag, 'done: ', @clock.pretty()
+    @_seq => log.v tag, 'done: ', clock.pretty
 
   defaultTasks : ( tasks... ) =>
     @_defaultTasks = tasks
@@ -144,6 +146,13 @@ module.exports = class Project extends multi EventEmitter, SeqX
     catch err
       p.reject err
     p.promise
+
+  onAfterEvaluate : =>
+    clock = new Clock()
+    tag = "onAfterEvaluate #{@path}"
+    log.v tag
+    @tasks.forEach ( t ) => @_seq t.onAfterEvaluate
+    @_seq => log.v tag, 'done:', clock.pretty
 
   _set : ( name, val ) ->
     old = @[ name ]

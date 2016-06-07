@@ -5,7 +5,6 @@ CopySpec = require './copy/CopySpec'
 {multi} = require 'heterarchy'
 glob = require '../../util/glob'
 path = require 'path'
-eventbus = require('../../util/Eventbus')()
 
 class CopyTask extends multi Task, CopySpec
 
@@ -13,17 +12,16 @@ class CopyTask extends multi Task, CopySpec
     opts.type = 'Copy'
     super opts
 
-    eventbus.on 'afterEvaluate', =>
-      @initialized = @createActions()
-      
-    @doFirst  =>
+  onAfterEvaluate : ( p ) =>
+    @resolveSourceFiles()
+    .then ( files ) ->
+      console.log files
 
   createActions : =>
     dest = @destinations[ 0 ]
     @resolveSourceFiles()
     .then ( files ) ->
       console.log files
-       
 
   resolveSourceFiles : =>
     res =

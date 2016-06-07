@@ -56,6 +56,8 @@ class Task
   onlyIf : ( fn ) =>
     @_onlyIfSpec.push fn
 
+  onAfterEvaluate : =>
+
   compareTo : ( other ) =>
     c = @project.compareTo other.project
     return c unless c is 0
