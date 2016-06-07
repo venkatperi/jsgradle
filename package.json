@@ -18,6 +18,7 @@
     "node-walkup": "^1.1.1",
     "pretty-hrtime": "^1.0.2",
     "q": "^1.4.1",
+    "split": "^1.0.0",
     "taglog": "^1.1.0"
   },
   "bundleDependencies": [],

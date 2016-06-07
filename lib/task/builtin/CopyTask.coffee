@@ -21,7 +21,7 @@ class CopyTask extends multi Task, CopySpec
     @resolveSourceFiles()
     .then ( files ) =>
       for f in files
-        @actions.push new CopyAction f, dest, cwd : @project.projectDir
+        @actions.push new CopyAction f, dest, @, cwd : @project.projectDir
 
   resolveSourceFiles : =>
     res =

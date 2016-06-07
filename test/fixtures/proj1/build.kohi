@@ -8,19 +8,12 @@ defaultTasks 'hello', 't5'
 greeting ->
   name = 'world'
 
-task copy(type : Copy), ( t )->
-  println "configuring task: #{t.name}, type: #{t.type}, path: #{t.path}"
-
+task copy(type : Copy), ->
   from 'lib', ->
     include '**/*.coffee'
     exclude '**/T*.coffee'
-
+    filter ( line ) -> line.toLowerCase()
   into 'dist'
-  exclude '**/*.bak'
-
-  doFirst -> println t.name + ' 1'
-  doFirst -> println t.name + ' 2'
-  doLast -> println t.name + ' 3'
 
 task t2(dependsOn : copy), ( t )->
   println "configuring task: #{t.name}, type: #{t.type}"

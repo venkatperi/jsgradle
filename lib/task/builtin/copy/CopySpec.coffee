@@ -3,6 +3,7 @@ SourceSpec = require './SourceSpec'
 class CopySpec extends SourceSpec
   constructor :  ->
     super()
+    @srcNameActions = []
     @fileActions = []
     @filters = []
     @sources = []
@@ -19,11 +20,15 @@ class CopySpec extends SourceSpec
   filter : ( f ) => @filters.push f
 
   caseSensitive : ( v ) => @_caseSensitive = v
+  
   includeEmptyDirs : ( v ) => @_includeEmptyDirs = v
+  
   duplicatesStrategy : ( v ) => @_duplicatesStrategy = v
 
   eachFile : ( f ) => @fileActions.push f
-  rename : ( f ) => @_rename = f
+    
+  rename : ( f ) => @srcNameActions.push f
+    
   with : ( child ) => @childSpecs.push child
 
   toString : =>
