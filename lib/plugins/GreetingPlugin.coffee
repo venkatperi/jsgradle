@@ -15,6 +15,7 @@ class GreetingPlugin extends Plugin
     project.task 'hello', null, ( t ) =>
       log.v 'configuring'
       t.doFirst =>
+        log.v 'executing'
         console.log "hello #{@greeting.name}"
       log.v 'done config'
 

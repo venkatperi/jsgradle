@@ -20,12 +20,12 @@ class Script extends multi CoffeeDsl, SeqX
     @on 'error', ( err ) =>
       console.log err
       throw err
-    @_seq @_loadScript
+    @seq @_loadScript
 
   methodMissing : ( name ) => ( args... ) =>
     log.d "method missing: #{name}, #{JSON.stringify args}"
-    #val = @project.methodMissing name, args...
-    #return val if val?
+    val = @project.methodMissing name, args...
+    return val if val?
     return [ name ] unless args.length
     args = args[ 0 ] if args.length is 1
     [ name, args ]
@@ -34,17 +34,18 @@ class Script extends multi CoffeeDsl, SeqX
     log.d "property missing: #{name}"
     name
 
-  initialize : => @_seq @_initialize
-  configure : => @_seq @_configure
-  execute : => @_seq @_execute
+  initialize : => @seq @_initialize
+    
+  configure : => @seq @_configure
+    
+  execute : => @seq @_execute
 
   _loadScript : =>
     walkup 'build.kohi', cwd: process.cwd()
     .then (v) =>
-      unless v.length 
-        throw new Error "Didn't find file build.kohi"
-      log.v 'loadScript:', v[0]
+      throw new Error "Didn't find file build.kohi" unless v.length 
       @scriptFile = path.join v[0].dir, v[0].files[0]
+      log.v 'script file:', @scriptFile 
       readFile @scriptFile, 'utf8'
     .then ( contents ) =>
       @contents = contents

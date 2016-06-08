@@ -1,9 +1,10 @@
+_ = require 'lodash'
 seqx = require 'seqx'
 
 class SeqX
-  _seq : ( task ) =>
+  seq : ( f ) =>
     @_seqx ?= seqx()
-    @_done = @_seqx.add.apply @_seqx, arguments
+    @_done = @_seqx.add f
     .fail ( err ) => @emit 'error', err
 
 module.exports = SeqX

@@ -1,7 +1,7 @@
 Plugin = require './Plugin'
 log = require('../util/logger') 'CoffeePlugin'
 SourceSetContainer = require '../task/SourceSetContainer'
-SourceSet = require '../task/SourceSet'
+SourceSet = require '../task/FileSourceSet'
 
 class CoffeePlugin extends Plugin
   constructor : ->

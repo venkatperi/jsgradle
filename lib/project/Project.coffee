@@ -71,37 +71,26 @@ module.exports = class Project extends multi EventEmitter, SeqX
 
   configure : =>
     clock = new Clock()
-    tag = "configuring #{@path}"
-    log.v tag
-    @tasks.forEach ( t ) => @_seq => @runp t.configure
-    @onAfterEvaluate()
-    @_seq =>
-      log.v tag, 'done', clock.pretty
+    log.v tag = "configuring #{@path}"
+    @tasks.forEach ( t ) => @seq => @runp t.configure
+    @_afterEvaluate()
+    @seq -> log.v tag, 'done', clock.pretty
 
   execute : =>
-    tag = "executing #{@path}"
-    log.v tag
+    log.v tag = "executing #{@path}"
     clock = new Clock()
     executor = new TaskGraphExecutor(@tasks)
     @_defaultTasks ?= []
     nodes = (@tasks.get t for t in @_defaultTasks)
     executor.add nodes
-    executor.determineExecutionPlan()
+    queue = executor.determineExecutionPlan()
     log.i 'tasks:', _.map executor.executionQueue, ( x ) -> x.task.name
-    executor.executionQueue.forEach ( t ) =>
-      @_seq t.execute
-    @_seq => log.v tag, 'done: ', clock.pretty
+
+    queue.forEach ( t ) =>  @seq => @runp t.execute
+    @seq -> log.v tag, 'done: ', clock.pretty
 
   defaultTasks : ( tasks... ) =>
     @_defaultTasks = tasks
-
-  property : ( name, val ) ->
-    old = @_prop[ name ]
-    return prop if arguments.length is 1
-    unless val is old
-      @[ name ] = val
-      @emit 'property', name, val, old
-    @
 
   apply : ( opts ) =>
     if opts?.plugin
@@ -117,12 +106,10 @@ module.exports = class Project extends multi EventEmitter, SeqX
       f = opts
       [name,opts] = name
     [f, opts] = [ opts ] unless f?
+    log.v 'task:', name
     opts ?= {}
     opts.name = name
     opts.project = @
-    opts.runWith = runWith = @script.context.runWith
-    if f?
-      cfg = ( task ) -> -> runWith (-> f(task)), task
     @tasks.create opts, f
 
   sourceSets : ( f ) =>
@@ -137,32 +124,33 @@ module.exports = class Project extends multi EventEmitter, SeqX
     return 1 if @path > other.path
     0
 
-  methodMissing : ( name ) => ( args... ) =>
+  methodMissing : ( name, args... ) =>
     return unless @extensions.has name
-    log.v 'configuring extension:', name, args
+    log.v 'configuring extension:', name
     @script.context.runWith args[ 0 ], @extensions.get name
     true
 
   runp : ( fn, args = [], ctx = [] ) =>
     p = new P()
     args.push p
-    run = @script.context.runWith
+    args.push @runp
+    list = [ (-> fn.apply null, args) ]
+    list = list.concat ctx
+    list.push p
+
     try
-      list = [ (-> fn.apply null, args) ]
-      list = list.concat ctx
-      list.push p
-      ret = run.apply @script.context, list
+      ret = @script.context.runWith.apply @script.context, list
       p.resolve ret unless p.asyncCalled
     catch err
       p.reject err
     p.promise
 
-  onAfterEvaluate : =>
+  _afterEvaluate : =>
     clock = new Clock()
     tag = "onAfterEvaluate #{@path}"
-    log.v tag
-    @tasks.forEach ( t ) => @_seq t.onAfterEvaluate
-    @_seq => log.v tag, 'done:', clock.pretty
+    @seq -> log.v tag
+    @tasks.forEach ( t ) =>  @seq => @runp t.afterEvaluate
+    @seq -> log.v tag, 'done:', clock.pretty
 
   _set : ( name, val ) ->
     old = @[ name ]

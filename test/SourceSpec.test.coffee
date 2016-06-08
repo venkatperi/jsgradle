@@ -2,6 +2,7 @@ path = require 'path'
 assert = require 'assert'
 should = require 'should'
 SourceSpec = require '../lib/task/SourceSpec'
+SourceSet = require '../lib/task/FileSourceSet'
 FileResolver = require '../lib/task/FileResolver'
 log = require('../lib/util/logger')('SourceSpec.test')
 
@@ -14,7 +15,8 @@ describe 'SourceSpec', ->
   it 'default includes all files', ->
     spec = new SourceSpec srcDir : 'proj1'
     spec.doConfigure()
-    spec.resolve resolver
+    set = new SourceSet spec: spec
+    set.resolve resolver
     .then ( files ) ->
       console.log files
 
@@ -31,7 +33,7 @@ describe 'SourceSpec', ->
     spec = new SourceSpec srcDir : 'proj1'
     spec.include '*.{kohi,coffee}'
     spec.exclude '**/T*.coffee'
-    lib = new SourceSpec srcDir : 'lib', parent: spec
+    lib = new SourceSpec srcDir : 'lib', parent : spec
     lib.include '**/*.coffee'
     spec.sources.push lib
     spec.doConfigure()

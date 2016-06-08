@@ -1,5 +1,4 @@
 Collection = require '../util/Collection'
-SourceSet = require './SourceSet'
 
 class SourceSetContainer extends Collection
 

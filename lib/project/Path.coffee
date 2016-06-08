@@ -3,7 +3,7 @@ SEP = ':'
 prop = require './../util/prop'
 
 isAbsolute = ( path ) ->
-  path.indexOf(SEP) is 0
+  path?.indexOf(SEP) is 0
 
 ###
 Public: Represents path to a project/task
@@ -50,6 +50,7 @@ class Path
     new Path @_segments[ 0..@_segments.length - 2 ], @absolute
 
   absolutePath : ( path ) =>
+    console.log path
     path = @prefix + path unless isAbsolute(path)
     path
 

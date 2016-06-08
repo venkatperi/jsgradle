@@ -1,14 +1,14 @@
-SourceSet = require './SourceSet'
+FileSourceSet = require './FileSourceSet'
 SourceSpec = require './SourceSpec'
 
-class CoffeeSourceSet extends SourceSet
+class CoffeeSourceSet extends FileSourceSet
 
   constructor : ( @name ) ->
     @name ?= 'coffeescript'
-    @sources = []
-    @sources.push new SourceSpec('lib')
+    spec = new SourceSpec()
+    .include '*.coffee'
+    spec.sources.push new SourceSpec 'lib'
     .include '**/*.coffee'
-    @sources.push new SourceSpec('root')
-    .include 'index.coffee'
+    super spec : spec
 
 module.exports = CoffeeSourceSet

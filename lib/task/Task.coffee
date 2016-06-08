@@ -2,6 +2,7 @@ os = require 'os'
 p = require './../util/prop'
 Path = require './../project/Path'
 Action = require './Action'
+log = require('../util/logger') 'Task'
 
 class Task
 
@@ -21,7 +22,9 @@ class Task
     get : -> @_didWork
     set : ( v ) -> @_set '_didWork', v
 
-  constructor : ( {@name, @project, @description, @type, @runWith} ) ->
+  constructor : ( {@name, @project, @description, @type} ) ->
+    throw new Error "Missing option: name" unless @name and typeof @name is 'string'
+    throw new Error "Missing option: type" unless @type?
     @_dependencies = []
     @actions = []
     @_onlyIfSpec = []
@@ -51,12 +54,12 @@ class Task
     @actions.push new Action action, false
     @
 
-  configure : ( p ) =>
+  configure : ( runp ) =>
+
+  afterEvaluate: =>
 
   onlyIf : ( fn ) =>
     @_onlyIfSpec.push fn
-
-  onAfterEvaluate : =>
 
   compareTo : ( other ) =>
     c = @project.compareTo other.project
@@ -71,8 +74,6 @@ class Task
       @[ name ] = val
       @emit 'change', name, val, old
     @
-
-  doConfigure : =>
 
   toString : =>
     "task #{@name}"

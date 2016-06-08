@@ -2,6 +2,7 @@ _ = require 'lodash'
 {EventEmitter} = require 'events'
 
 class Collection extends EventEmitter
+
   constructor : ( {@convertName} = {} ) ->
     @items = new Map()
     @convertName ?= ( x ) -> x
@@ -23,7 +24,9 @@ class Collection extends EventEmitter
 
   forEach : ( f ) => @items.forEach f
 
-  configure : ( run, f ) =>
-    run f, @
+  map : ( f ) =>
+    ret = []
+    @items.forEach ( x ) -> ret.push f x
+    ret
 
 module.exports = Collection

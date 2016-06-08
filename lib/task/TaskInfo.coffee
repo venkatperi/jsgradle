@@ -67,38 +67,34 @@ class TaskInfo extends multi EventEmitter, SeqX
         d = d()[ 0 ] if d if typeof d is 'function'
         @dependsOn.push d
 
-  configure : =>
+  configure : ( p, runp ) =>
     clock = new Clock()
-    tag = "configuring #{@task.path}"
-    log.v tag
+    log.v tag = "configuring #{@task.path}"
     task = @task
-    runp = task.project.runp
+    @seq => runp @task.configure, [@task], [ @task ]
     @configurators.forEach ( c ) =>
-      @_seq -> runp c, [ task ], [ task ]
+      @seq -> runp c, [ task ], [ task ]
 
-    @_seq -> log.v tag, 'done:', clock.pretty
+    @seq -> log.v tag, 'done:', clock.pretty
 
-  execute : =>
-    tag = "executing #{@task.path}"
-    log.v tag
-    clock = new Clock()
-    task = @task
-    runp = task.project.runp
-    task.actions.forEach ( a ) =>
-      @_seq -> runp a.exec, [], [ task ]
-    @_seq => log.v tag, 'done: ', clock.pretty
-
-  onAfterEvaluate : =>
+  afterEvaluate : ( p, runp ) =>
     clock = new Clock()
     tag = "onAfterEvaluate #{@task.path}"
     log.v tag
     task = @task
-    runp = task.project.runp
-    @_seq -> runp task.onAfterEvaluate, [], [ task ]
+    @seq -> runp task.afterEvaluate, [], [ task ]
     task.actions.forEach ( a ) =>
-      if a.onAfterEvaluate?
-        @_seq -> runp a.onAfterEvaluate, [], [ task ]
-    @_seq => log.v tag, 'done:', clock.pretty
+      if a.afterEvaluate?
+        @seq -> runp a.onAfterEvaluate, [], [ task ]
+    @seq -> log.v tag, 'done:', clock.pretty
+
+  execute : (p, runp) =>
+    log.v tag = "executing #{@task.path}"
+    clock = new Clock()
+    task = @task
+    task.actions.forEach ( a ) =>
+      @seq -> runp a.exec, [], [ task ]
+    @seq => log.v tag, 'done: ', clock.pretty
 
   startExecution : =>
     assert @isReady

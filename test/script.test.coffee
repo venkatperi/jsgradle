@@ -28,8 +28,11 @@ describe 'Script', ->
     s = new Script
       scriptFile : path.join __dirname, 'fixtures', 'script1.coffee'
     s.initialize()
-    .then -> s.configure()
-    .then -> s.execute()
+    .then ->
+      s.configure()
+    .then ->
+      console.log 123
+      s.execute()
     .then ->
       s.project.name.should.equal 'proj1'
       s.project.description.should.equal 'test project'

@@ -69,9 +69,9 @@ module.exports = class Project extends multi EventEmitter, SeqX
     clock = new Clock()
     tag = "configuring #{@path}"
     log.v tag
-    @tasks.forEach ( t ) => @_seq => @runp t.configure
+    @tasks.forEach ( t ) => @seq => @runp t.configure
     @onAfterEvaluate()
-    @_seq =>
+    @seq =>
       log.v tag, 'done', clock.pretty
 
   execute : =>
@@ -84,8 +84,8 @@ module.exports = class Project extends multi EventEmitter, SeqX
     executor.determineExecutionPlan()
     log.i 'tasks:', _.map executor.executionQueue, ( x ) -> x.task.name
     executor.executionQueue.forEach ( t ) =>
-      @_seq t.execute
-    @_seq => log.v tag, 'done: ', clock.pretty
+      @seq t.execute
+    @seq => log.v tag, 'done: ', clock.pretty
 
   defaultTasks : ( tasks... ) =>
     @_defaultTasks = tasks
@@ -151,7 +151,7 @@ module.exports = class Project extends multi EventEmitter, SeqX
     clock = new Clock()
     tag = "onAfterEvaluate #{@path}"
     log.v tag
-    @tasks.forEach ( t ) => @_seq t.onAfterEvaluate
+    @tasks.forEach ( t ) => @seq t.onAfterEvaluate
     @_seq => log.v tag, 'done:', clock.pretty
 
   _set : ( name, val ) ->

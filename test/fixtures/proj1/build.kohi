@@ -2,7 +2,8 @@ description = 'test project'
 version = '0.2.0'
 
 apply plugin : 'greeting'
-apply plugin : 'coffee'
+
+defaultTasks 'hello'
 
 greeting ->
   name = 'world'
@@ -14,8 +15,4 @@ task copy(type : Copy), ->
     filter ( line ) -> line.toLowerCase()
   into 'dist'
 
-task ls(type : Exec), ->
-  executable '/bin/ls'
-  workingDir '/'
-  
 
