@@ -1,35 +1,26 @@
-SourceSpec = require './SourceSpec'
+SourceSpec = require '../../SourceSpec'
 
 class CopySpec extends SourceSpec
-  constructor :  ->
+  constructor : ->
     super()
     @srcNameActions = []
     @fileActions = []
     @filters = []
-    @sources = []
     @destinations = []
-    @childSpecs = []
 
-  from : ( src, f ) =>
-    sourceSpec = new SourceSpec src
-    @runWith f, sourceSpec if f
-    @sources.push sourceSpec
-
-  into : ( spec ) => @destinations.push spec
+  into : ( dir ) => @destDir = dir
 
   filter : ( f ) => @filters.push f
 
   caseSensitive : ( v ) => @_caseSensitive = v
-  
+
   includeEmptyDirs : ( v ) => @_includeEmptyDirs = v
-  
+
   duplicatesStrategy : ( v ) => @_duplicatesStrategy = v
 
   eachFile : ( f ) => @fileActions.push f
-    
+
   rename : ( f ) => @srcNameActions.push f
-    
-  with : ( child ) => @childSpecs.push child
 
   toString : =>
     out = [ 'CopySpec' ]

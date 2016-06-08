@@ -8,11 +8,13 @@ P = require '../util/P'
 prop = require '../util/prop'
 TaskContainer = require '../task/TaskContainer'
 ExtensionContainer = require '../ext/ExtensionContainer'
+SourceSetContainer = require '../task/SourceSetContainer'
 TaskGraphExecutor = require './TaskGraphExecutor'
 PluginsRegistry = require './PluginsRegistry'
 log = require('../util/logger') 'Project'
 SeqX = require '../util/SeqX'
 Clock = require '../util/Clock'
+FileResolver = require '../task/FileResolver'
 
 module.exports = class Project extends multi EventEmitter, SeqX
 
@@ -52,6 +54,8 @@ module.exports = class Project extends multi EventEmitter, SeqX
     @pluginsRegistry = new PluginsRegistry()
     @tasks = new TaskContainer()
     @extensions = new ExtensionContainer()
+    @_sourceSets = new SourceSetContainer()
+    @fileResolver = new FileResolver @projectDir
     @plugins = {}
     @_prop = {}
 
@@ -79,6 +83,7 @@ module.exports = class Project extends multi EventEmitter, SeqX
     log.v tag
     clock = new Clock()
     executor = new TaskGraphExecutor(@tasks)
+    @_defaultTasks ?= []
     nodes = (@tasks.get t for t in @_defaultTasks)
     executor.add nodes
     executor.determineExecutionPlan()
@@ -120,6 +125,11 @@ module.exports = class Project extends multi EventEmitter, SeqX
       cfg = ( task ) -> -> runWith (-> f(task)), task
     @tasks.create opts, f
 
+  sourceSets : ( f ) =>
+    run = @script.context.runWith
+    @_sourceSets.forEach ( s ) ->
+      s.configure run, f
+
   compareTo : ( other ) =>
     diff = @depth - other.depth
     return diff unless diff is 0
@@ -127,9 +137,9 @@ module.exports = class Project extends multi EventEmitter, SeqX
     return 1 if @path > other.path
     0
 
-  methodMissing : ( name, args... ) =>
+  methodMissing : ( name ) => ( args... ) =>
     return unless @extensions.has name
-    log.v 'methodMissing:', name
+    log.v 'configuring extension:', name, args
     @script.context.runWith args[ 0 ], @extensions.get name
     true
 

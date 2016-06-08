@@ -4,13 +4,8 @@ version = '0.2.0'
 apply plugin : 'greeting'
 apply plugin : 'coffee'
 
-defaultTasks 'hello', 'coffeeCompile'
-
 greeting ->
   name = 'world'
-
-coffeescript ->
-
 
 task copy(type : Copy), ->
   from 'lib', ->

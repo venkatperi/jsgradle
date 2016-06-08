@@ -24,8 +24,8 @@ class Script extends multi CoffeeDsl, SeqX
 
   methodMissing : ( name ) => ( args... ) =>
     log.d "method missing: #{name}, #{JSON.stringify args}"
-    val = @project.methodMissing name, args...
-    return val if val?
+    #val = @project.methodMissing name, args...
+    #return val if val?
     return [ name ] unless args.length
     args = args[ 0 ] if args.length is 1
     [ name, args ]

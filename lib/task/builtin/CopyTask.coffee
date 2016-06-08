@@ -23,20 +23,10 @@ class CopyTask extends multi Task, CopySpec
       for f in files
         @actions.push new CopyAction f, dest, @, cwd : @project.projectDir
 
-  resolveSourceFiles : =>
-    res =
-      includes : []
-      excludes : []
-    prev = Q(true)
-    baseDir = @project.projectDir
-    @sources.forEach ( s ) ->
-      dir = path.join baseDir, s.src
-      [ 'includes', 'excludes' ].forEach ( t ) ->
-        s[ t ].forEach ( pat ) ->
-          prev = prev
-          .then -> glob pat, cwd : dir
-          .then ( list ) ->
-            res[ t ].push (path.join s.src, i for i in list)
+          #prev = prev
+          #.then -> glob pat, cwd : dir
+          #.then ( list ) ->
+          #  res[ t ].push (path.join s.srcDir, i for i in list)
 
     prev.then ->
       _.difference _.flatten(res.includes), _.flatten(res.excludes)

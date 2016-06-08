@@ -23,4 +23,7 @@ class Collection extends EventEmitter
 
   forEach : ( f ) => @items.forEach f
 
+  configure : ( run, f ) =>
+    run f, @
+
 module.exports = Collection
