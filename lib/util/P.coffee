@@ -16,7 +16,7 @@ class P
   async : =>
     log.v 'async'
     @asyncCalled = true
-    resolve : @defer.resolve
-    reject : @defer.reject
+    resolve : => @defer.resolve.apply @defer, arguments
+    reject : => @defer.reject.apply @defer, arguments
 
 module.exports = P

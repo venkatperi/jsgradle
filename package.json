@@ -8,9 +8,12 @@
   "preferGlobal": false,
   "description": "NEEDS DESCRIPTION",
   "dependencies": {
+    "ansi-escapes": "^1.4.0",
+    "colors": "^1.1.2",
     "glob": "^7.0.3",
     "guava-cache": "^0.7.0",
     "heterarchy": "^1.0.5",
+    "log-symbols": "^1.0.2",
     "mixto": "^1.0.0",
     "mkdirp": "^0.5.1",
     "multimap": "^1.0.2",

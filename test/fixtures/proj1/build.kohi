@@ -3,7 +3,7 @@ version = '0.2.0'
 
 apply plugin : 'greeting'
 
-defaultTasks 'hello'
+defaultTasks 'hello', 'ls'
 
 greeting ->
   name = 'world'
@@ -14,5 +14,9 @@ task copy(type : Copy), ->
     exclude '**/T*.coffee'
     filter ( line ) -> line.toLowerCase()
   into 'dist'
+
+task ls(type : Exec), ->
+  executable '/bin/ls'
+  workingDir '/'
 
 

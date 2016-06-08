@@ -4,7 +4,7 @@ should = require 'should'
 Script = require '../lib/project/Script'
 log = require('../lib/util/logger')('script.test')
 
-log.level 'verbose'
+log.level 'info'
 
 describe 'Script', ->
 
@@ -28,16 +28,13 @@ describe 'Script', ->
     s = new Script
       scriptFile : path.join __dirname, 'fixtures', 'script1.coffee'
     s.initialize()
-    .then ->
-      s.configure()
-    .then ->
-      console.log 123
-      s.execute()
+    .then -> s.configure()
+    .then -> s.execute()
+    .then -> s.report()
     .then ->
       s.project.name.should.equal 'proj1'
       s.project.description.should.equal 'test project'
       s.project.version.should.equal '0.2.0'
-      console.log 'done'
       done()
-    .fail done
+    .done()
 

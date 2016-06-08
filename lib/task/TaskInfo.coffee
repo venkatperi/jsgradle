@@ -1,5 +1,6 @@
 assert = require 'assert'
 prop = require './../util/prop'
+out = require './../util/out'
 log = require('../util/logger') 'TaskInfo'
 SeqX = require '../util/SeqX'
 {multi} = require 'heterarchy'
@@ -19,6 +20,8 @@ STATE = {
 
 class TaskInfo extends multi EventEmitter, SeqX
   #@STATE : STATE
+
+  prop @, 'name', get : -> @task.name
 
   prop @, 'isRequired', get : -> @state is STATE.ShouldRun
 
@@ -71,7 +74,7 @@ class TaskInfo extends multi EventEmitter, SeqX
     clock = new Clock()
     log.v tag = "configuring #{@task.path}"
     task = @task
-    @seq => runp @task.configure, [@task], [ @task ]
+    @seq => runp @task.configure, [ @task ], [ @task ]
     @configurators.forEach ( c ) =>
       @seq -> runp c, [ task ], [ task ]
 
@@ -88,13 +91,21 @@ class TaskInfo extends multi EventEmitter, SeqX
         @seq -> runp a.onAfterEvaluate, [], [ task ]
     @seq -> log.v tag, 'done:', clock.pretty
 
-  execute : (p, runp) =>
+  execute : ( p, runp ) =>
     log.v tag = "executing #{@task.path}"
     clock = new Clock()
     task = @task
+    @seq => out.grey @task.path
     task.actions.forEach ( a ) =>
-      @seq -> runp a.exec, [], [ task ]
-    @seq => log.v tag, 'done: ', clock.pretty
+      @seq =>
+        runp a.exec, [], [ task ]
+        .fail ( err ) =>
+          @errors ?= []
+          @errors.push err
+          out.yellow(' FAILED').eol()
+          out(err.message).eol()
+    @seq =>
+      log.v tag, 'done: ', clock.pretty
 
   startExecution : =>
     assert @isReady

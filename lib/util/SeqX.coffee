@@ -5,6 +5,9 @@ class SeqX
   seq : ( f ) =>
     @_seqx ?= seqx()
     @_done = @_seqx.add f
-    .fail ( err ) => @emit 'error', err
+    .fail ( err ) =>
+      @emit 'error', err
+      @errors ?= []
+      @errors.push err
 
 module.exports = SeqX

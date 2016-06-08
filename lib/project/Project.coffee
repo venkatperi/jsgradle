@@ -12,6 +12,7 @@ SourceSetContainer = require '../task/SourceSetContainer'
 TaskGraphExecutor = require './TaskGraphExecutor'
 PluginsRegistry = require './PluginsRegistry'
 log = require('../util/logger') 'Project'
+out = require('../util/out')
 SeqX = require '../util/SeqX'
 Clock = require '../util/Clock'
 FileResolver = require '../task/FileResolver'
@@ -67,6 +68,8 @@ module.exports = class Project extends multi EventEmitter, SeqX
       @_path = new Path [ @name ], true
 
   initialize : =>
+    unless @parent
+      @totalTime = new Clock()
     log.v 'initialize'
 
   configure : =>
@@ -83,11 +86,31 @@ module.exports = class Project extends multi EventEmitter, SeqX
     @_defaultTasks ?= []
     nodes = (@tasks.get t for t in @_defaultTasks)
     executor.add nodes
-    queue = executor.determineExecutionPlan()
-    log.i 'tasks:', _.map executor.executionQueue, ( x ) -> x.task.name
+    @taskQueue = queue = executor.determineExecutionPlan()
+    log.v 'tasks:', _.map executor.executionQueue, ( x ) -> x.task.name
 
     queue.forEach ( t ) =>  @seq => @runp t.execute
-    @seq -> log.v tag, 'done: ', clock.pretty
+    @seq =>
+      log.v tag, 'done: ', clock.pretty
+
+  report : =>
+    errors = []
+    @taskQueue?.forEach ( t ) =>
+      errors.push name : t.name, errors : t.errors if t.errors?.length
+
+    out.eol()
+    if errors.length is 0
+      out('BUILD SUCCESSFUL').eol()
+    else
+      num = errors.length
+      ex = 'exception'
+      ex += 's' if num > 1
+      out.red("FAILURE: Build failed with #{num} #{ex}").eol()
+      for e in errors
+        out("> #{e.name}").eol()
+
+    unless @parent
+      out("Total time: #{@totalTime.pretty}").eol()
 
   defaultTasks : ( tasks... ) =>
     @_defaultTasks = tasks

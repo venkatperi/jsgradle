@@ -50,7 +50,6 @@ class Path
     new Path @_segments[ 0..@_segments.length - 2 ], @absolute
 
   absolutePath : ( path ) =>
-    console.log path
     path = @prefix + path unless isAbsolute(path)
     path
 

@@ -1,5 +1,7 @@
 Plugin = require './Plugin'
 log = require('../util/logger') 'GreetingPlugin'
+out = require('../util/out') 
+
 
 class GreetingPlugin extends Plugin
   constructor : ->
@@ -16,7 +18,7 @@ class GreetingPlugin extends Plugin
       log.v 'configuring'
       t.doFirst =>
         log.v 'executing'
-        console.log "hello #{@greeting.name}"
+        out.eolThen("hello #{@greeting.name}").eol()
       log.v 'done config'
 
 module.exports = GreetingPlugin

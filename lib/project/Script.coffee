@@ -8,6 +8,7 @@ log = require('../util/logger') 'Script'
 walkup = require 'node-walkup'
 SeqX = require '../util/SeqX'
 {multi} = require 'heterarchy'
+out = require '../util/out'
 
 readFile = Q.denodeify fs.readFile
 
@@ -15,6 +16,7 @@ class Script extends multi CoffeeDsl, SeqX
   constructor : ( {@scriptFile} = {} ) ->
     throw new Error "Missing option: scriptFile" unless @scriptFile
     super()
+    @symbols.println = (msg) -> out(msg).eol()
     @symbols.sleep = ( time, fn ) -> setTimeout fn, time
     @phase = Phase.Initial
     @on 'error', ( err ) =>
@@ -35,17 +37,21 @@ class Script extends multi CoffeeDsl, SeqX
     name
 
   initialize : => @seq @_initialize
-    
+
   configure : => @seq @_configure
-    
+
   execute : => @seq @_execute
 
+  report : => @project.report()
+
+  logLevel : ( l ) => log.level l
+
   _loadScript : =>
-    walkup 'build.kohi', cwd: process.cwd()
-    .then (v) =>
-      throw new Error "Didn't find file build.kohi" unless v.length 
-      @scriptFile = path.join v[0].dir, v[0].files[0]
-      log.v 'script file:', @scriptFile 
+    walkup 'build.kohi', cwd : process.cwd()
+    .then ( v ) =>
+      throw new Error "Didn't find file build.kohi" unless v.length
+      @scriptFile = path.join v[ 0 ].dir, v[ 0 ].files[ 0 ]
+      log.v 'script file:', @scriptFile
       readFile @scriptFile, 'utf8'
     .then ( contents ) =>
       @contents = contents
@@ -60,7 +66,7 @@ class Script extends multi CoffeeDsl, SeqX
   _createProject : =>
     parts = path.parse @scriptFile
     projectDir = parts.dir
-    name = path.basename projectDir 
+    name = path.basename projectDir
     project = new Project
       script : @
       name : name,
