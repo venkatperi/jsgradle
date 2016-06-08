@@ -2,11 +2,15 @@ description = 'test project'
 version = '0.2.0'
 
 apply plugin : 'greeting'
+apply plugin : 'coffee'
 
-defaultTasks 'hello', 't5'
+defaultTasks 'hello', 'coffeeCompile'
 
 greeting ->
   name = 'world'
+
+coffeescript ->
+
 
 task copy(type : Copy), ->
   from 'lib', ->
@@ -15,22 +19,8 @@ task copy(type : Copy), ->
     filter ( line ) -> line.toLowerCase()
   into 'dist'
 
-task t2(dependsOn : copy), ( t )->
-  println "configuring task: #{t.name}, type: #{t.type}"
-  doFirst ->
-    {resolve} = async()
-    println t.name + ' 1'
-    sleep 1000, resolve
+task ls(type : Exec), ->
+  executable '/bin/ls'
+  workingDir '/'
+  
 
-task t3(dependsOn : copy), ( t )->
-  println "configuring task: #{t.name}, type: #{t.type}"
-  doFirst -> println t.name + ' 1'
-
-task t4(dependsOn : t3), ( t )->
-  println "configuring task: #{t.name}, type: #{t.type}"
-  doFirst -> println t.name + ' 1'
-
-task t5(dependsOn : [ t4, t2 ]), ( t )->
-  println "configuring task: #{t.name}, type: #{t.type}"
-  doFirst -> println t.name + ' 1'
-    

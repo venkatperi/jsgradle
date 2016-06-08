@@ -1,6 +1,7 @@
 Task = require './Task'
 Collection = require '../util/Collection'
 CopyTask = require './builtin/CopyTask'
+ExecTask = require './builtin/ExecTask'
 
 defaultTask = ( opts ) ->
   new Task opts
@@ -11,7 +12,7 @@ class TaskFactory extends Collection
     super()
     @register 'default', defaultTask
     @register 'Copy', ( x ) -> new CopyTask x
-
+    @register 'Exec', ( x ) -> new ExecTask x
 
   register : ( type, create ) => @add type, create
 

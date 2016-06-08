@@ -85,7 +85,7 @@ class TaskInfo extends multi EventEmitter, SeqX
     task = @task
     runp = task.project.runp
     task.actions.forEach ( a ) =>
-      @_seq -> runp a.exec, [ task ], [ task ]
+      @_seq -> runp a.exec, [], [ task ]
     @_seq => log.v tag, 'done: ', clock.pretty
 
   onAfterEvaluate : =>

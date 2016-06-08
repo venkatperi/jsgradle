@@ -17,7 +17,7 @@ class TaskGraphExecutor extends EventEmitter
       sorted.push v
     sorted = sorted.sort ( a, b ) -> a.task.compareTo b.task
 
-    for node in sorted
+    for node in sorted when node?
       if node.isMustNotRun
         requireWithDependencies node
       else if @filter node.task

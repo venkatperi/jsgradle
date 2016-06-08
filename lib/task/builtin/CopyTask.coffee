@@ -13,7 +13,7 @@ class CopyTask extends multi Task, CopySpec
     opts.type = 'Copy'
     super opts
 
-  onAfterEvaluate : ( p ) =>
+  onAfterEvaluate : =>
     @createActions()
 
   createActions : =>
