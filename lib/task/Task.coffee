@@ -54,9 +54,10 @@ class Task
     @actions.push new Action action, false
     @
 
-  configure : ( runp ) =>
+  configure : ( f, runp ) =>
+    runp f, [ @ ], [ @ ]
 
-  afterEvaluate: =>
+  afterEvaluate : =>
 
   onlyIf : ( fn ) =>
     @_onlyIfSpec.push fn

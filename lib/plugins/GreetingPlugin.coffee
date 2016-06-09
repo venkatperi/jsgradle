@@ -1,13 +1,18 @@
 Plugin = require './Plugin'
 log = require('../util/logger') 'GreetingPlugin'
-out = require('../util/out') 
+out = require('../util/out')
 
+class Extensible
+
+  methodMissing : ( name ) => ( args... ) =>
+    console.log 123
+    log.i 'methodMissing', name
 
 class GreetingPlugin extends Plugin
   constructor : ->
     log.v 'ctor()'
-    @greeting =
-      name : 'noname'
+    @greeting = new Extensible()
+    @greeting.name = 'noname'
 
   apply : ( project ) =>
     return if @configured

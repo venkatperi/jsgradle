@@ -5,7 +5,4 @@ ProcessingSpec = require '../ProcessingSpec'
 
 class CopySpec extends multi SourceSpec, TargetSpec, ProcessingSpec
 
-  constructor : ->
-    super()
-
 module.exports = CopySpec

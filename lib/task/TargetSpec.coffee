@@ -1,5 +1,5 @@
 class TargetSpec
-  constructor : ( {@_into} ) ->
+  constructor : ->
 
   into : ( dir ) =>
     @_into = dir

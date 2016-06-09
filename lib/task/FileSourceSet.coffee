@@ -3,7 +3,7 @@ _ = require 'lodash'
 glob = require '../util/glob'
 
 class FileSourceSet
-  constructor : ( {@spec} = {})->
+  constructor : ( {@spec} = {} )->
     @opts =
       nodir : true
       realpath : true
@@ -24,7 +24,11 @@ class FileSourceSet
           res[ t ].push list)
 
     if @spec.sources.length
-      children = Q.all(s.resolve resolver for s in @spec.sources)
+      children = Q.all(
+        for s in @spec.sources
+          new FileSourceSet spec : s
+          .resolve resolver
+      )
     else
       children = Q []
 

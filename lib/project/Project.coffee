@@ -56,7 +56,7 @@ module.exports = class Project extends multi EventEmitter, SeqX
     @tasks = new TaskContainer()
     @extensions = new ExtensionContainer()
     @_sourceSets = new SourceSetContainer()
-    @fileResolver = new FileResolver @projectDir
+    @fileResolver = new FileResolver projectDir: @projectDir
     @plugins = {}
     @_prop = {}
 

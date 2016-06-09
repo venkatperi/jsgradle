@@ -74,9 +74,9 @@ class TaskInfo extends multi EventEmitter, SeqX
     clock = new Clock()
     log.v tag = "configuring #{@task.path}"
     task = @task
-    @seq => runp @task.configure, [ @task ], [ @task ]
+    #@seq => runp @task.configure, [ @task ], [ @task ]
     @configurators.forEach ( c ) =>
-      @seq -> runp c, [ task ], [ task ]
+      @seq -> task.configure c, runp
 
     @seq -> log.v tag, 'done:', clock.pretty
 

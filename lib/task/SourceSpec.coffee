@@ -1,7 +1,7 @@
 path = require 'path'
 
 class SourceSpec
-  constructor : ( {@srcDir, @parent, @configurator} = {} ) ->
+  constructor : ( {@srcDir, @parent, @configClosure} = {} ) ->
     @srcDir ?= '.'
     @includes = []
     @excludes = []
@@ -14,7 +14,7 @@ class SourceSpec
       when 2
         @sources.push new SourceSpec
           srcDir : src,
-          configurator : f,
+          configClosure : f,
           parent : @
       else
         throw new Error "err..."
@@ -33,13 +33,13 @@ class SourceSpec
     @excludes.push i for i in items
     @
 
-  doConfigure : ( run ) =>
+  configure : ( run ) =>
     if @parent?
       @srcDir = path.join @parent.srcDir, @srcDir
     @includes.push '**/*' if @includes.length is 0
 
     @sources.forEach ( s ) ->
-      s.doConfigure run
-    run @configurator, @ if @configurator and run?
+      s.configure run
+    run @configClosure, [], [@] if @configClosure and run?
 
 module.exports = SourceSpec
