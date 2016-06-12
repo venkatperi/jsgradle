@@ -1,10 +1,10 @@
 path = require 'path'
 assert = require 'assert'
 should = require 'should'
-Script = require '../lib/project/Script'
+Script = require '../lib/project/Script2'
 log = require('../lib/util/logger')('script.test')
 
-log.level 'info'
+log.level 'verbose'
 
 describe 'Script', ->
 

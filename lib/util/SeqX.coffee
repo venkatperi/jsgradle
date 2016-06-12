@@ -6,7 +6,8 @@ class SeqX
     @_seqx ?= seqx()
     @_done = @_seqx.add f
     .fail ( err ) =>
-      @emit 'error', err
+      throw err
+      #@emit 'error', err
       @errors ?= []
       @errors.push err
 

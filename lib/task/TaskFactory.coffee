@@ -14,8 +14,8 @@ class TaskFactory extends Collection
   register : ( type, create ) => @add type, create
 
   create : ( opts = {} ) =>
-    unless opts.name
-      throw new Error "The task name must be provided"
+    throw new Error "The task name must be provided" unless opts.name
+    throw new Error "Missing option: project" unless opts.project
 
     opts.type ?= 'default'
     ctor = if @has(opts.type) then @get(opts.type) else @get('default')

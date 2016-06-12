@@ -30,6 +30,20 @@ class Task
     @_onlyIfSpec = []
     @_path = new Path @project._path.absolutePath @name
 
+  hasProperty: (name) =>
+    log.v 'hasProperty', name
+    false
+
+  getProperty : ( name ) =>
+    log.v 'getProperty', name
+    return @[ name ] if name in [ 'description', 'name', 'enabled', 'path',
+      'temporaryDir', 'didWork' ]
+    name
+
+  setProperty : ( name, val ) =>
+    log.v 'setProperty', name
+    @[ name ] = val
+
   dependsOn : ( paths... ) =>
     @_dependencies.push if paths.length is 1 then paths[ 0 ] else paths
     @
@@ -54,8 +68,8 @@ class Task
     @actions.push new Action action, false
     @
 
-  configure : ( f, runp ) =>
-    runp f, [ @ ], [ @ ]
+  configure : ( f ) =>
+    @project.callScriptMethod @, f
 
   afterEvaluate : =>
 

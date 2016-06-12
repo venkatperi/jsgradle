@@ -21,6 +21,7 @@
     "node-walkup": "^1.1.1",
     "pretty-hrtime": "^1.0.2",
     "q": "^1.4.1",
+    "rekuire": "^0.1.9",
     "split": "^1.0.0",
     "taglog": "^1.1.0"
   },
@@ -49,5 +50,11 @@
   },
   "author": "Venkat Peri <venkatperi@gmail.com> (http://www.vperi.com/)",
   "license": "MIT",
-  "keywords": []
+  "keywords": [],
+  "rekuire": {
+    "ignore": [
+      "test",
+      "dist"
+    ]
+  }
 }

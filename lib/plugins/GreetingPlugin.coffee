@@ -1,23 +1,27 @@
 Plugin = require './Plugin'
-log = require('../util/logger') 'GreetingPlugin'
-out = require('../util/out')
+rek = require 'rekuire'
+out = rek 'out'
+log = rek('logger')(require('path').basename(__filename).split('.')[ 0 ])
+SingletonFactory = rek 'SingletonFactory'
 
-class Extensible
+class Greeting
+  constructor : ( @name = 'noname' ) ->
+    
+  hasProperty : ( name ) =>
+    name in [ 'name' ]
 
-  methodMissing : ( name ) => ( args... ) =>
-    console.log 123
-    log.i 'methodMissing', name
+  setProperty : ( k, v ) =>
+    @[ k ] = v
 
 class GreetingPlugin extends Plugin
   constructor : ->
-    log.v 'ctor()'
-    @greeting = new Extensible()
-    @greeting.name = 'noname'
+    @greeting = new Greeting()
 
   apply : ( project ) =>
     return if @configured
     super project
     project.extensions.add 'greeting', @greeting
+    project.script.registerFactory 'greeting', new SingletonFactory(@greeting)
 
     project.task 'hello', null, ( t ) =>
       log.v 'configuring'

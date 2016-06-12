@@ -8,6 +8,8 @@ class ExtensionContainer extends EventEmitter
     @_items.set name, ext
     @emit 'add', name, ext
 
+  keys: => Array.from @_items.keys()
+  
   has : ( name ) => @_items.has name
   
   get: (name) => @_items.get name

@@ -8,14 +8,14 @@ defaultTasks 'hello', 'ls'
 greeting ->
   name = 'world'
 
-task copy(type : Copy), ->
+task 'copy', type : Copy, ->
   from 'lib', ->
     include '**/*.coffee'
     exclude '**/T*.coffee'
     filter ( line ) -> line.toLowerCase()
   into 'dist'
 
-task ls(type : Exec), ->
+task ls, type : Exec, ->
   executable '/bin/ls'
   workingDir '/'
 

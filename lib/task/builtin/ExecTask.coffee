@@ -1,3 +1,5 @@
+rek = require 'rekuire'
+log = rek('logger')(require('path').basename(__filename).split('.')[0])
 Task = require '../Task'
 ExecAction = require './ExecAction'
 
@@ -7,8 +9,11 @@ class ExecTask extends Task
     opts.type = 'Exec'
     super opts
     @_args = []
-
     @actions.push new ExecAction @
+
+  hasMethod : ( name ) =>
+    name in [ 'args', 'commandLine', 'executable', 'environment',
+      'ignoreExitValue', 'workingDir', ]
 
   args : ( arg... ) =>
     @_args = @_arg.concat arg
@@ -20,7 +25,8 @@ class ExecTask extends Task
       @_args = line
     @_executable = @_args.shift()
 
-  executable : ( name ) => @_executable = name
+  executable : ( name ) =>
+    @_executable = name
 
   environment : ( env ) =>
     @_env ?= {}
@@ -34,6 +40,5 @@ class ExecTask extends Task
   onAfterEvaluate : =>
     unless @_executable?
       throw new Error "No executable specified"
-
 
 module.exports = ExecTask

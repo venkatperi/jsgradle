@@ -3,6 +3,7 @@ Task = require '../Task'
 CopySpec = require './CopySpec'
 CopyAction = require './CopyAction'
 FileSourceSet = require '../FileSourceSet'
+log = require('../../util/logger')('CopyTask')
 
 class CopyTask extends Task
 
@@ -12,16 +13,11 @@ class CopyTask extends Task
     @spec = new CopySpec()
     @files = new FileSourceSet spec : @spec
 
-  configure : ( f, runp ) =>
-    runp f, [ @ ], [ @, @spec ]
-    @spec.configure runp
+  onCompleted : =>
+    log.v 'onCompleted'
+    @configured = @files.resolve @project.fileResolver
 
-  afterEvaluate : =>
-    @files.resolve @project.fileResolver
-    .then (files) =>
-      console.log files
-      @createActions()
-
-  createActions : =>
+  setChild : ( child ) =>
+    @spec.setChild child
 
 module.exports = CopyTask

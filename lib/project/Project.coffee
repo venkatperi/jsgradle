@@ -16,6 +16,7 @@ out = require('../util/out')
 SeqX = require '../util/SeqX'
 Clock = require '../util/Clock'
 FileResolver = require '../task/FileResolver'
+util = require 'util'
 
 module.exports = class Project extends multi EventEmitter, SeqX
 
@@ -47,8 +48,6 @@ module.exports = class Project extends multi EventEmitter, SeqX
 
   constructor : ( {@name, @parent, @projectDir, @script} = {} ) ->
     throw new Error "Project name must be defined" unless @name?
-    log.v 'ctor()', @name
-
     @rootProject = parent?.rootProject or @
     @description ?= "project #{@name}"
     @version ?= "0.1.0"
@@ -56,9 +55,10 @@ module.exports = class Project extends multi EventEmitter, SeqX
     @tasks = new TaskContainer()
     @extensions = new ExtensionContainer()
     @_sourceSets = new SourceSetContainer()
-    @fileResolver = new FileResolver projectDir: @projectDir
+    @fileResolver = new FileResolver projectDir : @projectDir
     @plugins = {}
     @_prop = {}
+    @methods = [ 'apply', 'defaultTasks' ]
 
     if @parent
       @_path = new Path @parent.absoluteProjectPath name
@@ -66,6 +66,32 @@ module.exports = class Project extends multi EventEmitter, SeqX
     else
       @depth = 0
       @_path = new Path [ @name ], true
+
+    #@extensions.on 'add', ( name ) =>
+    #  @methods.push name
+
+  hasProperty : ( name ) =>
+    log.v 'hasProperty', name
+    name in [ 'description', 'name', 'version' ]
+
+  hasMethod : ( name ) =>
+    log.v 'hasMethod', name
+    return true if name in [ 'apply', 'defaultTasks' ]
+
+  getProperty : ( name ) =>
+    log.v 'getProperty', name
+    return @[ name ] if name in [ 'description', 'name', 'version' ]
+
+  setProperty : ( name, val ) =>
+    log.v 'setProperty', "#{name}:", val
+    @[ name ] = val
+
+  invokeMethod : ( name, args ) =>
+    log.v 'invokeMethod', name
+    if @[ name ]?
+      @[ name ].apply @, args
+#else
+#  @script.invokeMethod name, args
 
   initialize : =>
     unless @parent
@@ -75,7 +101,7 @@ module.exports = class Project extends multi EventEmitter, SeqX
   configure : =>
     clock = new Clock()
     log.v tag = "configuring #{@path}"
-    @tasks.forEach ( t ) => @seq => @runp t.configure
+    @tasks.forEach ( t ) => @seq t.configure
     @_afterEvaluate()
     @seq -> log.v tag, 'done', clock.pretty
 
@@ -109,13 +135,13 @@ module.exports = class Project extends multi EventEmitter, SeqX
       for e in errors
         out("> #{e.name}").eol()
 
-    unless @parent
-      out("Total time: #{@totalTime.pretty}").eol()
-
   defaultTasks : ( tasks... ) =>
+    log.v 'defaultTasks', tasks
     @_defaultTasks = tasks
 
   apply : ( opts ) =>
+    log.v 'apply', util.inspect opts
+    opts = opts[ 0 ] if Array.isArray opts
     if opts?.plugin
       name = opts.plugin
       unless @pluginsRegistry.has name
@@ -125,15 +151,13 @@ module.exports = class Project extends multi EventEmitter, SeqX
       plugin.apply @
 
   task : ( name, opts, f ) =>
-    if Array.isArray name
-      f = opts
-      [name,opts] = name
-    [f, opts] = [ opts ] unless f?
-    log.v 'task:', name
+    log.v 'task', name, opts
     opts ?= {}
     opts.name = name
     opts.project = @
-    @tasks.create opts, f
+    task = @tasks.create opts, f
+    #@script.setDelegate f, task
+    null
 
   sourceSets : ( f ) =>
     run = @script.context.runWith
@@ -153,16 +177,21 @@ module.exports = class Project extends multi EventEmitter, SeqX
     @script.context.runWith args[ 0 ], @extensions.get name
     true
 
+  callScriptMethod : ( delegate, fn, args... ) =>
+    @script.callScriptMethod delegate, fn, args...
+
   runp : ( fn, args = [], ctx = [] ) =>
     p = new P()
     args.push p
     args.push @runp
-    list = [ (-> fn.apply null, args) ]
+    #list = [ (-> fn.apply null, args) ]
+
     list = list.concat ctx
     list.push p
 
     try
-      ret = @script.context.runWith.apply @script.context, list
+    #ret = @script.context.runWith.apply @script.context, list
+      ret = @script.call.apply @script, list
       p.resolve ret unless p.asyncCalled
     catch err
       p.reject err
@@ -172,7 +201,7 @@ module.exports = class Project extends multi EventEmitter, SeqX
     clock = new Clock()
     tag = "onAfterEvaluate #{@path}"
     @seq -> log.v tag
-    @tasks.forEach ( t ) =>  @seq => @runp t.afterEvaluate
+    @tasks.forEach ( t ) =>  @seq t.afterEvaluate
     @seq -> log.v tag, 'done:', clock.pretty
 
   _set : ( name, val ) ->

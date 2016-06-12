@@ -1,6 +1,8 @@
 Q = require 'q'
 _ = require 'lodash'
-glob = require '../util/glob'
+rek = require 'rekuire'
+glob = rek 'lib/util/glob'
+log = rek('logger')(require('path').basename(__filename).split('.')[ 0 ])
 
 class FileSourceSet
   constructor : ( {@spec} = {} )->
@@ -12,32 +14,31 @@ class FileSourceSet
     res =
       includes : []
       excludes : []
-    dir = resolver.file @spec.srcDir
-    opts = _.extend {}, @opts
-    opts.cwd = dir
-    all = []
 
-    [ 'includes', 'excludes' ].forEach ( t ) =>
-      @spec[ t ].forEach ( pat ) =>
-        all.push(glob pat, opts
-        .then ( list ) ->
-          res[ t ].push list)
+    files = []
+    Q.all(for s in @spec.children
+      new FileSourceSet spec : s
+      .resolve resolver)
+    .then ( list ) =>
+      files.push _.flatten list
+      return files unless @spec.srcDir
 
-    if @spec.sources.length
-      children = Q.all(
-        for s in @spec.sources
-          new FileSourceSet spec : s
-          .resolve resolver
-      )
-    else
-      children = Q []
+      dir = resolver.file @spec.srcDir
+      opts = _.extend {}, @opts
+      opts.cwd = dir
 
-    children.then ( cfiles ) =>
-      files = _.flatten cfiles
+      all = []
+      [ 'includes', 'excludes' ].forEach ( t ) =>
+        if @spec[ t ]
+          _.flatten(@spec[ t ]).forEach ( pat ) ->
+            all.push(glob pat, opts
+            .then ( list ) ->
+              res[ t ].push list)
+
       Q.all(all).then ->
         files = files.concat _.flatten(res.includes)
         _.difference files, _.flatten(res.excludes)
-      .then ( files ) =>
-        @files = _.uniq files
+    .then ( files ) =>
+      @files = _.uniq _.flatten files
 
 module.exports = FileSourceSet
