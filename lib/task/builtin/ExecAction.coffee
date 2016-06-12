@@ -1,13 +1,13 @@
 Action = require '../Action'
 log = require('../../util/logger') 'ExecAction'
-out = require('../../util/out') 
+out = require('../../util/out')
 execFile = require('child_process').execFile
 
 class ExecAction extends Action
   constructor : ( @spec ) ->
+    super()
 
-  exec : ( p ) =>
-    {resolve, reject} = p.async()
+  exec : ( resolve, reject ) =>
     opts = {}
     opts.env = @spec._env if @spec._env?
     opts.cwd = @spec._workingDir if @spec._workingDir?

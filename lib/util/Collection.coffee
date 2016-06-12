@@ -11,7 +11,7 @@ class Collection extends EventEmitter
     name = @convertName name
     throw new Error "Item exists: #{name}" if @has name
     @items.set name, item
-    @emit 'add', item
+    @emit 'add', name, item
     @
 
   has : ( name ) => @items.has @convertName name

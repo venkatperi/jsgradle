@@ -70,34 +70,15 @@ class TaskInfo extends multi EventEmitter, SeqX
         d = d()[ 0 ] if d if typeof d is 'function'
         @dependsOn.push d
 
-  configure : =>
-    clock = new Clock()
-    log.v tag = "configuring #{@task.path}"
-    task = @task
-    @configurators.forEach ( c ) =>
-      @seq -> task.configure c
-
-    @seq -> log.v tag, 'done:', clock.pretty
-
-  afterEvaluate : =>
-    clock = new Clock()
-    tag = "onAfterEvaluate #{@task.path}"
-    log.v tag
-    task = @task
-    @seq task.afterEvaluate
-    task.actions.forEach ( a ) =>
-      if a.afterEvaluate?
-        @seq -> runp a.onAfterEvaluate, [], [ task ]
-    @seq -> log.v tag, 'done:', clock.pretty
-
-  execute : ( p, runp ) =>
+  execute : =>
     log.v tag = "executing #{@task.path}"
     clock = new Clock()
     task = @task
+    project = task.project
     @seq => out.grey @task.path
     task.actions.forEach ( a ) =>
       @seq =>
-        runp a.exec, [], [ task ]
+        project.execTaskAction task, a
         .fail ( err ) =>
           @errors ?= []
           @errors.push err

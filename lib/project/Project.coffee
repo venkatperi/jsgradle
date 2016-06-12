@@ -1,3 +1,5 @@
+rek = require 'rekuire'
+Q = require 'q'
 _ = require 'lodash'
 {multi} = require 'heterarchy'
 {EventEmitter} = require 'events'
@@ -11,16 +13,22 @@ ExtensionContainer = require '../ext/ExtensionContainer'
 SourceSetContainer = require '../task/SourceSetContainer'
 TaskGraphExecutor = require './TaskGraphExecutor'
 PluginsRegistry = require './PluginsRegistry'
-log = require('../util/logger') 'Project'
+log = rek('logger')(require('path').basename(__filename).split('.')[0])
 out = require('../util/out')
 SeqX = require '../util/SeqX'
 Clock = require '../util/Clock'
 FileResolver = require '../task/FileResolver'
+ProxyFactory = rek 'ProxyFactory'
 util = require 'util'
+
+isSandboxFunction = ( f ) ->
+  f?.type is 'function'
 
 module.exports = class Project extends multi EventEmitter, SeqX
 
   prop @, 'path', get : -> @_path.fullPath
+
+  prop @, 'sourceSets', get : -> @extensions.get 'sourceSets'
 
   prop @, 'rootDir', get : -> @_rootDir
 
@@ -54,11 +62,14 @@ module.exports = class Project extends multi EventEmitter, SeqX
     @pluginsRegistry = new PluginsRegistry()
     @tasks = new TaskContainer()
     @extensions = new ExtensionContainer()
-    @_sourceSets = new SourceSetContainer()
     @fileResolver = new FileResolver projectDir : @projectDir
     @plugins = {}
     @_prop = {}
     @methods = [ 'apply', 'defaultTasks' ]
+    @extensions.on 'add', ( name, ext ) =>
+      log.v 'adding ext', name
+      @script.registerFactory name,
+        new ProxyFactory target : ext, script : @script
 
     if @parent
       @_path = new Path @parent.absoluteProjectPath name
@@ -67,16 +78,13 @@ module.exports = class Project extends multi EventEmitter, SeqX
       @depth = 0
       @_path = new Path [ @name ], true
 
-    #@extensions.on 'add', ( name ) =>
-    #  @methods.push name
-
   hasProperty : ( name ) =>
     log.v 'hasProperty', name
     name in [ 'description', 'name', 'version' ]
 
   hasMethod : ( name ) =>
     log.v 'hasMethod', name
-    return true if name in [ 'apply', 'defaultTasks' ]
+    return true if name in [ 'apply', 'defaultTasks', 'println' ]
 
   getProperty : ( name ) =>
     log.v 'getProperty', name
@@ -86,36 +94,25 @@ module.exports = class Project extends multi EventEmitter, SeqX
     log.v 'setProperty', "#{name}:", val
     @[ name ] = val
 
-  invokeMethod : ( name, args ) =>
-    log.v 'invokeMethod', name
-    if @[ name ]?
-      @[ name ].apply @, args
-#else
-#  @script.invokeMethod name, args
+  println : ( args... ) ->
+    out.eolThen args...
 
   initialize : =>
     unless @parent
       @totalTime = new Clock()
     log.v 'initialize'
 
-  configure : =>
-    clock = new Clock()
-    log.v tag = "configuring #{@path}"
-    @tasks.forEach ( t ) => @seq t.configure
-    @_afterEvaluate()
-    @seq -> log.v tag, 'done', clock.pretty
-
   execute : =>
     log.v tag = "executing #{@path}"
     clock = new Clock()
     executor = new TaskGraphExecutor(@tasks)
     @_defaultTasks ?= []
-    nodes = (@tasks.get t for t in @_defaultTasks)
+    nodes = (@tasks.get t for t in _.flatten @_defaultTasks)
     executor.add nodes
     @taskQueue = queue = executor.determineExecutionPlan()
     log.v 'tasks:', _.map executor.executionQueue, ( x ) -> x.task.name
 
-    queue.forEach ( t ) =>  @seq => @runp t.execute
+    queue.forEach ( t ) =>  @seq t.execute
     @seq =>
       log.v tag, 'done: ', clock.pretty
 
@@ -144,6 +141,7 @@ module.exports = class Project extends multi EventEmitter, SeqX
     opts = opts[ 0 ] if Array.isArray opts
     if opts?.plugin
       name = opts.plugin
+      return if @plugins[ name ]?
       unless @pluginsRegistry.has name
         throw new Error "No such plugin: #{name}"
       ctor = @pluginsRegistry.get name
@@ -155,14 +153,9 @@ module.exports = class Project extends multi EventEmitter, SeqX
     opts ?= {}
     opts.name = name
     opts.project = @
-    task = @tasks.create opts, f
-    #@script.setDelegate f, task
+    task = @tasks.create opts
+    f(task) if f?
     null
-
-  sourceSets : ( f ) =>
-    run = @script.context.runWith
-    @_sourceSets.forEach ( s ) ->
-      s.configure run, f
 
   compareTo : ( other ) =>
     diff = @depth - other.depth
@@ -171,31 +164,19 @@ module.exports = class Project extends multi EventEmitter, SeqX
     return 1 if @path > other.path
     0
 
-  methodMissing : ( name, args... ) =>
-    return unless @extensions.has name
-    log.v 'configuring extension:', name
-    @script.context.runWith args[ 0 ], @extensions.get name
-    true
-
   callScriptMethod : ( delegate, fn, args... ) =>
     @script.callScriptMethod delegate, fn, args...
 
-  runp : ( fn, args = [], ctx = [] ) =>
-    p = new P()
-    args.push p
-    args.push @runp
-    #list = [ (-> fn.apply null, args) ]
-
-    list = list.concat ctx
-    list.push p
-
+  execTaskAction : ( task, action ) =>
+    defer = Q.defer()
     try
-    #ret = @script.context.runWith.apply @script.context, list
-      ret = @script.call.apply @script, list
-      p.resolve ret unless p.asyncCalled
+      if action.isSandbox
+        defer.resolve(@callScriptMethod task, action.f)
+      else
+        defer.resolve action.doExec()
     catch err
-      p.reject err
-    p.promise
+      defer.reject err
+    defer.promise
 
   _afterEvaluate : =>
     clock = new Clock()

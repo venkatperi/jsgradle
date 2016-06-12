@@ -1,3 +1,4 @@
+Q = require 'q'
 os = require 'os'
 p = require './../util/prop'
 Path = require './../project/Path'
@@ -5,6 +6,8 @@ Action = require './Action'
 log = require('../util/logger') 'Task'
 
 class Task
+
+  p @, 'configured', get : -> @_configured.promise
 
   p @, 'path', get : -> @_path.fullPath
 
@@ -29,10 +32,14 @@ class Task
     @actions = []
     @_onlyIfSpec = []
     @_path = new Path @project._path.absolutePath @name
+    @_configured = Q.defer()
 
-  hasProperty: (name) =>
+  hasProperty : ( name ) =>
     log.v 'hasProperty', name
     false
+
+  hasMethod : ( name ) =>
+    name in [ 'doFirst', 'doLast' ]
 
   getProperty : ( name ) =>
     log.v 'getProperty', name
@@ -49,29 +56,17 @@ class Task
     @
 
   doFirst : ( action ) =>
+    log.v 'doFirst'
+    action = action[0] if Array.isArray action
     throw new Error "Action must not be null" unless action?
     @actions.splice 0, 0, new Action action
-    @
-
-  doFirstSync : ( action ) =>
-    throw new Error "Action must not be null" unless action?
-    @actions.splice 0, 0, new Action action, false
-    @
+    undefined
 
   doLast : ( action ) =>
+    action = action[0] if Array.isArray action
     throw new Error "Action must not be null" unless action?
     @actions.push new Action action
     @
-
-  doLastSync : ( action ) =>
-    throw new Error "Action must not be null" unless action?
-    @actions.push new Action action, false
-    @
-
-  configure : ( f ) =>
-    @project.callScriptMethod @, f
-
-  afterEvaluate : =>
 
   onlyIf : ( fn ) =>
     @_onlyIfSpec.push fn
@@ -82,6 +77,9 @@ class Task
     return -1 if @path < other.path
     return 1 if @path > other.path
     0
+
+  onCompleted : =>
+    @_configured.resolve()
 
   _set : ( name, val ) ->
     old = @[ name ]

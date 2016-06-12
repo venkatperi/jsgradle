@@ -11,6 +11,7 @@ class SourceSpec
   with : ( srcs... ) => @sources.push s for s in srcs
 
   include : ( items ) =>
+    log.v 'include', items
     @includes ?= []
     @includes.push i for i in items
 

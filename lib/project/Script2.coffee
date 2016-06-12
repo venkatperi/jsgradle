@@ -22,11 +22,11 @@ class Script extends FactoryBuilderSupport
     throw new Error "Missing option: scriptFile" unless @scriptFile
     super()
     @phase = Phase.Initial
-    @registerFactory 'project', new ProjectFactory script: @
-    @registerFactory 'task', new TaskBuilderFactory script: @
-    @registerFactory 'from', new CopySpecFactory script: @
-    @registerFactory 'into', new CopySpecFactory script: @
-    @registerFactory 'filter', new CopySpecFactory script: @
+    @registerFactory 'project', new ProjectFactory script : @
+    @registerFactory 'task', new TaskBuilderFactory script : @
+    @registerFactory 'from', new CopySpecFactory script : @
+    @registerFactory 'into', new CopySpecFactory script : @
+    @registerFactory 'filter', new CopySpecFactory script : @
     @seq @_loadScript
 
   seq : ( f ) =>
@@ -37,46 +37,15 @@ class Script extends FactoryBuilderSupport
       #@emit 'error', err
       @errors ?= []
       @errors.push err
-
-  methodMissing : ( name ) => ( args... ) =>
-    log.v "method missing: #{name}, #{JSON.stringify args}"
-    val = @project.methodMissing name, args...
-    return val if val?
-    return [ name ] unless args.length
-    args = args[ 0 ] if args.length is 1
-    [ name, args ]
-
-  propertyMissing : ( name ) ->
-    log.d "property missing: #{name}"
-    name
-
   initialize : => @seq @_initialize
 
-  configure : => @seq @_configure
+  configure : =>
+    @_configure()
+    #@project.configured
 
   execute : => @seq @_execute
 
   report : => @project.report()
-
-  logLevel : ( l ) => log.level l
-
-  #hasProperty : ( name ) =>
-  #  @project?.hasProperty(name) or super(name)
-  #
-  #hasMethod : ( name ) =>
-  #  @project?.hasMethod(name) or super(name)
-  #
-  #getProperty : ( name ) =>
-  #  @project?.getProperty(name) or super(name)
-  #
-  #setProperty : ( name, val ) =>
-  #  @project?.setProperty name, val
-  #
-  #invokeMethod : ( name, args ) =>
-  #  log.i 'invokeMethod', name, args
-  #  if @project and name in [ 'apply', 'defaultTasks', 'task' ]
-  #    return @project[ name ].apply @project, args
-  #  super name, args
 
   _loadScript : =>
     walkup 'build.kohi', cwd : process.cwd()
@@ -86,38 +55,27 @@ class Script extends FactoryBuilderSupport
       log.v 'script file:', @scriptFile
       readFile @scriptFile, 'utf8'
     .then ( contents ) =>
-      # add project closure 
-      parts = path.parse @scriptFile
-      projectDir = parts.dir
-      name = path.basename projectDir
-      lines = contents.split '\n'
-      lines = ('  ' + l for l in lines)
-      lines.splice 0, 0, "project '#{name}', projectDir: '#{projectDir}', ->"
-      contents = lines.join '\n'
-      @contents = contents
+      @_createProjectClosure contents
+
+  _createProjectClosure : ( contents ) =>
+    # add project closure 
+    parts = path.parse @scriptFile
+    projectDir = parts.dir
+    name = path.basename projectDir
+    lines = contents.split '\n'
+    lines = ('  ' + l for l in lines)
+    lines.splice 0, 0, "project '#{name}', projectDir: '#{projectDir}', ->"
+    contents = lines.join '\n'
+    @contents = contents
 
   _initialize : =>
     log.v 'initialize'
     @phase = Phase.Initialization
-    #@project = @_createProject()
-    #@context.push @project
-    #@project.initialize()
-
-  _createProject : =>
-    parts = path.parse @scriptFile
-    projectDir = parts.dir
-    name = path.basename projectDir
-    project = new Project
-      script : @
-      name : name,
-      projectDir : projectDir
-    project
 
   _configure : =>
     log.v 'configure'
     @phase = Phase.Configuration
     @evaluate @contents, coffee : true
-    #@project.configure()
 
   _execute : =>
     log.v 'execute'
@@ -125,17 +83,4 @@ class Script extends FactoryBuilderSupport
     @project.execute()
 
 module.exports = Script
-
-#class Script2 extends FactoryBuilderSupport
-#  constructor : ( opts = {} ) ->
-#    super()
-
-#module.exports = Script
-
-#code = """
-#task copy, type: Copy, -> println 'configuring task'
-#
-#"""
-#
-#builder = new Script2().build code, coffee : true
 

@@ -14,8 +14,7 @@ class CopyTask extends Task
     @files = new FileSourceSet spec : @spec
 
   onCompleted : =>
-    log.v 'onCompleted'
-    @configured = @files.resolve @project.fileResolver
+    @_configured.resolve @files.resolve @project.fileResolver
 
   setChild : ( child ) =>
     @spec.setChild child
