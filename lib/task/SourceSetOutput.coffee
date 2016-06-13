@@ -4,7 +4,7 @@ log = rek('logger')(require('path').basename(__filename).split('.')[ 0 ])
 
 class SourceSetOutput
 
-  constructor : ( {@parent} ) ->
+  constructor : ( {@parent, @name} ) ->
 
   hasProperty : ( name ) =>
     name in [ 'dir' ]

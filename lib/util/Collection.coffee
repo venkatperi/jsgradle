@@ -4,7 +4,7 @@ _ = require 'lodash'
 
 class Collection extends EventEmitter
 
-  constructor : ( {@convertName} = {} ) ->
+  constructor : ( {@convertName, @name} = {} ) ->
     @items = new Map()
     @convertName ?= ( x ) -> x
 

@@ -23,6 +23,8 @@ class TaskInfo extends multi EventEmitter, SeqX
 
   prop @, 'name', get : -> @task.name
 
+  prop @, 'dependsOn', get : -> @task.dependencies
+
   prop @, 'isRequired', get : -> @state is STATE.ShouldRun
 
   prop @, 'isMustNotRun', get : -> @state is STATE.MustNotRun
@@ -62,13 +64,13 @@ class TaskInfo extends multi EventEmitter, SeqX
     @shouldSuccessors = new Set()
     @finalizers = new Set()
     @dependenciesProcessed = false
-    @dependsOn = []
-    if opts.dependsOn
-      deps = opts.dependsOn
-      deps = [ deps ] unless Array.isArray deps
-      for d in deps
-        d = d()[ 0 ] if d if typeof d is 'function'
-        @dependsOn.push d
+    #@dependsOn = []
+    #if opts.dependsOn
+    #  deps = opts.dependsOn
+    #  deps = [ deps ] unless Array.isArray deps
+    #  for d in deps
+    #    d = d()[ 0 ] if d if typeof d is 'function'
+    #    @dependsOn.push d
 
   execute : =>
     @task.configured.then =>

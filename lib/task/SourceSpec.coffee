@@ -3,7 +3,9 @@ path = require 'path'
 log = require('../util/logger')('SourceSpec')
 
 class SourceSpec
-  
+
+  constructor : ( {@parent} = {} ) ->
+
   hasMethod : ( name ) =>
     name in [ 'include', 'exclude', 'caseSensitive' ]
 

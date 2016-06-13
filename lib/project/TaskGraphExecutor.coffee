@@ -1,6 +1,9 @@
 _ = require 'lodash'
 Multimap = require 'multimap'
 {EventEmitter} = require 'events'
+rek = require 'rekuire'
+log = rek('logger')(require('path').basename(__filename).split('.')[0])
+
 
 class TaskGraphExecutor extends EventEmitter
 
@@ -12,9 +15,9 @@ class TaskGraphExecutor extends EventEmitter
 
   add : ( nodes ) =>
     queue = []
-    sorted = []
-    for own k,v of nodes
-      sorted.push v
+    sorted = Array.from nodes
+    #for own k,v of nodes
+    #  sorted.push v
     sorted = sorted.sort ( a, b ) -> a.task.compareTo b.task
 
     for node in sorted when node?

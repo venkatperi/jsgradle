@@ -1,20 +1,15 @@
 _ = require 'lodash'
-Task = require '../Task'
+FileTask = require '../FileTask'
 CopySpec = require './CopySpec'
 CopyAction = require './CopyAction'
-FileSourceSet = require '../FileSourceSet'
-log = require('../../util/logger')('CopyTask')
 
-class CopyTask extends Task
+class CopyTask extends FileTask
 
-  constructor : ( opts = {} )->
-    opts.type = 'Copy'
+  init : ( opts = {} ) =>
+    opts = _.extend opts,
+      spec : new CopySpec()
+      actionType : CopyAction
     super opts
-    @spec = new CopySpec()
-    @files = new FileSourceSet spec : @spec
-
-  onCompleted : =>
-    @_configured.resolve @files.resolve @project.fileResolver
 
   setChild : ( child ) =>
     @spec.setChild child

@@ -19,8 +19,8 @@ Clock = rek 'Clock'
 readFile = Q.denodeify fs.readFile
 
 class Script extends FactoryBuilderSupport
-  constructor : ( {@scriptFile} = {} ) ->
-    throw new Error "Missing option: scriptFile" unless @scriptFile
+  constructor : ( opts = {} ) ->
+    @buildDir = opts.buildDir or process.cwd()
     @totalTime = new Clock()
     super()
     @phase = Phase.Initial
@@ -43,7 +43,7 @@ class Script extends FactoryBuilderSupport
 
   configure : =>
     @_configure()
-    #@project.configured
+  #@project.configured
 
   execute : => @seq @_execute
 
@@ -52,7 +52,7 @@ class Script extends FactoryBuilderSupport
     out.eolThen("Total time: #{@totalTime.pretty}").eol()
 
   _loadScript : =>
-    walkup 'build.kohi', cwd : process.cwd()
+    walkup 'build.kohi', cwd : @buildDir
     .then ( v ) =>
       throw new Error "Didn't find file build.kohi" unless v.length
       @scriptFile = path.join v[ 0 ].dir, v[ 0 ].files[ 0 ]

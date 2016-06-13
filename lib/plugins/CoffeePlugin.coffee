@@ -15,14 +15,15 @@ class CoffeePlugin extends Plugin
   apply : ( project ) =>
     return if @configured
     super project
+    project.apply plugin : 'build'
+    
     @options = new CoffeeOptions()
     project.extensions.add 'coffeescript', @options
-
     @_createSourceSets()
-
     TaskFactory.register 'CompileCoffee', ( x ) -> new CoffeeTask x
     project.task 'compileCoffee', type : 'CompileCoffee'
-    #unless project.tasks.has
+
+    project.tasks.get('build').task.dependsOn 'compileCoffee'
 
   _createSourceSets : =>
     unless @project.plugins.sourceSets?
@@ -30,27 +31,27 @@ class CoffeePlugin extends Plugin
 
     root = @project.sourceSets
     unless root.has 'main'
-      root.add 'main', new SourceSetContainer parent : root
+      root.add 'main', new SourceSetContainer parent : root, name : 'main'
     unless root.has 'test'
-      root.add 'test', new SourceSetContainer parent : root
+      root.add 'test', new SourceSetContainer parent : root, name : 'test'
 
     main = root.get 'main'
     test = root.get 'test'
 
     unless main.has 'output'
-      out = new SourceSetOutput parent : main
+      out = new SourceSetOutput parent : main, name : 'output'
       out.dir = 'dist'
       main.add 'output', out
 
     unless main.has 'coffeescript'
-      src = new CopySpec parent : main
+      src = new CopySpec parent : main, name : 'coffeescript', allMethods : true
       src.srcDir = 'lib'
       src.include '**/*.coffee'
       main.add 'coffeescript', src
 
     unless test.has 'coffeescript'
-      src = new CopySpec parent : test
+      src = new CopySpec parent : test, name : 'coffeescript'
       src.include 'test/**/*.coffee'
-      test.add 'coffeescript', test
+      test.add 'coffeescript', src
 
 module.exports = CoffeePlugin

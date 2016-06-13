@@ -57,17 +57,16 @@ class Project extends multi EventEmitter, SeqX
     @rootProject = parent?.rootProject or @
     @description ?= "project #{@name}"
     @version ?= "0.1.0"
+    @_defaultTasks = []
     @pluginsRegistry = new PluginsRegistry()
     @tasks = new TaskContainer()
     @extensions = new ExtensionContainer()
     @fileResolver = new FileResolver projectDir : @projectDir
     @plugins = new PluginContainer()
-    @_prop = {}
     @methods = [ 'apply', 'defaultTasks' ]
     @extensions.on 'add', ( name, ext ) =>
       log.v 'adding ext', name
-      @script.registerFactory name,
-        new ProxyFactory target : ext, script : @script
+      @registerProxyFactory ext, name
 
     if @parent
       @_path = new Path @parent.absoluteProjectPath name
@@ -75,6 +74,10 @@ class Project extends multi EventEmitter, SeqX
     else
       @depth = 0
       @_path = new Path [ @name ], true
+
+  registerProxyFactory : ( target, name ) =>
+    @script.registerFactory name,
+      new ProxyFactory target : target, script : @script
 
   onCompleted : =>
     @emit 'afterEvaluate'
@@ -105,7 +108,6 @@ class Project extends multi EventEmitter, SeqX
     log.v tag = "executing #{@path}"
     clock = new Clock()
     executor = new TaskGraphExecutor(@tasks)
-    @_defaultTasks ?= []
     nodes = (@tasks.get t for t in _.flatten @_defaultTasks)
     executor.add nodes
     @taskQueue = queue = executor.determineExecutionPlan()
@@ -132,8 +134,7 @@ class Project extends multi EventEmitter, SeqX
         out("> #{e.name}").eol()
 
   defaultTasks : ( tasks... ) =>
-    log.v 'defaultTasks', tasks
-    @_defaultTasks = tasks
+    @_defaultTasks.push t for t in tasks
 
   apply : ( opts ) =>
     opts = opts[ 0 ] if Array.isArray opts
@@ -145,6 +146,7 @@ class Project extends multi EventEmitter, SeqX
       ctor = @pluginsRegistry.get name
       plugin = @plugins[ name ] = new ctor()
       plugin.apply @
+      undefined
 
   task : ( name, opts, f ) =>
     log.v 'task', name, opts

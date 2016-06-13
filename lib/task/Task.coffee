@@ -8,6 +8,8 @@ log = require('../util/logger') 'Task'
 class Task
 
   p @, 'configured', get : -> @_configured.promise
+    
+  p @, 'dependencies', get : -> @_dependencies
 
   p @, 'path', get : -> @_path.fullPath
 

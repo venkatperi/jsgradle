@@ -1,38 +1,19 @@
 _ = require 'lodash'
 rek = require 'rekuire'
-Task = rek 'Task'
+Task = rek 'lib/task/Task'
 FileSourceSet = rek 'FileSourceSet'
 prop = rek 'prop'
 CoffeeAction = require './CoffeeAction'
-log = rek('logger')(require('path').basename(__filename).split('.')[ 0 ])
+FileTask = rek 'FileTask'
 
-class CoffeeTask extends Task
+class CoffeeTask extends FileTask
 
-  prop @, 'spec',
-    get : -> @project.sourceSets.get 'main.coffeescript'
-
-  prop @, 'output',
-    get : -> @project.sourceSets.get 'main.output'
-
-  prop @, 'options',
-    get : -> @project.extensions.get 'coffeescript'
-
-  constructor : ( opts = {} )->
-    opts.type = 'Coffee'
+  init : ( opts = {} ) =>
+    opts = _.extend opts,
+      spec : @project.sourceSets.get 'main.coffeescript'
+      options : @project.extensions.get 'coffeescript'
+      output : @project.sourceSets.get 'main.output'
+      actionType : CoffeeAction
     super opts
-    @files = new FileSourceSet spec : @spec
-
-  onAfterEvaluate : =>
-    log.v 'onAfterEvaluate'
-    srcDir = @project.fileResolver.file @spec.srcDir
-    dest = @project.fileResolver.file @output.dir
-    @_configured.resolve(
-      @files.resolve @project.fileResolver
-      .then ( files ) =>
-        for f in files
-          @doLast new CoffeeAction
-            src : f, dest : dest, opts : @options,
-            srcDir : srcDir, spec : @spec
-    )
 
 module.exports = CoffeeTask

@@ -14,4 +14,6 @@ class TaskContainer extends Collection
     @add opts.name, node
     task
 
+  #getByName : ( name ) => @get(name).task
+
 module.exports = TaskContainer

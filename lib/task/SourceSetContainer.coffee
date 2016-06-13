@@ -4,6 +4,7 @@ Collection = require '../util/Collection'
 log = rek('logger')(require('path').basename(__filename).split('.')[ 0 ])
 
 class SourceSetContainer extends Collection
+
   prop @, 'root',
     get : ->
       root = @
@@ -15,8 +16,10 @@ class SourceSetContainer extends Collection
     super opts
     @parent = opts.parent or throw new Error "Missing option: parent"
     @methods = []
-    @on 'add', ( name ) =>
+    @on 'add', ( name, obj ) =>
+      #log.i "add: #{@name} -> #{name}"
       @methods.push name
+      #@root.registerProxyFactory obj, name
       @[ name ] = ( f ) =>
         log.v "configuring #{name}"
         f = f[ 0 ] if Array.isArray f

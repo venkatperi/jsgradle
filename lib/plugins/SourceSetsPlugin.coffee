@@ -12,7 +12,7 @@ class SourceSetsPlugin extends Plugin
     log.v 'apply'
     return if @configured
     super project
-    @sourceSets = new SourceSetContainer parent : project
+    @sourceSets = new SourceSetContainer parent : project, name: 'root'
     project.extensions.add 'sourceSets', @sourceSets
     project.script.registerFactory 'sourceSets',
       new ProxyFactory target : @sourceSets, script : project.script
