@@ -10,13 +10,16 @@ lstat = Q.denodeify fs.lstat
 readFile = Q.denodeify fs.readFile
 writeFile = Q.denodeify fs.writeFile
 
-isDir = ( name ) ->
+isType = ( type ) -> ( name ) ->
   stat name
   .then ( stats ) ->
-    return stats.isDirectory()
+    return stats[ "is#{type}" ]()
   .fail ( err ) ->
     throw err unless err.code is 'ENOENT'
     false
+
+isDir = isType 'Directory'
+isFile = isType 'File' 
 
 copyFile = ( src, dest, opts = {} ) ->
   defer = Q.defer()
@@ -88,4 +91,6 @@ module.exports = {
   writeFile
   writeFileMkdir
   changeExt
+  isDir
+  isFile
 }

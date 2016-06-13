@@ -1,0 +1,31 @@
+description = 'test project'
+version = '0.2.0'
+
+apply plugin : 'greeting'
+apply plugin : 'coffee'
+
+defaultTasks 'hello', 'test'
+
+sourceSets ->
+  main ->
+    coffeescript ->
+      from '.', ->
+        include '*.coffee'
+
+greeting ->
+  name = 'world'
+
+task 'copy', type : Copy, ->
+  from 'lib', ->
+    include '**/*.coffee'
+    exclude '**/T*.coffee'
+    filter ( line ) -> line.toLowerCase()
+  into 'dist'
+
+task ls, type : Exec, ->
+  executable '/bin/ls'
+  workingDir '/'
+
+task test, ->
+  doFirst ->
+    println 'test'

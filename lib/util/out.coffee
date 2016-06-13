@@ -1,11 +1,13 @@
 C = require('colors/safe')
 prop = require './prop'
 os = require 'os'
-ansiEscapes = require 'ansi-escapes'
 
 stdout = process.stdout
 print = ( s ) -> stdout.write s
-println = ( s ) -> stdout.write s + os.EOL
+println = ( s ) -> 
+  console.log s
+  #stdout.write s + os.EOL
+  #stdout.flush()
 
 colors = [ 'green', 'grey', 'white', 'red', 'yellow' ]
 class Message
@@ -16,7 +18,7 @@ class Message
 
   constructor : ( msg ) ->
     @parts = []
-    for c in colors
+    colors.forEach (c) =>
       @[ c ] = ( msg ) =>
         @parts.push C[ c ] msg
         @
@@ -24,6 +26,7 @@ class Message
 
   msg : ( msg ) =>
     @grey msg
+    #@parts.push msg
     @
 
   eolThen : ( msg ) =>
@@ -54,5 +57,6 @@ for c in colors
 progress.eol = message.eol
 progress.eolThen = message.eolThen
 progress.thenEol = message.thenEol
+progress.error = message.red
 
 module.exports = progress

@@ -99,7 +99,7 @@ class Project extends multi EventEmitter, SeqX
     @[ name ] = val
 
   println : ( args... ) ->
-    out.eolThen args...
+    out.eolThen('').white args...
 
   initialize : =>
     log.v 'initialize'
@@ -122,9 +122,9 @@ class Project extends multi EventEmitter, SeqX
     @taskQueue?.forEach ( t ) =>
       errors.push name : t.name, errors : t.errors if t.errors?.length
 
-    out.eol()
+    out.eolThen('').eol()
     if errors.length is 0
-      out('BUILD SUCCESSFUL').eol()
+      out.white('BUILD SUCCESSFUL').eol()
     else
       num = errors.length
       ex = 'error'

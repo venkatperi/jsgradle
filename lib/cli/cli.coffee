@@ -1,3 +1,4 @@
+out = require('../util/out')
 rek = require 'rekuire'
 Script = rek 'Script2'
 
@@ -26,11 +27,13 @@ options = require 'yargs'
       default : process.cwd()
       describe : 'Specifies the start directory. Defaults to the current' +
         ' directory.'
+.help()
 .argv
 
-new Script buildDir : options.p
-.initialize()
+s = new Script buildDir : options.projectDir
+s.initialize()
 .then -> s.configure()
 .then -> s.execute()
 .then -> s.report()
-.done()
+.fail ( err ) ->
+  console.log "ERROR: #{err.message}"

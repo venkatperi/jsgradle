@@ -15,8 +15,7 @@ ProjectFactory = rek 'lib/factory/ProjectFactory'
 CopySpecFactory = rek 'lib/factory/CopySpecFactory'
 log = rek('logger')(require('path').basename(__filename).split('.')[ 0 ])
 Clock = rek 'Clock'
-
-readFile = Q.denodeify fs.readFile
+{isFile, readFile} = rek 'fileOps'
 
 class Script extends FactoryBuilderSupport
   constructor : ( opts = {} ) ->
@@ -29,7 +28,6 @@ class Script extends FactoryBuilderSupport
     @registerFactory 'from', new CopySpecFactory script : @
     @registerFactory 'into', new CopySpecFactory script : @
     @registerFactory 'filter', new CopySpecFactory script : @
-    @seq @_loadScript
 
   seq : ( f ) =>
     @_seqx ?= seqx()
@@ -39,17 +37,19 @@ class Script extends FactoryBuilderSupport
       #@emit 'error', err
       @errors ?= []
       @errors.push err
-  initialize : => @seq @_initialize
 
   configure : =>
+    out.eolThen 'Configuring... '
     @_configure()
+    out.grey(" DONE. #{@totalTime.pretty}").eol()
+
   #@project.configured
 
   execute : => @seq @_execute
 
   report : =>
     @project.report()
-    out.eolThen("Total time: #{@totalTime.pretty}").eol()
+    out.eolThen('').white("Total time: #{@totalTime.pretty}").eol()
 
   _loadScript : =>
     walkup 'build.kohi', cwd : @buildDir
@@ -57,6 +57,9 @@ class Script extends FactoryBuilderSupport
       throw new Error "Didn't find file build.kohi" unless v.length
       @scriptFile = path.join v[ 0 ].dir, v[ 0 ].files[ 0 ]
       log.v 'script file:', @scriptFile
+      isFile @scriptFile
+    .then ( type ) =>
+      throw new Error "Not a file: #{@scriptFile}" unless type
       readFile @scriptFile, 'utf8'
     .then ( contents ) =>
       @_createProjectClosure contents
@@ -72,9 +75,10 @@ class Script extends FactoryBuilderSupport
     contents = lines.join '\n'
     @contents = contents
 
-  _initialize : =>
+  initialize : =>
     log.v 'initialize'
     @phase = Phase.Initialization
+    @_loadScript()
 
   _configure : =>
     log.v 'configure'

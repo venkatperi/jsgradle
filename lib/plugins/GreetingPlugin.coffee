@@ -1,6 +1,5 @@
 Plugin = require './Plugin'
 rek = require 'rekuire'
-out = rek 'out'
 ProxyFactory = rek 'ProxyFactory'
 
 class Greeting
@@ -23,6 +22,6 @@ class GreetingPlugin extends Plugin
 
     project.task 'hello', null, ( t ) =>
       t.doFirst =>
-        out.eolThen("hello #{@greeting.name}").eol()
+        project.println("hello #{@greeting.name}")
 
 module.exports = GreetingPlugin
