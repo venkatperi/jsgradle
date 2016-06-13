@@ -71,21 +71,23 @@ class TaskInfo extends multi EventEmitter, SeqX
         @dependsOn.push d
 
   execute : =>
-    log.v tag = "executing #{@task.path}"
-    clock = new Clock()
-    task = @task
-    project = task.project
-    @seq => out.grey @task.path
-    task.actions.forEach ( a ) =>
+    @task.configured.then =>
+      log.v tag = "executing #{@task.path}"
+      clock = new Clock()
+      task = @task
+      project = task.project
+      @seq => out.eolThen @task.path
+      task.actions.forEach ( a ) =>
+        @seq =>
+          project.execTaskAction task, a
+          .fail ( err ) =>
+            @errors ?= []
+            @errors.push err
+            out.yellow(' FAILED').eol()
+            out(err.message).eol()
       @seq =>
-        project.execTaskAction task, a
-        .fail ( err ) =>
-          @errors ?= []
-          @errors.push err
-          out.yellow(' FAILED').eol()
-          out(err.message).eol()
-    @seq =>
-      log.v tag, 'done: ', clock.pretty
+        time = clock.pretty
+        log.v tag, 'done: ', time
 
   startExecution : =>
     assert @isReady

@@ -33,6 +33,10 @@ class Task
     @_onlyIfSpec = []
     @_path = new Path @project._path.absolutePath @name
     @_configured = Q.defer()
+    @project.on 'afterEvaluate', @onAfterEvaluate
+
+  onAfterEvaluate : =>
+    @_configured.resolve()
 
   hasProperty : ( name ) =>
     log.v 'hasProperty', name
@@ -57,16 +61,17 @@ class Task
 
   doFirst : ( action ) =>
     log.v 'doFirst'
-    action = action[0] if Array.isArray action
-    throw new Error "Action must not be null" unless action?
-    @actions.splice 0, 0, new Action action
+    action = action[ 0 ] if Array.isArray action
+    action = new Action(action) unless action instanceof Action
+    @actions.splice 0, 0, action
     undefined
 
   doLast : ( action ) =>
-    action = action[0] if Array.isArray action
+    action = action[ 0 ] if Array.isArray action
     throw new Error "Action must not be null" unless action?
-    @actions.push new Action action
-    @
+    action = new Action(action) unless action instanceof Action
+    @actions.push action
+    undefined
 
   onlyIf : ( fn ) =>
     @_onlyIfSpec.push fn
@@ -77,9 +82,6 @@ class Task
     return -1 if @path < other.path
     return 1 if @path > other.path
     0
-
-  onCompleted : =>
-    @_configured.resolve()
 
   _set : ( name, val ) ->
     old = @[ name ]

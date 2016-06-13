@@ -1,6 +1,7 @@
 _ = require 'lodash'
 {EventEmitter} = require 'events'
 
+
 class Collection extends EventEmitter
 
   constructor : ( {@convertName} = {} ) ->
@@ -16,7 +17,13 @@ class Collection extends EventEmitter
 
   has : ( name ) => @items.has @convertName name
 
-  get : ( name ) => @items.get @convertName name
+  get : ( name ) =>
+    path = name.split '.'
+    obj = @items.get path[0]
+    for p in path[1..]
+      obj = obj.get p
+      return unless obj?
+    obj
 
   delete : ( name ) => @items.delete @convertName name
 

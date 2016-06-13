@@ -16,21 +16,25 @@ class FileSourceSet
       excludes : []
 
     files = []
-    Q.all(for s in @spec.children
-      new FileSourceSet spec : s
-      .resolve resolver)
-    .then ( list ) =>
-      files.push _.flatten list
-      return files unless @spec.srcDir
+    if @spec.children?
+      children = Q.all(for s in @spec.children
+        new FileSourceSet spec : s
+        .resolve resolver)
+    else
+      children = Q([])
 
-      dir = resolver.file @spec.srcDir
+    children.then ( list ) =>
+      files.push _.flatten list
+      #return files unless @spec.srcDir
+      srcDir = @spec.srcDir or '.'
+      dir = resolver.file srcDir
       opts = _.extend {}, @opts
       opts.cwd = dir
 
       all = []
       [ 'includes', 'excludes' ].forEach ( t ) =>
         if @spec[ t ]
-          _.flatten(@spec[ t ]).forEach ( pat ) ->
+          @spec[ t ].forEach ( pat ) ->
             all.push(glob pat, opts
             .then ( list ) ->
               res[ t ].push list)

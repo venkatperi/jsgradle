@@ -4,7 +4,7 @@ should = require 'should'
 Script = require '../lib/project/Script2'
 log = require('../lib/util/logger')('script.test')
 
-log.level 'verbose'
+#log.level 'verbose'
 
 describe 'Script', ->
 

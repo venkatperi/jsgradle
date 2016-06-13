@@ -20,7 +20,7 @@ class SourceSetContainer extends Collection
       @[ name ] = ( f ) =>
         log.v "configuring #{name}"
         f = f[ 0 ] if Array.isArray f
-        @root.callScriptMethod @.get(name), f
+        @root.callScriptMethod @.get(name), f if f?
 
   hasMethod : ( name ) =>
     name in @methods

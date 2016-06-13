@@ -1,3 +1,4 @@
+_ = require 'lodash'
 path = require 'path'
 log = require('../util/logger')('SourceSpec')
 
@@ -10,14 +11,14 @@ class SourceSpec
 
   with : ( srcs... ) => @sources.push s for s in srcs
 
-  include : ( items ) =>
+  include : ( items... ) =>
     log.v 'include', items
     @includes ?= []
-    @includes.push i for i in items
+    @includes.push i for i in _.flatten items
 
   exclude : ( items... ) =>
     @excludes ?= []
-    @excludes.push i for i in items
+    @excludes.push i for i in _.flatten items
 
   configure : ( run ) =>
     log.i 'configure'

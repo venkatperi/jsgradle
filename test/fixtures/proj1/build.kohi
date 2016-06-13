@@ -4,12 +4,13 @@ version = '0.2.0'
 apply plugin : 'greeting'
 apply plugin : 'coffee'
 
-defaultTasks 'hello', 'ls', 'test'
+defaultTasks 'hello', 'test', 'compileCoffee'
 
 sourceSets ->
   main ->
     coffeescript ->
-      include '**/*.coffee'
+      from '.', ->
+        include '*.coffee'
 
 greeting ->
   name = 'world'

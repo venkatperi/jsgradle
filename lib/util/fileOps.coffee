@@ -1,23 +1,3 @@
-###
-   File file(Object path);
-    File file(Object path, PathValidation validation);
-    URI uri(Object path);
-    FileResolver getFileResolver();
-    String relativePath(Object path);
-    ConfigurableFileCollection files(Object... paths);
-    ConfigurableFileTree fileTree(Object baseDir);
-    ConfigurableFileTree fileTree(Map<String, ?> args);
-    FileTree zipTree(Object zipPath);
-    FileTree tarTree(Object tarPath);
-    CopySpec copySpec();
-    WorkResult copy(Action<? super CopySpec> action);
-    WorkResult sync(Action<? super CopySpec> action);
-    File mkdir(Object path);
-    boolean delete(Object... paths);
-    WorkResult delete(Action<? super DeleteSpec> action);
-    ResourceHandler getResources();
-###
-
 path = require 'path'
 Q = require 'q'
 fs = require 'fs'
@@ -28,6 +8,7 @@ stat = Q.denodeify fs.stat
 unlink = Q.denodeify fs.unlink
 lstat = Q.denodeify fs.lstat
 readFile = Q.denodeify fs.readFile
+writeFile = Q.denodeify fs.writeFile
 
 isDir = ( name ) ->
   stat name
@@ -89,9 +70,22 @@ copyFile = ( src, dest, opts = {} ) ->
 
     defer.promise
 
+changeExt = ( file, ext ) ->
+  parts = path.parse file
+  parts.ext = ext
+  delete parts.base
+  path.format parts
+
+writeFileMkdir = ( file, data ) ->
+  dir = path.dirname(file)
+  mkdirp(dir).then -> writeFile(file, data)
+
 module.exports = {
   mkdirp,
   readFile
   copyFile
   unlink
+  writeFile
+  writeFileMkdir
+  changeExt
 }

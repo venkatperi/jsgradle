@@ -2,16 +2,11 @@ rek = require 'rekuire'
 Plugin = require './Plugin'
 log = require('../util/logger') 'CoffeePlugin'
 SourceSetContainer = require '../task/SourceSetContainer'
-SourceSpec = rek 'lib/task/SourceSpec'
-
-class CoffeeOptions
-  constructor : ->
-    @bare = false
-    @sourceMap = false
-    @literate = false
-
-  hasProperty : ( name ) =>
-    name in [ 'bare', 'sourceMap', 'literate' ]
+CopySpec = rek 'lib/task/builtin/CopySpec'
+SourceSetOutput = rek 'lib/task/SourceSetOutput'
+CoffeeOptions = require './coffeescript/CoffeeOptions'
+CoffeeTask = require './coffeescript/CoffeeTask'
+TaskFactory = rek 'lib/task/TaskFactory'
 
 class CoffeePlugin extends Plugin
   constructor : ->
@@ -25,9 +20,9 @@ class CoffeePlugin extends Plugin
 
     @_createSourceSets()
 
-    project.task 'compileCoffee', null, ( t ) =>
-      log.v 'configuring'
-      t.doFirst =>
+    TaskFactory.register 'CompileCoffee', ( x ) -> new CoffeeTask x
+    project.task 'compileCoffee', type : 'CompileCoffee'
+    #unless project.tasks.has
 
   _createSourceSets : =>
     unless @project.plugins.sourceSets?
@@ -41,16 +36,21 @@ class CoffeePlugin extends Plugin
 
     main = root.get 'main'
     test = root.get 'test'
+
+    unless main.has 'output'
+      out = new SourceSetOutput parent : main
+      out.dir = 'dist'
+      main.add 'output', out
+
     unless main.has 'coffeescript'
-      src = new SourceSpec parent : main
-      src.include 'lib/**/*.coffee'
-      src.include 'src/**/*.coffee'
-      src.include '*.coffee'
+      src = new CopySpec parent : main
+      src.srcDir = 'lib'
+      src.include '**/*.coffee'
       main.add 'coffeescript', src
-      
+
     unless test.has 'coffeescript'
-      src = new SourceSpec parent : test
+      src = new CopySpec parent : test
       src.include 'test/**/*.coffee'
-      test.add 'coffeescript', test 
+      test.add 'coffeescript', test
 
 module.exports = CoffeePlugin

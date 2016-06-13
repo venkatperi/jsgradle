@@ -3,28 +3,26 @@ Q = require 'q'
 _ = require 'lodash'
 {multi} = require 'heterarchy'
 {EventEmitter} = require 'events'
-TaskFactory = require '../task/TaskFactory'
+
+{ensureOption} = rek 'validate'
+Clock = rek 'Clock'
+ExtensionContainer = rek 'lib/ext/ExtensionContainer'
+FileResolver = rek 'FileResolver'
+log = rek('logger')(require('path').basename(__filename).split('.')[ 0 ])
+out = rek 'lib/util/out'
 Path = require './Path'
-ScriptPhase = require './ScriptPhase'
-P = require '../util/P'
-prop = require '../util/prop'
-TaskContainer = require '../task/TaskContainer'
-ExtensionContainer = require '../ext/ExtensionContainer'
-SourceSetContainer = require '../task/SourceSetContainer'
-TaskGraphExecutor = require './TaskGraphExecutor'
+PluginContainer = require './PluginContainer'
 PluginsRegistry = require './PluginsRegistry'
-log = rek('logger')(require('path').basename(__filename).split('.')[0])
-out = require('../util/out')
-SeqX = require '../util/SeqX'
-Clock = require '../util/Clock'
-FileResolver = require '../task/FileResolver'
+prop = rek 'lib/util/prop'
 ProxyFactory = rek 'ProxyFactory'
-util = require 'util'
+ScriptPhase = require './ScriptPhase'
+SeqX = rek 'SeqX'
+SourceSetContainer = rek 'lib/task/SourceSetContainer'
+TaskContainer = rek 'lib/task/TaskContainer'
+TaskFactory = rek 'lib/task/TaskFactory'
+TaskGraphExecutor = require './TaskGraphExecutor'
 
-isSandboxFunction = ( f ) ->
-  f?.type is 'function'
-
-module.exports = class Project extends multi EventEmitter, SeqX
+class Project extends multi EventEmitter, SeqX
 
   prop @, 'path', get : -> @_path.fullPath
 
@@ -55,7 +53,7 @@ module.exports = class Project extends multi EventEmitter, SeqX
     set : ( v ) -> @_set '_status', v
 
   constructor : ( {@name, @parent, @projectDir, @script} = {} ) ->
-    throw new Error "Project name must be defined" unless @name?
+    ensureOption @, 'name'
     @rootProject = parent?.rootProject or @
     @description ?= "project #{@name}"
     @version ?= "0.1.0"
@@ -63,7 +61,7 @@ module.exports = class Project extends multi EventEmitter, SeqX
     @tasks = new TaskContainer()
     @extensions = new ExtensionContainer()
     @fileResolver = new FileResolver projectDir : @projectDir
-    @plugins = {}
+    @plugins = new PluginContainer()
     @_prop = {}
     @methods = [ 'apply', 'defaultTasks' ]
     @extensions.on 'add', ( name, ext ) =>
@@ -77,6 +75,9 @@ module.exports = class Project extends multi EventEmitter, SeqX
     else
       @depth = 0
       @_path = new Path [ @name ], true
+
+  onCompleted : =>
+    @emit 'afterEvaluate'
 
   hasProperty : ( name ) =>
     log.v 'hasProperty', name
@@ -98,8 +99,6 @@ module.exports = class Project extends multi EventEmitter, SeqX
     out.eolThen args...
 
   initialize : =>
-    unless @parent
-      @totalTime = new Clock()
     log.v 'initialize'
 
   execute : =>
@@ -114,7 +113,7 @@ module.exports = class Project extends multi EventEmitter, SeqX
 
     queue.forEach ( t ) =>  @seq t.execute
     @seq =>
-      log.v tag, 'done: ', clock.pretty
+      log.v tag, clock.pretty
 
   report : =>
     errors = []
@@ -126,7 +125,7 @@ module.exports = class Project extends multi EventEmitter, SeqX
       out('BUILD SUCCESSFUL').eol()
     else
       num = errors.length
-      ex = 'exception'
+      ex = 'error'
       ex += 's' if num > 1
       out.red("FAILURE: Build failed with #{num} #{ex}").eol()
       for e in errors
@@ -137,7 +136,6 @@ module.exports = class Project extends multi EventEmitter, SeqX
     @_defaultTasks = tasks
 
   apply : ( opts ) =>
-    log.v 'apply', util.inspect opts
     opts = opts[ 0 ] if Array.isArray opts
     if opts?.plugin
       name = opts.plugin
@@ -195,3 +193,4 @@ module.exports = class Project extends multi EventEmitter, SeqX
   toString : =>
     "project #{name}"
 
+module.exports = Project

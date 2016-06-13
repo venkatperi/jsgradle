@@ -14,12 +14,14 @@ TaskBuilderFactory = rek 'lib/factory/TaskBuilderFactory'
 ProjectFactory = rek 'lib/factory/ProjectFactory'
 CopySpecFactory = rek 'lib/factory/CopySpecFactory'
 log = rek('logger')(require('path').basename(__filename).split('.')[ 0 ])
+Clock = rek 'Clock'
 
 readFile = Q.denodeify fs.readFile
 
 class Script extends FactoryBuilderSupport
   constructor : ( {@scriptFile} = {} ) ->
     throw new Error "Missing option: scriptFile" unless @scriptFile
+    @totalTime = new Clock()
     super()
     @phase = Phase.Initial
     @registerFactory 'project', new ProjectFactory script : @
@@ -45,7 +47,9 @@ class Script extends FactoryBuilderSupport
 
   execute : => @seq @_execute
 
-  report : => @project.report()
+  report : =>
+    @project.report()
+    out.eolThen("Total time: #{@totalTime.pretty}").eol()
 
   _loadScript : =>
     walkup 'build.kohi', cwd : process.cwd()
@@ -74,8 +78,10 @@ class Script extends FactoryBuilderSupport
 
   _configure : =>
     log.v 'configure'
+    clock = new Clock()
     @phase = Phase.Configuration
     @evaluate @contents, coffee : true
+    log.v 'configure done:', clock.pretty
 
   _execute : =>
     log.v 'execute'
