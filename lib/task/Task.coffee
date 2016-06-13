@@ -8,7 +8,7 @@ log = require('../util/logger') 'Task'
 class Task
 
   p @, 'configured', get : -> @_configured.promise
-    
+
   p @, 'dependencies', get : -> @_dependencies
 
   p @, 'path', get : -> @_path.fullPath
@@ -64,14 +64,14 @@ class Task
   doFirst : ( action ) =>
     log.v 'doFirst'
     action = action[ 0 ] if Array.isArray action
-    action = new Action(action) unless action instanceof Action
+    action = new Action(f : action, task : @) unless action instanceof Action
     @actions.splice 0, 0, action
     undefined
 
   doLast : ( action ) =>
     action = action[ 0 ] if Array.isArray action
     throw new Error "Action must not be null" unless action?
-    action = new Action(action) unless action instanceof Action
+    action = new Action(f : action, task : @) unless action instanceof Action
     @actions.push action
     undefined
 

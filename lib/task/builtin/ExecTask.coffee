@@ -1,5 +1,5 @@
 rek = require 'rekuire'
-log = rek('logger')(require('path').basename(__filename).split('.')[0])
+log = rek('logger')(require('path').basename(__filename).split('.')[ 0 ])
 Task = require '../Task'
 ExecAction = require './ExecAction'
 
@@ -9,7 +9,7 @@ class ExecTask extends Task
     opts.type = 'Exec'
     super opts
     @_args = []
-    @actions.push new ExecAction @
+    @doFirst new ExecAction spec : @, task : @
 
   hasMethod : ( name ) =>
     name in [ 'args', 'commandLine', 'executable', 'environment',
@@ -40,5 +40,6 @@ class ExecTask extends Task
   onAfterEvaluate : =>
     unless @_executable?
       throw new Error "No executable specified"
+    super()
 
 module.exports = ExecTask

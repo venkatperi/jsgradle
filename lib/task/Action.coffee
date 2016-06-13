@@ -1,16 +1,22 @@
 rek = require 'rekuire'
-Promise = rek 'Promise'
-
+Q = require 'q'
+prop = rek 'prop'
 
 class Action
-  constructor : ( @f ) ->
+
+  prop @, 'project', get : -> @task.project
+
+  constructor : ( {@f, @task} = {} ) ->
     @isSandbox = @f?.type is 'function'
+
+  println : ( msg ) =>
+    @project.println msg
 
   doExec : =>
     if @exec? and @execSync?
       throw new Error "Only one of 'exec' or 'execSync' may be defined"
     return @execSync() if @execSync?
-    return new Promise(@exec) if @exec?
+    return Q.Promise(@exec) if @exec?
     return @f() if @f #and !@f?.type is 'function'
     throw new Error "Don't know how to execute action"
 

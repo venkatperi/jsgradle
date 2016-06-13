@@ -36,6 +36,11 @@ class Message
   thenEol : ( msg ) =>
     @parts.push msg if msg?
     @eol()
+    
+  ifNewline: (msg) =>
+    unless @parts.length
+      @msg msg
+    @
 
   eol : =>
     println @string
@@ -57,6 +62,7 @@ for c in colors
 progress.eol = message.eol
 progress.eolThen = message.eolThen
 progress.thenEol = message.thenEol
+progress.ifNewline = message.ifNewline
 progress.error = message.red
 
 module.exports = progress

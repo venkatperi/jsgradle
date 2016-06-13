@@ -20,6 +20,7 @@ Clock = rek 'Clock'
 class Script extends FactoryBuilderSupport
   constructor : ( opts = {} ) ->
     @buildDir = opts.buildDir or process.cwd()
+    @tasks = opts.tasks
     @totalTime = new Clock()
     super()
     @phase = Phase.Initial
@@ -85,6 +86,7 @@ class Script extends FactoryBuilderSupport
     clock = new Clock()
     @phase = Phase.Configuration
     @evaluate @contents, coffee : true
+    @project._defaultTasks = @tasks if @tasks.length
     log.v 'configure done:', clock.pretty
 
   _execute : =>

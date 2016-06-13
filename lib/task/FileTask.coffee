@@ -23,8 +23,9 @@ class FileTask extends Task
       .then ( files ) =>
         for f in files
           @doLast new @actionType
-            src : f, dest : dest, opts : @options,
-            srcDir : srcDir, spec : @spec
+            task : @, src : f, dest : dest, 
+            opts : @options, srcDir : srcDir, 
+            spec : @spec
     )
 
 module.exports = FileTask

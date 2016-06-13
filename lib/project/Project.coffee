@@ -99,7 +99,7 @@ class Project extends multi EventEmitter, SeqX
     @[ name ] = val
 
   println : ( args... ) ->
-    out.eolThen('').white args...
+    out.eolThen('').white(args...).eol()
 
   initialize : =>
     log.v 'initialize'

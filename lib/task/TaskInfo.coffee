@@ -89,6 +89,7 @@ class TaskInfo extends multi EventEmitter, SeqX
             out(err.message).eol()
       @seq =>
         time = clock.pretty
+        out.ifNewline("> #{task.path}").green(' OK ').grey(time).eol()
         log.v tag, 'done: ', time
 
   startExecution : =>

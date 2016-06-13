@@ -30,7 +30,7 @@ options = require 'yargs'
 .help()
 .argv
 
-s = new Script buildDir : options.projectDir
+s = new Script buildDir : options.projectDir, tasks : options._
 s.initialize()
 .then -> s.configure()
 .then -> s.execute()
