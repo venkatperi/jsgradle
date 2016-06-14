@@ -1,34 +1,32 @@
 Plugin = require './Plugin'
+rek = require 'rekuire'
+PackageOptions = rek 'PackageOptions'
+UpdatePkgTask = rek 'UpdatePkgTask'
+TaskFactory = rek 'TaskFactory'
+configurable = rek 'configurable'
+fs = require 'fs'
+_ = require 'lodash'
+
+load = ( file, obj ) =>
+  pkg = JSON.parse fs.readFileSync file, 'utf8'
+  _.extend obj, pkg
+  pkg
 
 class PackagePlugin extends Plugin
   constructor : ->
     @name = 'package'
-    @package =
-      description : undefined
-      keywords : []
-      preferGlobal : false
-      homepage : undefined
-      bugs : {}
-      license : undefined
-      author : {}
-      contributors : []
-      main : undefined
-      bin : undefined
-      repository : {}
-      scripts : {}
-      man : []
-      dist : {}
-      gitHead : undefined
-      maintainers : {}
 
   apply : ( project ) =>
     super project
-    project.extensions.add 'pkg', @package
+    #@package = new PackageOptions()
+    @package = configurable(project.callScriptMethod)
+    file = project.fileResolver.file 'package.json'
+    pkg = load file, @package
 
-    project.task 'pkg', null, ( t, p ) =>
-      t.doFirst ( p ) =>
-        console.log "pkg: #{@package.description}"
-        p.resolve()
-      p.done()
+    project.extensions.add 'pkg', @package
+    project.extensions.add '__pkg', filename: file, pkg: pkg
+    TaskFactory.register 'UpdatePkg', ( x ) -> new UpdatePkgTask x
+    project.task 'updatePkg', type : 'UpdatePkg'
+    project.defaultTasks 'updatePkg'
 
 module.exports = PackagePlugin

@@ -1,0 +1,58 @@
+{
+  "name": "test",
+  "version": "0.2.0",
+  "repository": {
+    "type": "type",
+    "url": "url"
+  },
+  "preferGlobal": false,
+  "description": "test project",
+  "dependencies": {
+    "ansi-escapes": "ansi-escapes",
+    "colors": "colors",
+    "glob": "glob",
+    "guava-cache": "guava-cache",
+    "heterarchy": "heterarchy",
+    "log-symbols": "log-symbols",
+    "mixto": "mixto",
+    "mkdirp": "mkdirp",
+    "multimap": "multimap",
+    "ncp": "ncp",
+    "node-walkup": "node-walkup",
+    "pretty-hrtime": "pretty-hrtime",
+    "q": "q",
+    "rekuire": "rekuire",
+    "split": "split",
+    "taglog": "taglog",
+    "yargs": "yargs"
+  },
+  "bundleDependencies": {},
+  "main": "dist/index",
+  "scripts": {
+    "prepublish": "prepublish",
+    "test": "test",
+    "abc": 123
+  },
+  "devDependencies": {
+    "child-process-promise": "child-process-promise",
+    "coffee-coverage": "coffee-coverage",
+    "coffee-script": "coffee-script",
+    "coffeescope2": "coffeescope2",
+    "grunt": "grunt",
+    "grunt-coffeelint": "grunt-coffeelint",
+    "grunt-contrib-clean": "grunt-contrib-clean",
+    "grunt-contrib-coffee": "grunt-contrib-coffee",
+    "grunt-contrib-copy": "grunt-contrib-copy",
+    "grunt-contrib-watch": "grunt-contrib-watch",
+    "grunt-exec": "grunt-exec",
+    "grunt-istanbul": "grunt-istanbul",
+    "json-stringify-safe": "json-stringify-safe",
+    "lodash": "lodash"
+  },
+  "author": "Venkat Peri <venkatperi@gmail.com> (http://www.vperi.com/)",
+  "license": "MIT",
+  "keywords": {},
+  "rekuire": {
+    "ignore": "ignore"
+  }
+}

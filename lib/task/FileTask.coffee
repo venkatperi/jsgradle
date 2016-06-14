@@ -13,6 +13,9 @@ class FileTask extends Task
     @spec = opts.spec
     @actionType = opts.actionType
     @files = new FileSourceSet spec : @spec
+    
+  summary: =>
+    if @didWork then "#{@didWork} file(s) OK" else "UP-TO-DATE"
 
   onAfterEvaluate : =>
     srcDir = @project.fileResolver.file @spec.srcDir

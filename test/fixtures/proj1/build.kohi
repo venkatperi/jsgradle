@@ -1,10 +1,16 @@
+apply plugin : 'greeting'
+apply plugin : 'package'
+apply plugin : 'coffee'
+
 description = 'test project'
 version = '0.2.0'
 
-apply plugin : 'greeting'
-apply plugin : 'coffee'
+defaultTasks 'hello', 'test', 'ls'
 
-defaultTasks 'hello', 'test'
+pkg ->
+  name = 'test'
+  scripts ->
+    abc = 123
 
 sourceSets ->
   main ->
@@ -23,7 +29,7 @@ task 'copy', type : Copy, ->
   into 'dist'
 
 task ls, type : Exec, ->
-  executable '/bin/ls'
+  executable '/bin/xls'
   workingDir '/'
 
 task test, ->

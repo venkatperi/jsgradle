@@ -1,8 +1,8 @@
+Q = require 'q'
 assert = require 'assert'
 prop = require './../util/prop'
 out = require './../util/out'
 log = require('../util/logger') 'TaskInfo'
-SeqX = require '../util/SeqX'
 {multi} = require 'heterarchy'
 {EventEmitter} = require 'events'
 Clock = require '../util/Clock'
@@ -18,7 +18,7 @@ STATE = {
   Skipped : 'Skipped'
 }
 
-class TaskInfo extends multi EventEmitter, SeqX
+class TaskInfo extends multi EventEmitter
   #@STATE : STATE
 
   prop @, 'name', get : -> @task.name
@@ -64,13 +64,7 @@ class TaskInfo extends multi EventEmitter, SeqX
     @shouldSuccessors = new Set()
     @finalizers = new Set()
     @dependenciesProcessed = false
-    #@dependsOn = []
-    #if opts.dependsOn
-    #  deps = opts.dependsOn
-    #  deps = [ deps ] unless Array.isArray deps
-    #  for d in deps
-    #    d = d()[ 0 ] if d if typeof d is 'function'
-    #    @dependsOn.push d
+    @hasErrors = 0
 
   execute : =>
     @task.configured.then =>
@@ -78,19 +72,20 @@ class TaskInfo extends multi EventEmitter, SeqX
       clock = new Clock()
       task = @task
       project = task.project
-      @seq => out.eolThen @task.path
+      prev = Q()
+      out.eolThen @task.path
       task.actions.forEach ( a ) =>
-        @seq =>
-          project.execTaskAction task, a
-          .fail ( err ) =>
-            @errors ?= []
-            @errors.push err
-            out.yellow(' FAILED').eol()
-            out(err.message).eol()
-      @seq =>
+        prev = prev.then => project.execTaskAction task, a
+      prev.then =>
         time = clock.pretty
-        out.ifNewline("> #{task.path}").green(' OK ').grey(time).eol()
-        log.v tag, 'done: ', time
+        out.ifNewline("> #{task.path}")
+        .green(" #{@task.summary()} ")
+        .grey(time).eol()
+      .fail =>
+        out.ifNewline("> #{task.path}")
+        .red(" #{@task.summary()} ")
+        .eol()
+
 
   startExecution : =>
     assert @isReady

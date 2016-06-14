@@ -3,17 +3,17 @@ rek = require 'rekuire'
 Task = rek 'lib/task/Task'
 FileSourceSet = rek 'FileSourceSet'
 prop = rek 'prop'
-CoffeeAction = require './CoffeeAction'
+CompileCoffeeAction = require './CompileCoffeeAction'
 FileTask = rek 'FileTask'
 
-class CoffeeTask extends FileTask
+class CompileCoffeeTask extends FileTask
 
   init : ( opts = {} ) =>
     opts = _.extend opts,
       spec : @project.sourceSets.get 'main.coffeescript'
       options : @project.extensions.get 'coffeescript'
       output : @project.sourceSets.get 'main.output'
-      actionType : CoffeeAction
+      actionType : CompileCoffeeAction
     super opts
 
-module.exports = CoffeeTask
+module.exports = CompileCoffeeTask

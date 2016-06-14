@@ -13,7 +13,6 @@ class ExecAction extends Action
     opts.cwd = @spec._workingDir if @spec._workingDir?
     execFile @spec._executable, @spec._args, opts, ( e, stdout, stderr ) =>
       if e
-        console.log e
         @spec.execResult = e
         unless @spec._ignoreExitValue
           return reject switch e.code

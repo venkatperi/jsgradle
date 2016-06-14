@@ -23,6 +23,7 @@ class FileAction extends Action
         output = @transform source, @opts
       else
         output = source
+      @task.didWork++
       writeFileMkdir dest, output
 
 module.exports = FileAction

@@ -1,11 +1,11 @@
-description = 'test project'
-version = '0.2.0'
-
 apply plugin : 'coffee'
+
+description = 'gradle-esq Nodejs build tool'
+version = '0.2.0'
 
 sourceSets ->
   main ->
     coffeescript ->
       from '.', ->
-        include '*.coffee'
+        include 'index.coffee'
 

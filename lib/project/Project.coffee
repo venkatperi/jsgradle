@@ -4,7 +4,7 @@ _ = require 'lodash'
 {multi} = require 'heterarchy'
 {EventEmitter} = require 'events'
 
-{ensureOption} = rek 'validate'
+{ensureOptions} = rek 'validate'
 Clock = rek 'Clock'
 ExtensionContainer = rek 'lib/ext/ExtensionContainer'
 FileResolver = rek 'FileResolver'
@@ -24,7 +24,13 @@ TaskGraphExecutor = require './TaskGraphExecutor'
 
 class Project extends multi EventEmitter, SeqX
 
+  prop @, 'pkg', get : -> @extensions.get 'pkg'
+  
+  prop @, 'originalPkg', get : -> @extensions.get '__pkg'
+
   prop @, 'path', get : -> @_path.fullPath
+
+  prop @, 'continueOnError', get : -> @script.continueOnError
 
   prop @, 'sourceSets', get : -> @extensions.get 'sourceSets'
 
@@ -40,23 +46,32 @@ class Project extends multi EventEmitter, SeqX
 
   prop @, 'subProjects', get : ->
 
+  prop @, 'failed', get : -> @tasks.some ( x ) -> x.task.failed
+
+  prop @, 'failedTasks', get : -> @tasks.filter ( x ) -> x.task.failed
+
+  prop @, 'messages', get : ->
+    _.flatten(_.map @failedTasks, ( x ) -> x.messages)
+
   prop @, 'description',
     get : -> @_description
-    set : ( v ) -> @_set '_description', v
+    set : ( v ) ->
+      @_set '_description', v
+      @pkg?.description = v
 
   prop @, 'version',
     get : -> @_version
-    set : ( v ) -> @_set '_version', v
+    set : ( v ) ->
+      @_set '_version', v
+      @pkg?.version = v
 
   prop @, 'status',
     get : -> @_status
     set : ( v ) -> @_set '_status', v
 
   constructor : ( {@name, @parent, @projectDir, @script} = {} ) ->
-    ensureOption @, 'name'
+    ensureOptions @, 'name'
     @rootProject = parent?.rootProject or @
-    @description ?= "project #{@name}"
-    @version ?= "0.1.0"
     @_defaultTasks = []
     @pluginsRegistry = new PluginsRegistry()
     @tasks = new TaskContainer()
@@ -65,9 +80,12 @@ class Project extends multi EventEmitter, SeqX
     @plugins = new PluginContainer()
     @methods = [ 'apply', 'defaultTasks' ]
     @extensions.on 'add', ( name, ext ) =>
+      return if _.startsWith name, '__'
       log.v 'adding ext', name
       @registerProxyFactory ext, name
 
+    @description ?= "project #{@name}"
+    @version ?= "0.1.0"
     if @parent
       @_path = new Path @parent.absoluteProjectPath name
       @depth = @parent.depth + 1
@@ -108,10 +126,16 @@ class Project extends multi EventEmitter, SeqX
     log.v tag = "executing #{@path}"
     clock = new Clock()
     executor = new TaskGraphExecutor(@tasks)
-    nodes = (@tasks.get t for t in _.flatten @_defaultTasks)
+    tasks = @_tasksToExecute or @_defaultTasks
+    nodes = (@tasks.get t for t in _.flatten tasks)
+    for n in nodes
+      n.task.enable()
     executor.add nodes
     @taskQueue = queue = executor.determineExecutionPlan()
-    log.v 'tasks:', _.map executor.executionQueue, ( x ) -> x.task.name
+    for t in queue
+      t.task.onAfterEvaluate()
+
+    log.i 'tasks:', _.map executor.executionQueue, ( x ) -> x.task.name
 
     queue.forEach ( t ) =>  @seq t.execute
     @seq =>
@@ -123,15 +147,17 @@ class Project extends multi EventEmitter, SeqX
       errors.push name : t.name, errors : t.errors if t.errors?.length
 
     out.eolThen('').eol()
-    if errors.length is 0
+    if !@failed
       out.white('BUILD SUCCESSFUL').eol()
     else
-      num = errors.length
+      msgs = Array.from @messages
+      num = msgs.length
       ex = 'error'
-      ex += 's' if num > 1
-      out.red("FAILURE: Build failed with #{num} #{ex}").eol()
-      for e in errors
-        out("> #{e.name}").eol()
+      ex += 's' if msgs.length > 1
+      out.red("FAILURE: Build failed with #{num} #{ex}.
+        See task for details.").eol()
+      for t in @failedTasks
+        out('> ' + t.task.name).eol()
 
   defaultTasks : ( tasks... ) =>
     @_defaultTasks.push t for t in tasks

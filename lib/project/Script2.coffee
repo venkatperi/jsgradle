@@ -20,6 +20,7 @@ Clock = rek 'Clock'
 class Script extends FactoryBuilderSupport
   constructor : ( opts = {} ) ->
     @buildDir = opts.buildDir or process.cwd()
+    @continueOnError = opts.continueOnError
     @tasks = opts.tasks
     @totalTime = new Clock()
     super()
@@ -50,7 +51,7 @@ class Script extends FactoryBuilderSupport
 
   report : =>
     @project.report()
-    out.eolThen('').white("Total time: #{@totalTime.pretty}").eol()
+    out.eolThen('').eol().white("Total time: #{@totalTime.pretty}").eol()
 
   _loadScript : =>
     walkup 'build.kohi', cwd : @buildDir
@@ -86,7 +87,7 @@ class Script extends FactoryBuilderSupport
     clock = new Clock()
     @phase = Phase.Configuration
     @evaluate @contents, coffee : true
-    @project._defaultTasks = @tasks if @tasks.length
+    @project._tasksToExecute = @tasks if @tasks?.length
     log.v 'configure done:', clock.pretty
 
   _execute : =>

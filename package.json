@@ -10,6 +10,7 @@
   "dependencies": {
     "ansi-escapes": "^1.4.0",
     "colors": "^1.1.2",
+    "deep-equal": "^1.0.1",
     "glob": "^7.0.3",
     "guava-cache": "^0.7.0",
     "heterarchy": "^1.0.5",
@@ -22,6 +23,7 @@
     "pretty-hrtime": "^1.0.2",
     "q": "^1.4.1",
     "rekuire": "^0.1.9",
+    "rmdir": "^1.2.0",
     "split": "^1.0.0",
     "taglog": "^1.1.0",
     "yargs": "^4.7.1"

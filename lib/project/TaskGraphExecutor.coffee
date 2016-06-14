@@ -11,7 +11,7 @@ class TaskGraphExecutor extends EventEmitter
     @executionPlan = new Set()
     @executionQueue = []
     @entryTasks = []
-    @filter = -> true
+    @filter = (x) -> x.enabled
 
   add : ( nodes ) =>
     queue = []
@@ -48,8 +48,6 @@ class TaskGraphExecutor extends EventEmitter
       if !visiting.has node
         visiting.add node
 
-        #task.project.tasks.prepareForExecution task
-        #dependsOnTasks = context.getDependencies task
         dependsOnTasks = node.dependsOn
         for t in dependsOnTasks
           targetNode = @container.get t
