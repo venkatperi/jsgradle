@@ -13,6 +13,7 @@ out = rek 'lib/util/out'
 TaskBuilderFactory = rek 'lib/factory/TaskBuilderFactory'
 ProjectFactory = rek 'lib/factory/ProjectFactory'
 CopySpecFactory = rek 'lib/factory/CopySpecFactory'
+OptionsFactory = rek 'lib/factory/OptionsFactory'
 log = rek('logger')(require('path').basename(__filename).split('.')[ 0 ])
 Clock = rek 'Clock'
 {isFile, readFile} = rek 'fileOps'
@@ -30,6 +31,7 @@ class Script extends FactoryBuilderSupport
     @registerFactory 'from', new CopySpecFactory script : @
     @registerFactory 'into', new CopySpecFactory script : @
     @registerFactory 'filter', new CopySpecFactory script : @
+    @registerFactory 'options', new OptionsFactory script : @
 
   seq : ( f ) =>
     @_seqx ?= seqx()
@@ -43,7 +45,8 @@ class Script extends FactoryBuilderSupport
   configure : =>
     out.eolThen 'Configuring... '
     @_configure()
-    out.grey(" DONE. #{@totalTime.pretty}").eol()
+    out.ifNewline("> Configuring...")
+    .grey(" DONE. #{@totalTime.pretty}").eol()
 
   #@project.configured
 
@@ -86,7 +89,12 @@ class Script extends FactoryBuilderSupport
     log.v 'configure'
     clock = new Clock()
     @phase = Phase.Configuration
-    @evaluate @contents, coffee : true
+    Q.Promise ( resolve, reject ) =>
+      try
+        resolve @evaluate @contents, coffee : true
+      catch err
+      #reject err
+
     @project._tasksToExecute = @tasks if @tasks?.length
     log.v 'configure done:', clock.pretty
 

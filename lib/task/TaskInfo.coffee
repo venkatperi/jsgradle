@@ -23,6 +23,8 @@ class TaskInfo extends multi EventEmitter
 
   prop @, 'name', get : -> @task.name
 
+  prop @, 'displayName', get : -> @task.displayName
+
   prop @, 'dependsOn', get : -> @task.dependencies
 
   prop @, 'isRequired', get : -> @state is STATE.ShouldRun
@@ -73,16 +75,16 @@ class TaskInfo extends multi EventEmitter
       task = @task
       project = task.project
       prev = Q()
-      out.eolThen @task.path
+      out.eolThen @task.displayName
       task.actions.forEach ( a ) =>
         prev = prev.then => project.execTaskAction task, a
       prev.then =>
         time = clock.pretty
-        out.ifNewline("> #{task.path}")
+        out.ifNewline("> #{task.displayName}")
         .green(" #{@task.summary()} ")
         .grey(time).eol()
       .fail =>
-        out.ifNewline("> #{task.path}")
+        out.ifNewline("> #{task.displayName}")
         .red(" #{@task.summary()} ")
         .eol()
 

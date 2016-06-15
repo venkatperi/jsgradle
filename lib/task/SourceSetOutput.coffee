@@ -1,16 +1,12 @@
 path = require 'path'
 rek = require 'rekuire'
-log = rek('logger')(require('path').basename(__filename).split('.')[ 0 ])
+BaseObject = rek 'BaseObject'
 
-class SourceSetOutput
-
-  constructor : ( {@parent, @name} ) ->
-
-  hasProperty : ( name ) =>
-    name in [ 'dir' ]
-
-  getProperty : ( name ) => @[ name ]
-
-  setProperty : ( k, v ) => @[ k ] = v
+class SourceSetOutput extends BaseObject
+  
+  @_addProperties
+    required : [ 'dir' ]
+    optional : [ 'parent' ]
+    exported : [ 'dir' ]
 
 module.exports = SourceSetOutput

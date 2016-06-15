@@ -6,13 +6,23 @@ p = rek 'lib/util/prop'
 Path = require './../project/Path'
 Action = require './Action'
 log = require('../util/logger') 'Task'
-{ensureOptions} = rek 'validate'
+out = rek 'out'
+BaseObject = rek 'BaseObject'
 
-class Task
+class Task extends BaseObject
+
+  @_addProperties
+    required : [ 'name', 'project', 'type' ]
+    optional : [ 'description' ]
+    exported : [ 'description', 'didWork', 'enabled' ]
+    exportedReadOnly : [ 'name', 'actions', 'dependencies', 'temporaryDir' ]
+    exportedMethods : [ 'doFirst', 'doLast' ]
 
   p @, 'configured', get : -> @_configured.promise
 
   p @, 'path', get : -> @_path.fullPath
+
+  p @, 'displayName', get : -> ":#{@name}"
 
   p @, 'temporaryDir', get : -> os.tmpdir()
 
@@ -24,11 +34,8 @@ class Task
     _.map _.flatten(_.map @failedActions, ( x ) -> x.messages),
       ( x ) -> '> ' + x
 
-  constructor : ( opts = {} ) ->
-    ensureOptions opts, 'name', 'project', 'type'
-    for p in [ 'name', 'project', 'description', 'type' ] when opts[ p ]
-      @[ p ] = opts[ p ]
-
+  init : =>
+    @description ?= "task #{@name}"
     @enabled = true
     @dependencies = []
     @actions = []
@@ -36,15 +43,12 @@ class Task
     @_path = new Path @project._path.absolutePath @name
     @_configured = Q.defer()
     @didWork = 0
-    @init opts
 
-  init : =>
-
-  enable: (v = true) =>
+  enable : ( v = true ) =>
     @enabled = v
     for d in @dependencies
       @project.tasks.get(d).task.enable()
-    
+
   summary : =>
     if !@failed
       if @checkDidWork() then "OK" else "UP-TO-DATE"
@@ -60,23 +64,6 @@ class Task
 
   onAfterEvaluate : =>
     @_configured.resolve()
-
-  hasProperty : ( name ) =>
-    log.v 'hasProperty', name
-    false
-
-  hasMethod : ( name ) =>
-    name in [ 'doFirst', 'doLast' ]
-
-  getProperty : ( name ) =>
-    log.v 'getProperty', name
-    return @[ name ] if name in [ 'description', 'name', 'enabled', 'path',
-      'temporaryDir', 'didWork' ]
-    name
-
-  setProperty : ( name, val ) =>
-    log.v 'setProperty', name
-    @[ name ] = val
 
   dependsOn : ( paths... ) =>
     @dependencies.push if paths.length is 1 then paths[ 0 ] else paths
@@ -105,13 +92,6 @@ class Task
     return -1 if @path < other.path
     return 1 if @path > other.path
     0
-
-  _set : ( name, val ) ->
-    old = @[ name ]
-    unless val is @[ name ]
-      @[ name ] = val
-      @emit 'change', name, val, old
-    @
 
   toString : =>
     "task #{@name}"

@@ -3,16 +3,13 @@ FileSourceSet = require './FileSourceSet'
 
 class FileTask extends Task
 
-  constructor : ( opts ) ->
-    super opts
-    @init opts
-
   init : ( opts ) =>
     @output = opts.output if opts.output
     @options = opts.options or {}
     @spec = opts.spec
     @actionType = opts.actionType
     @files = new FileSourceSet spec : @spec
+    super opts
     
   summary: =>
     if @didWork then "#{@didWork} file(s) OK" else "UP-TO-DATE"

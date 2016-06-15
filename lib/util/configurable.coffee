@@ -12,54 +12,45 @@ configurable = ( obj, invoker ) ->
   handlers =
     get : ( target, name ) ->
       switch name
-        when 'hasProperty' then ( x ) ->
-          log.i 'hasProperty', x
-          true
-        when 'hasMethod' then ( x ) ->
-          log.i 'hasMethod', x
-          x?
+        when 'hasProperty' then ( x ) -> true
+        when 'hasMethod' then ( x ) -> x?
         when 'getProperty' then ( x ) ->
-          log.i 'getProperty', x
           v = target[ x ]
           if !_.isObjectLike(v) then v else x
         when 'setProperty' then ( k, v ) ->
-          log.i 'setProperty', k, v
           target[ k ] = v
         when 'getMethod' then ( x ) ->
-          log.i 'getMethod', x
           ( fn ) ->
-            log.i 'method', x
             if fn?.type is 'function' and invoker?
-              target[ x ] ?= configurable {}, invoker
-              invoker target[ x ], fn
-              console.log target
+              target[x] ?= configurable {}, invoker
+              invoker target[x], fn
         else
           target[ name ]
 
     set : ( target, name, value ) ->
       target[ name ] = wrap value
 
-  #deleteProperty : ( target, name ) ->
-  #  return unless target[ name ]?
-  #  delete target[ name ]
+    #deleteProperty : ( target, name ) ->
+    #  return unless target[ name ]?
+    #  delete target[ name ]
 
-  #enumerate: ->
-  #  Reflect.ownKeys properties
+    #enumerate: ->
+    #  Reflect.ownKeys properties
 
-  #ownKeys : (target)->
-  #  keys = Reflect.ownKeys target
-  #  keys.push 'length'
-  #  keys
-  #
-  #has : ( target, name ) ->
-  #  name in properties
-  #
-  #defineProperty : ( target, name, desc ) ->
-  #  properties.setKey name, desc
-  #  target
-  #
-  #getOwnPropertyDescriptor : ( target, name ) ->
-  #  Object.getOwnPropertyDescriptor target, name
+    #ownKeys : (target)->
+    #  keys = Reflect.ownKeys target
+    #  keys.push 'length'
+    #  keys
+    #
+    #has : ( target, name ) ->
+    #  name in properties
+    #
+    #defineProperty : ( target, name, desc ) ->
+    #  properties.setKey name, desc
+    #  target
+    #
+    #getOwnPropertyDescriptor : ( target, name ) ->
+    #  Object.getOwnPropertyDescriptor target, name
 
   if arguments.length is 1
     [invoker,obj] = [ obj ] if typeof obj is 'function'

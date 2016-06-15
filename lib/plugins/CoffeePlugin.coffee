@@ -8,24 +8,22 @@ CoffeeOptions = require './coffeescript/CoffeeOptions'
 CompileCoffeeTask = require './coffeescript/CompileCoffeeTask'
 CleanCoffeeTask = require './coffeescript/CleanCoffeeTask'
 TaskFactory = rek 'lib/task/TaskFactory'
+CoffeeConvention = require './coffeescript/CoffeeConvention'
 
 class CoffeePlugin extends Plugin
-  constructor : ->
-    log.v 'ctor()'
 
   apply : ( project ) =>
     return if @configured
     super project
     project.apply plugin : 'build'
 
-    @options = new CoffeeOptions()
-    project.extensions.add 'coffeescript', @options
-    @_createSourceSets()
+    project.extensions.add 'coffeescript', new CoffeeOptions() 
+    project.conventions.add 'coffeescript', new CoffeeConvention()
+    
     TaskFactory.register 'CompileCoffee', ( x ) -> new CompileCoffeeTask x
     TaskFactory.register 'CleanCoffee', ( x ) -> new CleanCoffeeTask x
     project.task 'compileCoffee', type : 'CompileCoffee'
     project.task 'cleanCoffee', type : 'CleanCoffee'
-
     project.tasks.get('build').task.dependsOn 'compileCoffee'
     project.tasks.get('clean').task.dependsOn 'cleanCoffee'
 

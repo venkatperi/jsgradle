@@ -19,6 +19,7 @@ class Collection extends EventEmitter
   has : ( name ) => @items.has @convertName name
 
   get : ( name ) =>
+    return unless name?
     path = name.split '.'
     obj = @items.get path[ 0 ]
     for p in path[ 1.. ]

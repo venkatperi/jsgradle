@@ -4,10 +4,10 @@ os = require 'os'
 
 stdout = process.stdout
 print = ( s ) -> stdout.write s
-println = ( s ) -> 
+println = ( s ) ->
   console.log s
-  #stdout.write s + os.EOL
-  #stdout.flush()
+#stdout.write s + os.EOL
+#stdout.flush()
 
 colors = [ 'green', 'grey', 'white', 'red', 'yellow' ]
 class Message
@@ -17,27 +17,31 @@ class Message
   prop @, 'show', get : -> console.log @string
 
   constructor : ( msg ) ->
+    @color = 'grey'
     @parts = []
-    colors.forEach (c) =>
+    colors.forEach ( c ) =>
       @[ c ] = ( msg ) =>
-        @parts.push C[ c ] msg
+        if msg
+          @parts.push C[ c ] msg
+        else
+          @color = c
         @
     @grey msg if msg?
 
   msg : ( msg ) =>
-    @grey msg
-    #@parts.push msg
+    @[ @color ] msg if msg?
     @
 
   eolThen : ( msg ) =>
     @eol() if @parts.length
-    @msg msg
+    @msg msg if msg?
+    @
 
   thenEol : ( msg ) =>
     @parts.push msg if msg?
     @eol()
-    
-  ifNewline: (msg) =>
+
+  ifNewline : ( msg ) =>
     unless @parts.length
       @msg msg
     @
@@ -50,6 +54,15 @@ class Message
   clear : =>
     @parts = []
     @
+
+  continue : ( prefix, msg ) =>
+    @ifNewline("> #{prefix}")
+    .msg(" #{@task.summary()} ")
+
+  warning : ( msg ) =>
+    @eolThen()
+    .yellow msg
+    .eol()
 
 message = new Message()
 
@@ -64,5 +77,6 @@ progress.eolThen = message.eolThen
 progress.thenEol = message.thenEol
 progress.ifNewline = message.ifNewline
 progress.error = message.red
+progress.warning = message.warning
 
 module.exports = progress

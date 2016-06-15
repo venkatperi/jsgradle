@@ -30,6 +30,9 @@ options = require 'yargs'
 .help()
 .argv
 
+onError = (err) ->
+  console.log "ERROR: #{err.message}"
+
 s = new Script
   buildDir : options.projectDir,
   tasks : options._
@@ -38,5 +41,4 @@ s.initialize()
 .then -> s.configure()
 .then -> s.execute()
 .then -> s.report()
-.fail ( err ) ->
-  console.log "ERROR: #{err.message}"
+.fail onError

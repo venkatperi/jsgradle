@@ -1,10 +1,7 @@
 rek = require 'rekuire'
 Q = require 'q'
 _ = require 'lodash'
-{multi} = require 'heterarchy'
-{EventEmitter} = require 'events'
-
-{ensureOptions} = rek 'validate'
+BaseObject = rek 'BaseObject'
 Clock = rek 'Clock'
 ExtensionContainer = rek 'lib/ext/ExtensionContainer'
 FileResolver = rek 'FileResolver'
@@ -12,20 +9,20 @@ log = rek('logger')(require('path').basename(__filename).split('.')[ 0 ])
 out = rek 'lib/util/out'
 Path = require './Path'
 PluginContainer = require './PluginContainer'
+ConventionContainer = rek 'ConventionContainer'
 PluginsRegistry = require './PluginsRegistry'
 prop = rek 'lib/util/prop'
 ProxyFactory = rek 'ProxyFactory'
 ScriptPhase = require './ScriptPhase'
-SeqX = rek 'SeqX'
 SourceSetContainer = rek 'lib/task/SourceSetContainer'
 TaskContainer = rek 'lib/task/TaskContainer'
 TaskFactory = rek 'lib/task/TaskFactory'
 TaskGraphExecutor = require './TaskGraphExecutor'
 
-class Project extends multi EventEmitter, SeqX
+class Project extends BaseObject
 
   prop @, 'pkg', get : -> @extensions.get 'pkg'
-  
+
   prop @, 'originalPkg', get : -> @extensions.get '__pkg'
 
   prop @, 'path', get : -> @_path.fullPath
@@ -69,20 +66,31 @@ class Project extends multi EventEmitter, SeqX
     get : -> @_status
     set : ( v ) -> @_set '_status', v
 
-  constructor : ( {@name, @parent, @projectDir, @script} = {} ) ->
-    ensureOptions @, 'name'
-    @rootProject = parent?.rootProject or @
+  @_addProperties
+    required : [ 'name', 'projectDir', 'script' ]
+    optional : [ 'parent' ]
+    exported : [ 'description', 'name', 'version' ]
+    exportedReadOnly : []
+    exportedMethods : [ 'apply', 'defaultTasks', 'println' ]
+
+  init : =>
+    @isMultiProject = false
+    @rootProject = @parent?.rootProject or @
     @_defaultTasks = []
     @pluginsRegistry = new PluginsRegistry()
     @tasks = new TaskContainer()
+    @conventions = new ConventionContainer()
     @extensions = new ExtensionContainer()
     @fileResolver = new FileResolver projectDir : @projectDir
     @plugins = new PluginContainer()
-    @methods = [ 'apply', 'defaultTasks' ]
+
     @extensions.on 'add', ( name, ext ) =>
       return if _.startsWith name, '__'
       log.v 'adding ext', name
       @registerProxyFactory ext, name
+
+    @conventions.on 'add', ( name, obj ) =>
+      obj.apply @
 
     @description ?= "project #{@name}"
     @version ?= "0.1.0"
@@ -99,22 +107,6 @@ class Project extends multi EventEmitter, SeqX
 
   onCompleted : =>
     @emit 'afterEvaluate'
-
-  hasProperty : ( name ) =>
-    log.v 'hasProperty', name
-    name in [ 'description', 'name', 'version' ]
-
-  hasMethod : ( name ) =>
-    log.v 'hasMethod', name
-    return true if name in [ 'apply', 'defaultTasks', 'println' ]
-
-  getProperty : ( name ) =>
-    log.v 'getProperty', name
-    return @[ name ] if name in [ 'description', 'name', 'version' ]
-
-  setProperty : ( name, val ) =>
-    log.v 'setProperty', "#{name}:", val
-    @[ name ] = val
 
   println : ( args... ) ->
     out.eolThen('').white(args...).eol()
@@ -135,10 +127,14 @@ class Project extends multi EventEmitter, SeqX
     for t in queue
       t.task.onAfterEvaluate()
 
-    log.i 'tasks:', _.map executor.executionQueue, ( x ) -> x.task.name
+    names = _.map executor.executionQueue, ( x ) =>
+      if @isMultiProject then x.task.path else x.task.displayName
+    out.grey "Executing #{names.length} task(s): #{names.join ', '}"
 
-    queue.forEach ( t ) =>  @seq t.execute
-    @seq =>
+    prev = Q()
+    queue.forEach ( t ) =>
+      prev = prev.then -> t.execute()
+    prev.then ->
       log.v tag, clock.pretty
 
   report : =>
@@ -157,10 +153,10 @@ class Project extends multi EventEmitter, SeqX
       out.red("FAILURE: Build failed with #{num} #{ex}.
         See task for details.").eol()
       for t in @failedTasks
-        out('> ' + t.task.name).eol()
+        out('> ' + t.task.displayName).eol()
 
   defaultTasks : ( tasks... ) =>
-    @_defaultTasks.push t for t in tasks
+    @_defaultTasks.push t for t in tasks when t?
 
   apply : ( opts ) =>
     opts = opts[ 0 ] if Array.isArray opts
@@ -203,13 +199,6 @@ class Project extends multi EventEmitter, SeqX
     catch err
       defer.reject err
     defer.promise
-
-  _afterEvaluate : =>
-    clock = new Clock()
-    tag = "onAfterEvaluate #{@path}"
-    @seq -> log.v tag
-    @tasks.forEach ( t ) =>  @seq t.afterEvaluate
-    @seq -> log.v tag, 'done:', clock.pretty
 
   _set : ( name, val ) ->
     old = @[ name ]

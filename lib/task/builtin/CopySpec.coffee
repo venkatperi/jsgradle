@@ -5,7 +5,7 @@ SourceSpec = rek 'SourceSpec'
 TargetSpec = rek 'TargetSpec'
 ProcessingSpec = rek 'ProcessingSpec'
 {multi} = require 'heterarchy'
-log = rek('logger')(require('path').basename(__filename).split('.')[ 0 ])
+path = require 'path'
 
 methods = []
 
@@ -26,6 +26,27 @@ class CopySpec extends multi SourceSpec, TargetSpec, ProcessingSpec
       while (root.parent?)
         root = root.parent
       root
+
+  prop @, 'allDest',
+    get : ->
+      list = (c.allDest for c in @children)
+      list.push @dest if @dest?
+      _.flatten list
+
+  prop @, 'patterns',
+    get : ->
+      src = "#{@srcDir}/" or ''
+      patterns = _.map _.flatten(c.patterns for c in @children),
+        ( x ) ->
+          prefix = ''
+          [x,prefix] = [ x[ 1.. ], '!' ] if x[ 0 ] is '!'
+          "#{prefix}#{src}#{x}"
+      patterns = patterns.concat _.map @includes, ( x ) -> "#{src}#{x}"
+      patterns = patterns.concat _.map @excludes, ( x ) -> "!#{src}#{x}"
+      _.map patterns, ( x ) ->
+        prefix = ''
+        [x,prefix] = [ x[ 1.. ], '!' ] if x[ 0 ] is '!'
+        prefix + path.normalize(x)
 
   constructor : ( opts = {} ) ->
     for p in [ 'srcDir', 'dest', 'name', 'parent' ] when opts[ p ]?

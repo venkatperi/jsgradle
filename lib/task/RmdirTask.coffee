@@ -8,6 +8,7 @@ class RmdirTask extends Task
 
   init : ( opts = {} ) =>
     {@dirs} = ensureOptions opts, 'dirs'
+    super opts
 
   summary : =>
     if @didWork then "#{@didWork} file(s) OK" else "UP-TO-DATE"

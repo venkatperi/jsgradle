@@ -1,37 +1,42 @@
 apply plugin : 'greeting'
-apply plugin : 'package'
-apply plugin : 'coffee'
+#apply plugin : 'package'
+#apply plugin : 'coffee'
+apply plugin : 'gulp'
 
 description = 'test project'
 version = '0.2.0'
 
-defaultTasks 'hello', 'test', 'ls'
+defaultTasks 'hello', 'ls', 'test'
 
-pkg ->
-  name = 'test'
-  scripts ->
-    abc = 123
+#pkg ->
+#  name = 'test'
+#  scripts ->
+#    abc = 123
 
-sourceSets ->
-  main ->
-    coffeescript ->
-      from '.', ->
-        include '*.coffee'
+#sourceSets ->
+#  main ->
+#    coffeescript ->
+#      from '.', ->
+#        include '*.coffee'
 
 greeting ->
   name = 'world'
 
-task 'copy', type : Copy, ->
-  from 'lib', ->
-    include '**/*.coffee'
-    exclude '**/T*.coffee'
-    filter ( line ) -> line.toLowerCase()
-  into 'dist'
+#task 'copy', type : Copy, ->
+#  from 'lib', ->
+#    include '**/*.coffee'
+#    exclude '**/T*.coffee'
+#    filter ( line ) -> line.toLowerCase()
+#  into 'dist'
 
 task ls, type : Exec, ->
   executable '/bin/xls'
   workingDir '/'
 
-task test, ->
-  doFirst ->
-    println 'test'
+task test, type: Gulp, ->
+  from 'lib', ->
+    include '**/*.coffee'
+  into 'dist'
+  options ->
+    a = 1
+  

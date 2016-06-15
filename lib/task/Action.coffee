@@ -2,24 +2,25 @@ _ = require 'lodash'
 rek = require 'rekuire'
 Q = require 'q'
 prop = rek 'prop'
-{ensureOptions} = rek 'validate'
+BaseObject = rek 'BaseObject'
 
-class Action
+class Action extends BaseObject
 
   prop @, 'project', get : -> @task.project
 
   prop @, 'failed', get : -> @errors?.length > 0
 
+  prop @, 'isSandbox', get : -> @f?.type is 'function'
+
   prop @, 'messages', get : -> _.map @errors, ( x ) -> x.message
 
-  constructor : ( opts = {} ) ->
-    {@task} = ensureOptions opts, 'task'
-    @f = opts.f
-    @isSandbox = @f?.type is 'function'
-    @errors = []
-    @init opts
+  @_addProperties
+    required : [ 'task' ]
+    optional : [ 'f' ]
 
-  init : =>
+  init : ( opts ) =>
+    super opts
+    @errors = []
 
   println : ( msg ) =>
     @project.println msg
