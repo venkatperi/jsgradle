@@ -6,9 +6,8 @@ RmdirAction = require './RmdirAction'
 
 class RmdirTask extends Task
 
-  init : ( opts = {} ) =>
-    {@dirs} = ensureOptions opts, 'dirs'
-    super opts
+  @_addProperties
+    required : [ 'dirs' ]
 
   summary : =>
     if @didWork then "#{@didWork} file(s) OK" else "UP-TO-DATE"

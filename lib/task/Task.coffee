@@ -8,6 +8,7 @@ Action = require './Action'
 log = require('../util/logger') 'Task'
 out = rek 'out'
 BaseObject = rek 'BaseObject'
+conf = rek 'conf'
 
 class Task extends BaseObject
 
@@ -15,7 +16,8 @@ class Task extends BaseObject
     required : [ 'name', 'project', 'type' ]
     optional : [ 'description' ]
     exported : [ 'description', 'didWork', 'enabled' ]
-    exportedReadOnly : [ 'name', 'actions', 'dependencies', 'temporaryDir' ]
+    exportedReadOnly : [ 'name', 'actions', 'dependencies',
+      'temporaryDir' ]
     exportedMethods : [ 'doFirst', 'doLast' ]
 
   p @, 'configured', get : -> @_configured.promise
@@ -26,13 +28,18 @@ class Task extends BaseObject
 
   p @, 'temporaryDir', get : -> os.tmpdir()
 
-  p @, 'failed', get : -> _.some @actions, ( x ) -> x.failed
+  p @, 'failed', get : ->
+    @_cache.get 'failed',
+      => _.some @actions, ( x ) -> x.failed
 
-  p @, 'failedActions', get : -> _.filter @actions, ( x ) -> x.failed
+  p @, 'failedActions', get : ->
+    @_cache.get 'failedActions',
+      => _.filter @actions, ( x ) -> x.failed
 
   p @, 'messages', get : ->
-    _.map _.flatten(_.map @failedActions, ( x ) -> x.messages),
-      ( x ) -> '> ' + x
+    @_cache.get 'messages',
+      => _.map _.flatten(_.map @failedActions,
+        ( x ) -> x.messages), ( x ) -> '> ' + x
 
   init : =>
     @description ?= "task #{@name}"
@@ -50,17 +57,19 @@ class Task extends BaseObject
       @project.tasks.get(d).task.enable()
 
   summary : =>
-    if !@failed
-      if @checkDidWork() then "OK" else "UP-TO-DATE"
-    else
-      msg = Array.from @messages
-      msg.unshift 'FAILED'
-      msg.join '\n'
+    @_cache.get 'summary', =>
+      if !@failed
+        if @checkDidWork() then "OK" else "UP-TO-DATE"
+      else
+        msg = Array.from @messages
+        msg.unshift 'FAILED'
+        msg.join '\n'
 
   checkDidWork : =>
-    return true if @didWork
-    for d in @dependencies
-      return true if @project.tasks.get(d).task.checkDidWork()
+    @_cache.get 'checkDidWork', =>
+      return true if @didWork
+      for d in @dependencies
+        return true if @project.tasks.get(d).task.checkDidWork()
 
   onAfterEvaluate : =>
     @_configured.resolve()
@@ -70,7 +79,6 @@ class Task extends BaseObject
     @
 
   doFirst : ( action ) =>
-    log.v 'doFirst'
     action = action[ 0 ] if Array.isArray action
     action = new Action(f : action, task : @) unless action instanceof Action
     @actions.splice 0, 0, action
@@ -93,7 +101,6 @@ class Task extends BaseObject
     return 1 if @path > other.path
     0
 
-  toString : =>
-    "task #{@name}"
+  toString : => "task #{@name}"
 
 module.exports = Task

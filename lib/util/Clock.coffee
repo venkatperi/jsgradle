@@ -7,7 +7,10 @@ class Clock
 
   prop @, 'pretty', get : -> pretty @time
 
-  constructor : () ->
+  constructor : ->
+    @reset()
+
+  reset : =>
     @start = process.hrtime()
 
 module.exports = Clock

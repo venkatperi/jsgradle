@@ -22,6 +22,7 @@
     "mixto": "^1.0.0",
     "mkdirp": "^0.5.1",
     "multimap": "^1.0.2",
+    "nconf": "^0.8.4",
     "ncp": "^2.0.0",
     "node-walkup": "^1.1.1",
     "pretty-hrtime": "^1.0.2",

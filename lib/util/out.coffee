@@ -3,11 +3,8 @@ prop = require './prop'
 os = require 'os'
 
 stdout = process.stdout
-print = ( s ) -> stdout.write s
 println = ( s ) ->
-  console.log s
-#stdout.write s + os.EOL
-#stdout.flush()
+  stdout.write s + os.EOL
 
 colors = [ 'green', 'grey', 'white', 'red', 'yellow' ]
 class Message

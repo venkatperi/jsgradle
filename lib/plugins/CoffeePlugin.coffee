@@ -1,59 +1,36 @@
 rek = require 'rekuire'
 Plugin = require './Plugin'
-log = require('../util/logger') 'CoffeePlugin'
-SourceSetContainer = require '../task/SourceSetContainer'
-CopySpec = rek 'lib/task/builtin/CopySpec'
-SourceSetOutput = rek 'lib/task/SourceSetOutput'
-CoffeeOptions = require './coffeescript/CoffeeOptions'
-CompileCoffeeTask = require './coffeescript/CompileCoffeeTask'
-CleanCoffeeTask = require './coffeescript/CleanCoffeeTask'
-TaskFactory = rek 'lib/task/TaskFactory'
-CoffeeConvention = require './coffeescript/CoffeeConvention'
+SourceSetContainer = rek 'SourceSetContainer'
+CopySpec = rek 'CopySpec'
+SourceSetOutput = rek 'SourceSetOutput'
+CoffeeOptions = rek 'CoffeeOptions'
+CleanMainOutputTask = rek 'CleanMainOutputTask'
+TaskFactory = rek 'TaskFactory'
+CoffeeConvention = rek 'CoffeeConvention'
+GulpTask = rek 'GulpTask'
+
+coffeeTask = ( options ) -> ( opts = {} ) ->
+  _opts = _.extend {}, opts
+  _.extend _opts, options : options
+  new GulpTask _opts
 
 class CoffeePlugin extends Plugin
 
-  apply : ( project ) =>
-    return if @configured
-    super project
-    project.apply plugin : 'build'
+  doApply : =>
+    @applyPlugin 'build'
 
-    project.extensions.add 'coffeescript', new CoffeeOptions() 
-    project.conventions.add 'coffeescript', new CoffeeConvention()
-    
-    TaskFactory.register 'CompileCoffee', ( x ) -> new CompileCoffeeTask x
-    TaskFactory.register 'CleanCoffee', ( x ) -> new CleanCoffeeTask x
-    project.task 'compileCoffee', type : 'CompileCoffee'
-    project.task 'cleanCoffee', type : 'CleanCoffee'
-    project.tasks.get('build').task.dependsOn 'compileCoffee'
-    project.tasks.get('clean').task.dependsOn 'cleanCoffee'
+    @register
+      extensions :
+        coffeescript : CoffeeOptions
+      conventions :
+        coffeescript : CoffeeConvention
+      taskFactory :
+        CompileCoffee : coffeeTask(@extension 'coffeescript')
+        CleanCoffee : CleanMainOutput
 
-  _createSourceSets : =>
-    unless @project.plugins.sourceSets?
-      @project.apply plugin : 'sourceSets'
-
-    root = @project.sourceSets
-    unless root.has 'main'
-      root.add 'main', new SourceSetContainer parent : root, name : 'main'
-    unless root.has 'test'
-      root.add 'test', new SourceSetContainer parent : root, name : 'test'
-
-    main = root.get 'main'
-    test = root.get 'test'
-
-    unless main.has 'output'
-      out = new SourceSetOutput parent : main, name : 'output'
-      out.dir = 'dist'
-      main.add 'output', out
-
-    unless main.has 'coffeescript'
-      src = new CopySpec parent : main, name : 'coffeescript', allMethods : true
-      src.srcDir = 'lib'
-      src.include '**/*.coffee'
-      main.add 'coffeescript', src
-
-    unless test.has 'coffeescript'
-      src = new CopySpec parent : test, name : 'coffeescript'
-      src.include 'test/**/*.coffee'
-      test.add 'coffeescript', src
+    @createTask 'compileCoffee', type : 'GulpCoffee'
+    @createTask 'cleanCoffee', type : 'CleanMainOutput'
+    @task('build').dependsOn 'compileCoffee'
+    @task('clean').task.dependsOn 'cleanCoffee'
 
 module.exports = CoffeePlugin

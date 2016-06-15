@@ -1,11 +1,8 @@
-_ = require 'lodash'
 Q = require 'q'
 path = require 'path'
 fs = require 'fs'
 {FactoryBuilderSupport} = require 'coffee-dsl'
 walkup = require 'node-walkup'
-seqx = require 'seqx'
-
 rek = require 'rekuire'
 Phase = rek 'ScriptPhase'
 Project = rek 'Project'
@@ -15,32 +12,34 @@ ProjectFactory = rek 'lib/factory/ProjectFactory'
 CopySpecFactory = rek 'lib/factory/CopySpecFactory'
 OptionsFactory = rek 'lib/factory/OptionsFactory'
 log = rek('logger')(require('path').basename(__filename).split('.')[ 0 ])
-Clock = rek 'Clock'
 {isFile, readFile} = rek 'fileOps'
+time = rek 'time'
+HrTime = rek 'HrTime'
+Clock = rek 'Clock'
+conf = rek 'conf'
+
+defaultFactories =
+  project : ProjectFactory
+  task : TaskBuilderFactory
+  from : CopySpecFactory
+  into : CopySpecFactory
+  filter : CopySpecFactory
+  options : OptionsFactory
 
 class Script extends FactoryBuilderSupport
-  constructor : ( opts = {} ) ->
-    @buildDir = opts.buildDir or process.cwd()
-    @continueOnError = opts.continueOnError
-    @tasks = opts.tasks
-    @totalTime = new Clock()
-    super()
-    @phase = Phase.Initial
-    @registerFactory 'project', new ProjectFactory script : @
-    @registerFactory 'task', new TaskBuilderFactory script : @
-    @registerFactory 'from', new CopySpecFactory script : @
-    @registerFactory 'into', new CopySpecFactory script : @
-    @registerFactory 'filter', new CopySpecFactory script : @
-    @registerFactory 'options', new OptionsFactory script : @
 
-  seq : ( f ) =>
-    @_seqx ?= seqx()
-    @_done = @_seqx.add f
-    .fail ( err ) =>
-      throw err
-      #@emit 'error', err
-      @errors ?= []
-      @errors.push err
+  constructor : ( opts = {} ) ->
+    @totalTime = new Clock()
+    super opts
+    @phase = Phase.Initial
+    @buildDir = opts.buildDir or conf.get('script:build:dir')
+    @continueOnError = opts.continueOnError or conf.get 'project:build:continueOnError'
+    @tasks = opts.tasks
+    @_registerFactories()
+
+  initialize : =>
+    @phase = Phase.Initialization
+    @_loadScript()
 
   configure : =>
     out.eolThen 'Configuring... '
@@ -48,29 +47,35 @@ class Script extends FactoryBuilderSupport
     out.ifNewline("> Configuring...")
     .grey(" DONE. #{@totalTime.pretty}").eol()
 
-  #@project.configured
-
-  execute : => @seq @_execute
+  execute : =>
+    @phase = Phase.Execution
+    @project.execute()
 
   report : =>
     @project.report()
     out.eolThen('').eol().white("Total time: #{@totalTime.pretty}").eol()
 
+  _configure : =>
+    @phase = Phase.Configuration
+    Q.try =>
+      @evaluate @contents, coffee : true
+      @project._tasksToExecute = @tasks if @tasks?.length
+
   _loadScript : =>
-    walkup 'build.kohi', cwd : @buildDir
+    fileName = conf.get 'script:build:file'
+    enc = conf.get 'script:build:enc'
+    walkup fileName, cwd : @buildDir
     .then ( v ) =>
-      throw new Error "Didn't find file build.kohi" unless v.length
+      throw new Error "Didn't find build file (#{fileName})" unless v.length
       @scriptFile = path.join v[ 0 ].dir, v[ 0 ].files[ 0 ]
-      log.v 'script file:', @scriptFile
       isFile @scriptFile
-    .then ( type ) =>
-      throw new Error "Not a file: #{@scriptFile}" unless type
-      readFile @scriptFile, 'utf8'
+    .then ( isAFile ) =>
+      throw new Error "Not a file: #{@scriptFile}" unless isAFile
+      readFile @scriptFile, enc
     .then ( contents ) =>
       @_createProjectClosure contents
 
   _createProjectClosure : ( contents ) =>
-    # add project closure 
     parts = path.parse @scriptFile
     projectDir = parts.dir
     name = path.basename projectDir
@@ -80,28 +85,9 @@ class Script extends FactoryBuilderSupport
     contents = lines.join '\n'
     @contents = contents
 
-  initialize : =>
-    log.v 'initialize'
-    @phase = Phase.Initialization
-    @_loadScript()
-
-  _configure : =>
-    log.v 'configure'
-    clock = new Clock()
-    @phase = Phase.Configuration
-    Q.Promise ( resolve, reject ) =>
-      try
-        resolve @evaluate @contents, coffee : true
-      catch err
-      #reject err
-
-    @project._tasksToExecute = @tasks if @tasks?.length
-    log.v 'configure done:', clock.pretty
-
-  _execute : =>
-    log.v 'execute'
-    @phase = Phase.Execution
-    @project.execute()
+  _registerFactories : =>
+    for own k,v of defaultFactories
+      @registerFactory k, new v script : @
 
 module.exports = Script
 

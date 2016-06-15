@@ -13,20 +13,21 @@ load = ( file, obj ) =>
   pkg
 
 class PackagePlugin extends Plugin
-  constructor : ->
-    @name = 'package'
 
-  apply : ( project ) =>
-    super project
-    #@package = new PackageOptions()
-    @package = configurable(project.callScriptMethod)
+  doApply : =>
+    @package = configurable(@project.callScriptMethod)
+
     file = project.fileResolver.file 'package.json'
     pkg = load file, @package
 
-    project.extensions.add 'pkg', @package
-    project.extensions.add '__pkg', filename: file, pkg: pkg
-    TaskFactory.register 'UpdatePkg', ( x ) -> new UpdatePkgTask x
-    project.task 'updatePkg', type : 'UpdatePkg'
+    @register
+      extensions :
+        pkg : @package
+        __pkg : { filename : file, pkg : pkg }
+      taskFactory :
+        UpdatePkg : UpdatePkgTask
+        
+    @createTask 'updatePkg', type : 'UpdatePkg'
     project.defaultTasks 'updatePkg'
 
 module.exports = PackagePlugin

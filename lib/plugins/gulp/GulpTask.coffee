@@ -1,16 +1,17 @@
+_ = require 'lodash'
 rek = require 'rekuire'
 Task = rek 'lib/task/Task'
 gulp = require 'gulp'
 GulpSpec = rek 'GulpSpec'
 GulpAction = require './GulpAction'
-coffee = require 'gulp-coffee'
+
+PREFIX = 'Gulp'
 
 class GulpTask extends Task
 
-  init : ( opts ) =>
-    @spec = opts.spec
-    @output = opts.output
-    super(opts)
+  @_addProperties
+    required : [ 'spec' ]
+    optional : [ 'output', 'options', 'gulpType' ]
 
   setChild : ( c ) =>
     @spec ?= new GulpSpec()
@@ -20,18 +21,28 @@ class GulpTask extends Task
     if @didWork then "#{@didWork} file(s) OK" else "UP-TO-DATE"
 
   onAfterEvaluate : =>
-    console.log @spec
-    @_configured.resolve()
-    return
-    
+    gulpType = @gulpType
+    unless gulpType
+      gulpType = _.lowerFirst @type[ PREFIX.length.. ]
+      throw new Error "Bad gulp plugin: gulp-#{gulpType}" unless gulpType.length > 0
+      gulpType = gulp + gulpType
+
+    gulpPlugin = require gulpType
+
     dest = @spec?.allDest
     dest = dest?[ 0 ] or @output
-    @_configured.reject new Error "No destinations" unless dest
+    throw new Error "No destinations" unless dest
+
     gulp.task @path, =>
       gulp.src @spec.patterns
-      .pipe coffee { bare : true }
+      .pipe gulpPlugin @options
       .pipe gulp.dest dest
-    @doFirst new GulpAction gulp : gulp, taskName : @path, task : @
+
+    @doFirst new GulpAction
+      gulp : gulp,
+      taskName : @path,
+      task : @
+
     @_configured.resolve()
 
 module.exports = GulpTask

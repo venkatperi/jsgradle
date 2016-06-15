@@ -12,7 +12,8 @@ class Action extends BaseObject
 
   prop @, 'isSandbox', get : -> @f?.type is 'function'
 
-  prop @, 'messages', get : -> _.map @errors, ( x ) -> x.message
+  prop @, 'messages', get : ->
+    @_cache.get 'messages', => _.map @errors, ( x ) -> x.message
 
   @_addProperties
     required : [ 'task' ]

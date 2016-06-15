@@ -1,13 +1,11 @@
+rek = require 'rekuire'
+prop = rek 'prop'
+
 SEP = ':'
-
-prop = require './../util/prop'
-
-isAbsolute = ( path ) ->
-  path?.indexOf(SEP) is 0
+isAbsolute = ( path ) -> path?.indexOf(SEP) is 0
 
 ###
 Public: Represents path to a project/task
-
 ###
 class Path
   @SEP : SEP
@@ -23,6 +21,7 @@ class Path
   constructor : ( path, absolute = true )->
     @_segments = []
     @absolute = absolute
+    
     if typeof path is 'string'
       @absolute = isAbsolute path
       path = path[ 1.. ] if @absolute

@@ -1,22 +1,16 @@
 rek = require 'rekuire'
-log = rek('logger')(require('path').basename(__filename).split('.')[ 0 ])
 Task = require '../Task'
 ExecAction = require './ExecAction'
 
 class ExecTask extends Task
 
-  constructor : ( opts = {} )->
-    opts.type = 'Exec'
-    super opts
-    @_args = []
-    @doFirst new ExecAction spec : @, task : @
-
-  hasMethod : ( name ) =>
-    name in [ 'args', 'commandLine', 'executable', 'environment',
-      'ignoreExitValue', 'workingDir', ]
+  @_addProperties
+    exportedMethods : [ 'args', 'commandLine',
+      'executable', 'environment', 'ignoreExitValue',
+      'workingDir', ]
 
   args : ( arg... ) =>
-    @_args = @_arg.concat arg
+    @_args = @_args.concat arg
 
   commandLine : ( line ) =>
     if typeof line is 'string'
@@ -35,11 +29,13 @@ class ExecTask extends Task
   ignoreExitValue : ( val ) =>
     @_ignoreExitValue = val
 
-  workingDir : ( dir ) => @_workingDir = dir
+  workingDir : ( dir ) =>
+    @_workingDir = dir
 
   onAfterEvaluate : =>
     unless @_executable?
       throw new Error "No executable specified"
+    @doFirst new ExecAction spec : @, task : @
     super()
 
 module.exports = ExecTask

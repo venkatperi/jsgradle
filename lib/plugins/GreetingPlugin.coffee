@@ -13,15 +13,16 @@ class Greeting
 
 class GreetingPlugin extends Plugin
   constructor : ->
+
+  doApply : =>
     @greeting = new Greeting()
+    
+    @register
+      extensions :
+        greeting : @greeting
 
-  apply : ( project ) =>
-    return if @configured
-    super project
-    project.extensions.add 'greeting', @greeting
-
-    project.task 'hello', null, ( t ) =>
+    @createTask 'hello', null, ( t ) =>
       t.doFirst =>
-        project.println("hello #{@greeting.name}")
+        @project.println("hello #{@greeting.name}")
 
 module.exports = GreetingPlugin

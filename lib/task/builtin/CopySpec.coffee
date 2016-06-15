@@ -27,6 +27,13 @@ class CopySpec extends multi SourceSpec, TargetSpec, ProcessingSpec
         root = root.parent
       root
 
+  prop @, 'allOptions',
+    get : ->
+      list = []
+      for c in @children
+        list.push (if c.__factory is 'options' then c else c.allOptions)
+      _.flatten list
+
   prop @, 'allDest',
     get : ->
       list = (c.allDest for c in @children)

@@ -18,6 +18,7 @@ SourceSetContainer = rek 'lib/task/SourceSetContainer'
 TaskContainer = rek 'lib/task/TaskContainer'
 TaskFactory = rek 'lib/task/TaskFactory'
 TaskGraphExecutor = require './TaskGraphExecutor'
+conf = rek 'conf'
 
 class Project extends BaseObject
 
@@ -43,12 +44,17 @@ class Project extends BaseObject
 
   prop @, 'subProjects', get : ->
 
-  prop @, 'failed', get : -> @tasks.some ( x ) -> x.task.failed
+  prop @, 'failed', get : ->
+    @_cache.get 'failed',
+      => @tasks.some ( x ) -> x.task.failed
 
-  prop @, 'failedTasks', get : -> @tasks.filter ( x ) -> x.task.failed
+  prop @, 'failedTasks', get : ->
+    @_cache.get 'failedTasks',
+      => @tasks.filter ( x ) -> x.task.failed
 
   prop @, 'messages', get : ->
-    _.flatten(_.map @failedTasks, ( x ) -> x.messages)
+    @_cache.get 'messages',
+      => _.flatten(_.map @failedTasks, ( x ) -> x.messages)
 
   prop @, 'description',
     get : -> @_description
@@ -76,7 +82,7 @@ class Project extends BaseObject
   init : =>
     @isMultiProject = false
     @rootProject = @parent?.rootProject or @
-    @_defaultTasks = []
+    @_defaultTasks = conf.get 'project:build:defaultTasks', []
     @pluginsRegistry = new PluginsRegistry()
     @tasks = new TaskContainer()
     @conventions = new ConventionContainer()
@@ -86,14 +92,14 @@ class Project extends BaseObject
 
     @extensions.on 'add', ( name, ext ) =>
       return if _.startsWith name, '__'
-      log.v 'adding ext', name
       @registerProxyFactory ext, name
 
     @conventions.on 'add', ( name, obj ) =>
       obj.apply @
 
     @description ?= "project #{@name}"
-    @version ?= "0.1.0"
+    @version ?= conf.get 'project:build:version'
+
     if @parent
       @_path = new Path @parent.absoluteProjectPath name
       @depth = @parent.depth + 1
@@ -112,10 +118,8 @@ class Project extends BaseObject
     out.eolThen('').white(args...).eol()
 
   initialize : =>
-    log.v 'initialize'
 
   execute : =>
-    log.v tag = "executing #{@path}"
     clock = new Clock()
     executor = new TaskGraphExecutor(@tasks)
     tasks = @_tasksToExecute or @_defaultTasks
@@ -171,7 +175,6 @@ class Project extends BaseObject
       undefined
 
   task : ( name, opts, f ) =>
-    log.v 'task', name, opts
     opts ?= {}
     opts.name = name
     opts.project = @
@@ -207,7 +210,6 @@ class Project extends BaseObject
       @emit 'change', name, val, old
     @
 
-  toString : =>
-    "project #{name}"
+  toString : => "project #{name}"
 
 module.exports = Project
