@@ -12,7 +12,6 @@ class Greeting
     @[ k ] = v
 
 class GreetingPlugin extends Plugin
-  constructor : ->
 
   doApply : =>
     @greeting = new Greeting()

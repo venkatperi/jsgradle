@@ -1,22 +1,23 @@
+_ = require 'lodash'
 Q = require 'q'
 path = require 'path'
 fs = require 'fs'
 {FactoryBuilderSupport} = require 'coffee-dsl'
 walkup = require 'node-walkup'
 rek = require 'rekuire'
-Phase = rek 'ScriptPhase'
 Project = rek 'Project'
 out = rek 'lib/util/out'
 TaskBuilderFactory = rek 'lib/factory/TaskBuilderFactory'
 ProjectFactory = rek 'lib/factory/ProjectFactory'
 CopySpecFactory = rek 'lib/factory/CopySpecFactory'
 OptionsFactory = rek 'lib/factory/OptionsFactory'
-log = rek('logger')(require('path').basename(__filename).split('.')[ 0 ])
 {isFile, readFile} = rek 'fileOps'
 time = rek 'time'
 HrTime = rek 'HrTime'
 Clock = rek 'Clock'
 conf = rek 'conf'
+ConsoleReporter = rek 'ConsoleReporter'
+prop = rek 'prop'
 
 defaultFactories =
   project : ProjectFactory
@@ -28,38 +29,94 @@ defaultFactories =
 
 class Script extends FactoryBuilderSupport
 
+  prop @, 'failed', get : ->
+    @errors.length or @project.failed
+
+  prop @, 'messages', get : ->
+    list = _.map @errors, ( x ) -> '> ' + x.message
+    list = _.concat list, @project.messages
+    list.join '\n'
+
   constructor : ( opts = {} ) ->
     @totalTime = new Clock()
+    @errors = []
+    @reporters = [ new ConsoleReporter() ]
+    @listenTo @
     super opts
-    @phase = Phase.Initial
     @buildDir = opts.buildDir or conf.get('script:build:dir')
     @continueOnError = opts.continueOnError or conf.get 'project:build:continueOnError'
     @tasks = opts.tasks
     @_registerFactories()
+  #@on 'error', ( err ) ->  console.log err.message
+
+  build : ( stage = 'execute' ) =>
+    @.initialize().then =>
+      @configure()
+      .then =>
+        return if stage is @stage
+        return if @failed
+        @afterEvaluate()
+      .then =>
+        return if stage is @stage
+        return if @failed
+        @execute()
+    .then => @report()
+    .fail ( err ) =>
+      @errors.push err
+
+  listenTo : ( obj ) =>
+    @reporters.forEach ( r ) -> r.listenTo obj
 
   initialize : =>
-    @phase = Phase.Initialization
+    @stage = 'initialize'
+    @emit 'script:initialize:start', @
     @_loadScript()
+    .finally =>
+      @emit 'script:initialize:end', @, @totalTime.pretty
 
   configure : =>
-    out.eolThen 'Configuring... '
+    @stage = 'configure'
+    clock = new Clock()
+    @emit 'script:configure:start', @
     @_configure()
-    out.ifNewline("> Configuring...")
-    .grey(" DONE. #{@totalTime.pretty}").eol()
+    .finally =>
+      @emit 'script:configure:end', @, clock.pretty
+
+  afterEvaluate : =>
+    @stage = 'afterEvaluate'
+    clock = new Clock()
+    @emit 'script:afterEvaluate:start', @
+    @project.afterEvaluate()
+    .finally =>
+      @emit 'script:afterEvaluate:end', @, clock.pretty
 
   execute : =>
-    @phase = Phase.Execution
+    @stage = 'execute'
+    @emit 'script:execute:start', @
     @project.execute()
+    .finally =>
+      @emit 'script:execute:end', @, @totalTime.pretty
 
   report : =>
-    @project.report()
+    if @failed
+      if @errors.length
+        out.eolThen().eol()
+        .red('FAILURE: The following error(s) occurred:')
+        .eol()
+        out.grey(@messages).eol()
+      else
+        @project.report()
+    else
+      @project.report()
+
     out.eolThen('').eol().white("Total time: #{@totalTime.pretty}").eol()
 
   _configure : =>
-    @phase = Phase.Configuration
     Q.try =>
       @evaluate @contents, coffee : true
       @project._tasksToExecute = @tasks if @tasks?.length
+    .fail ( err ) =>
+      @errors.push err
 
   _loadScript : =>
     fileName = conf.get 'script:build:file'

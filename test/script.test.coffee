@@ -27,10 +27,7 @@ describe 'Script', ->
   it 'execute', ( done ) ->
     s = new Script
       scriptFile : path.join __dirname, 'fixtures', 'script1.coffee'
-    s.initialize()
-    .then -> s.configure()
-    .then -> s.execute()
-    .then -> s.report()
+    s.build()
     .then ->
       s.project.name.should.equal 'proj1'
       s.project.description.should.equal 'test project'

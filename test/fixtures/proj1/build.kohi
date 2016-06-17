@@ -1,12 +1,16 @@
 apply plugin : 'greeting'
 #apply plugin : 'package'
-#apply plugin : 'coffee'
+apply plugin : 'coffee'
 #apply plugin : 'gulp'
 
 description = 'test project'
 version = '0.2.0'
 
 defaultTasks 'hello', 'ls', 'test'
+
+dependencies ->
+  runtime 'abc', '1.0.3'
+  runtime 'abcd:^1.0.4'
 
 #pkg ->
 #  name = 'test'
@@ -33,7 +37,7 @@ task ls, type : Exec, ->
   executable '/bin/xls'
   workingDir '/'
 
-task test, type: GulpCoffee, ->
+task test, ->
   from 'lib', ->
     include '**/*.coffee'
   into 'dist'

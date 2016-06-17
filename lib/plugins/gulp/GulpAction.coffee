@@ -1,18 +1,18 @@
 rek = require 'rekuire'
 Action = rek 'Action'
-
-class CoffeeAction extends Action
+through = require 'through'
+class GulpAction extends Action
 
   init : ( opts = {} ) =>
     @gulp = opts.gulp
     @taskName = opts.taskName
 
   exec : ( resolve, reject ) =>
-    @gulp.start @taskName, ( err, res ) ->
+    @gulp.start @taskName, ( err, res ) =>
       return reject err if err?
       resolve res
 
-module.exports = CoffeeAction
+module.exports = GulpAction
     
 
 

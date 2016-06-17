@@ -29,8 +29,10 @@
     "q": "^1.4.1",
     "rekuire": "^0.1.9",
     "rmdir": "^1.2.0",
+    "semver": "^5.1.0",
     "split": "^1.0.0",
     "taglog": "^1.1.0",
+    "through": "^2.3.8",
     "yargs": "^4.7.1"
   },
   "bundleDependencies": [],

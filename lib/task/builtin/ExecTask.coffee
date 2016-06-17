@@ -36,6 +36,5 @@ class ExecTask extends Task
     unless @_executable?
       throw new Error "No executable specified"
     @doFirst new ExecAction spec : @, task : @
-    super()
 
 module.exports = ExecTask

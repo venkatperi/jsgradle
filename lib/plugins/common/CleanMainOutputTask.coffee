@@ -1,11 +1,11 @@
-_ = require 'lodash'
 rek = require 'rekuire'
 RmdirTask = rek 'RmdirTask'
+log = rek('logger')(require('path').basename(__filename).split('.')[0])
+
 
 class CleanMainOutputTask extends RmdirTask
 
-  init : ( opts = {} ) =>
-    super _.extend opts,
-      dirs : [ @project.sourceSets.get('main.output').dir ]
+  onAfterEvaluate : =>
+    @dirs ?= [ @project.sourceSets.get('main.output').dir ]
 
 module.exports = CleanMainOutputTask

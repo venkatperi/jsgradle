@@ -17,6 +17,5 @@ class UpdatePkgTask extends Task
         task : @,
         filename : originalPkg.filename,
         pkg : pkg
-    super()
 
 module.exports = UpdatePkgTask

@@ -18,7 +18,9 @@ class TaskFactory extends Collection
     throw new Error "Missing option: project" unless opts.project
 
     opts.type ?= 'default'
-    ctor = if @has(opts.type) then @get(opts.type) else @get('default')
+    unless @has opts.type
+      throw new Error "Don't know how to create task with type '#{opts.type}'"
+    ctor = @get(opts.type)
     task = ctor opts
     task.dependsOn opts.dependsOn if opts.dependsOn
     task.doFirst opts.action if opts.action

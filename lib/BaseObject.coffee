@@ -2,13 +2,13 @@ _ = require 'lodash'
 rek = require 'rekuire'
 {ensureOptions} = rek 'validate'
 {EventEmitter} = require 'events'
-deepExtend = require 'deep-extend'
 prop = rek 'prop'
 cache = require 'guava-cache'
 deepCopy = require 'deep-copy'
 
 class BaseObject extends EventEmitter
-  @_addProperties : ( opts ) ->
+
+  @_addProperties : ( opts = {} ) ->
     @:: _properties ?= {}
     unless @:: hasOwnProperty "_properties"
       @:: _properties = deepCopy @:: _properties
@@ -36,7 +36,7 @@ class BaseObject extends EventEmitter
       => _.concat @_properties.exported, @_properties.exportedReadOnly
 
   constructor : ( opts = {} ) ->
-    ensureOptions opts, @_properties.required
+    ensureOptions opts, @_properties.required if @_properties?.required
     _.extend @, _.pick opts, @_allProperties
     @init opts
 

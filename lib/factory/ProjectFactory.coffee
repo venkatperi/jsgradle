@@ -12,6 +12,7 @@ class ProjectFactory extends BaseFactory
     opts.script = @script
     proj = new Project opts
     @script.project = proj
+    @script.listenTo proj
     proj
 
 module.exports = ProjectFactory

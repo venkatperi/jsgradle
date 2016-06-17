@@ -39,8 +39,7 @@ class Action extends BaseObject
       .fail ( err ) =>
         @errors ?= []
         @errors.push err
-        throw err
 
-    throw new Error "Don't know how to execute action"
+    return new Error "Don't know how to execute action"
 
 module.exports = Action

@@ -5,12 +5,12 @@ BaseObject = rek 'BaseObject'
 Clock = rek 'Clock'
 ExtensionContainer = rek 'lib/ext/ExtensionContainer'
 FileResolver = rek 'FileResolver'
-log = rek('logger')(require('path').basename(__filename).split('.')[ 0 ])
 out = rek 'lib/util/out'
 Path = require './Path'
-PluginContainer = require './PluginContainer'
+PluginContainer = require './../plugins/PluginContainer'
 ConventionContainer = rek 'ConventionContainer'
-PluginsRegistry = require './PluginsRegistry'
+ConfigurationContainer = rek 'ConfigurationContainer'
+PluginsRegistry = require './../plugins/PluginsRegistry'
 prop = rek 'lib/util/prop'
 ProxyFactory = rek 'ProxyFactory'
 ScriptPhase = require './ScriptPhase'
@@ -18,7 +18,11 @@ SourceSetContainer = rek 'lib/task/SourceSetContainer'
 TaskContainer = rek 'lib/task/TaskContainer'
 TaskFactory = rek 'lib/task/TaskFactory'
 TaskGraphExecutor = require './TaskGraphExecutor'
+DependenciesExt = rek 'DependenciesExt'
+Dependency = rek 'Dependency'
 conf = rek 'conf'
+configurable = rek 'configurable'
+log = rek('logger')(require('path').basename(__filename).split('.')[ 0 ])
 
 class Project extends BaseObject
 
@@ -32,9 +36,9 @@ class Project extends BaseObject
 
   prop @, 'sourceSets', get : -> @extensions.get 'sourceSets'
 
-  prop @, 'rootDir', get : -> @_rootDir
+  prop @, 'dependencies', get : -> @extensions.get 'dependencies'
 
-  prop @, 'buildDir', get : -> @_buildDir
+  prop @, 'rootDir', get : -> @_rootDir
 
   prop @, 'buildFile', get : -> @_buildFile
 
@@ -44,9 +48,10 @@ class Project extends BaseObject
 
   prop @, 'subProjects', get : ->
 
-  prop @, 'failed', get : ->
-    @_cache.get 'failed',
-      => @tasks.some ( x ) -> x.task.failed
+  prop @, 'failed', get : -> @tasks.some ( x ) -> x.task.failed
+
+  prop @, 'taskQueueNames', get : -> _.map @taskQueue, ( x ) =>
+    if @isMultiProject then x.task.path else x.task.displayName
 
   prop @, 'failedTasks', get : ->
     @_cache.get 'failedTasks',
@@ -80,12 +85,14 @@ class Project extends BaseObject
     exportedMethods : [ 'apply', 'defaultTasks', 'println' ]
 
   init : =>
+    @buildDir ?= "#{@projectDir}/#{conf.get 'project:build:buildDir'}"
     @isMultiProject = false
     @rootProject = @parent?.rootProject or @
     @_defaultTasks = conf.get 'project:build:defaultTasks', []
     @pluginsRegistry = new PluginsRegistry()
     @tasks = new TaskContainer()
     @conventions = new ConventionContainer()
+    @configurations = new ConfigurationContainer()
     @extensions = new ExtensionContainer()
     @fileResolver = new FileResolver projectDir : @projectDir
     @plugins = new PluginContainer()
@@ -94,8 +101,12 @@ class Project extends BaseObject
       return if _.startsWith name, '__'
       @registerProxyFactory ext, name
 
-    @conventions.on 'add', ( name, obj ) =>
-      obj.apply @
+    @conventions.on 'add', ( name, obj ) => obj.apply @
+
+    @extensions.add 'dependencies', new DependenciesExt()
+
+    @configurations.on 'add', ( name, cfg ) =>
+      @dependencies.onConfigurationAdded name, cfg
 
     @description ?= "project #{@name}"
     @version ?= conf.get 'project:build:version'
@@ -107,39 +118,41 @@ class Project extends BaseObject
       @depth = 0
       @_path = new Path [ @name ], true
 
+    for p in conf.get('project:startup:plugins') or []
+      @apply plugin : p
+
   registerProxyFactory : ( target, name ) =>
     @script.registerFactory name,
       new ProxyFactory target : target, script : @script
-
-  onCompleted : =>
-    @emit 'afterEvaluate'
 
   println : ( args... ) ->
     out.eolThen('').white(args...).eol()
 
   initialize : =>
 
-  execute : =>
-    clock = new Clock()
+  afterEvaluate : =>
+    @emit 'project:afterEvaluate:start', @
     executor = new TaskGraphExecutor(@tasks)
     tasks = @_tasksToExecute or @_defaultTasks
     nodes = (@tasks.get t for t in _.flatten tasks)
-    for n in nodes
-      n.task.enable()
+    n.task.enable() for n in nodes
     executor.add nodes
+
     @taskQueue = queue = executor.determineExecutionPlan()
-    for t in queue
-      t.task.onAfterEvaluate()
-
-    names = _.map executor.executionQueue, ( x ) =>
-      if @isMultiProject then x.task.path else x.task.displayName
-    out.grey "Executing #{names.length} task(s): #{names.join ', '}"
-
     prev = Q()
     queue.forEach ( t ) =>
+      prev = prev.then -> t.afterEvaluate()
+    prev.finally =>
+      @emit 'project:afterEvaluate:end', @
+
+  execute : =>
+    return if @failed
+    @emit 'project:execute:start', @
+    prev = Q()
+    @taskQueue.forEach ( t ) =>
       prev = prev.then -> t.execute()
-    prev.then ->
-      log.v tag, clock.pretty
+    prev.finally =>
+      @emit 'project:execute:end', @
 
   report : =>
     errors = []
@@ -170,7 +183,7 @@ class Project extends BaseObject
       unless @pluginsRegistry.has name
         throw new Error "No such plugin: #{name}"
       ctor = @pluginsRegistry.get name
-      plugin = @plugins[ name ] = new ctor()
+      plugin = @plugins[ name ] = new ctor name : name
       plugin.apply @
       undefined
 
@@ -179,6 +192,7 @@ class Project extends BaseObject
     opts.name = name
     opts.project = @
     task = @tasks.create opts
+    @script.listenTo task
     f(task) if f?
     null
 
@@ -209,6 +223,9 @@ class Project extends BaseObject
       @[ name ] = val
       @emit 'change', name, val, old
     @
+
+  onCompleted : =>
+    #console.log @configurations.get('runtime').dependencies.items
 
   toString : => "project #{name}"
 

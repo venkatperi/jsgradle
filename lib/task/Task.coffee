@@ -5,10 +5,9 @@ os = require 'os'
 p = rek 'lib/util/prop'
 Path = require './../project/Path'
 Action = require './Action'
-log = require('../util/logger') 'Task'
-out = rek 'out'
 BaseObject = rek 'BaseObject'
 conf = rek 'conf'
+log = rek('logger')(require('path').basename(__filename).split('.')[ 0 ])
 
 class Task extends BaseObject
 
@@ -20,8 +19,6 @@ class Task extends BaseObject
       'temporaryDir' ]
     exportedMethods : [ 'doFirst', 'doLast' ]
 
-  p @, 'configured', get : -> @_configured.promise
-
   p @, 'path', get : -> @_path.fullPath
 
   p @, 'displayName', get : -> ":#{@name}"
@@ -29,27 +26,28 @@ class Task extends BaseObject
   p @, 'temporaryDir', get : -> os.tmpdir()
 
   p @, 'failed', get : ->
-    @_cache.get 'failed',
-      => _.some @actions, ( x ) -> x.failed
+    @errors.length > 0 or _.some @actions, ( x ) -> x.failed
 
   p @, 'failedActions', get : ->
-    @_cache.get 'failedActions',
-      => _.filter @actions, ( x ) -> x.failed
+    @_cache.get 'failedActions', =>
+      _.filter @actions, ( x ) -> x.failed
 
   p @, 'messages', get : ->
-    @_cache.get 'messages',
-      => _.map _.flatten(_.map @failedActions,
-        ( x ) -> x.messages), ( x ) -> '> ' + x
+    @_cache.get 'messages', =>
+      list = _.map @failedActions, ( x ) -> x.messages
+      list = _.concat list, _.map @errors, ( x ) -> x.message
+      _.map _.flatten(list), ( x ) -> '> ' + x
 
-  init : =>
+  init : ( opts ) =>
     @description ?= "task #{@name}"
     @enabled = true
     @dependencies = []
     @actions = []
+    @errors = []
     @_onlyIfSpec = []
     @_path = new Path @project._path.absolutePath @name
-    @_configured = Q.defer()
     @didWork = 0
+    super opts
 
   enable : ( v = true ) =>
     @enabled = v
@@ -58,12 +56,12 @@ class Task extends BaseObject
 
   summary : =>
     @_cache.get 'summary', =>
-      if !@failed
-        if @checkDidWork() then "OK" else "UP-TO-DATE"
-      else
+      if @failed
         msg = Array.from @messages
         msg.unshift 'FAILED'
         msg.join '\n'
+      else
+        if @checkDidWork() then "OK" else "UP-TO-DATE"
 
   checkDidWork : =>
     @_cache.get 'checkDidWork', =>
@@ -71,8 +69,15 @@ class Task extends BaseObject
       for d in @dependencies
         return true if @project.tasks.get(d).task.checkDidWork()
 
+  doAfterEvaluate : =>
+    @emit 'task:afterEvaluate:start', @
+    @configured = Q.try @onAfterEvaluate
+    .fail ( err ) =>
+      @errors.push err
+    .finally =>
+      @emit 'task:afterEvaluate:end', @
+
   onAfterEvaluate : =>
-    @_configured.resolve()
 
   dependsOn : ( paths... ) =>
     @dependencies.push if paths.length is 1 then paths[ 0 ] else paths

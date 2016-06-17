@@ -1,27 +1,27 @@
 rek = require 'rekuire'
-Convention = require './CoffeeConvention'
+SourceMapConvention = rek 'SourceMapConvention'
+_conf = rek 'conf'
+SourceSetContainer = rek 'SourceSetContainer'
+SourceSetOutput = rek 'SourceSetOutput'
+CopySpec = rek 'CopySpec'
 
-class CoffeeConvention extends Convention
+get = ( name ) ->
+  _conf.get("convention:coffeescript:#{name}") or
+    _conf.get("convention:#{name}")
 
-  init : ( opts ) =>
-    @name = 'coffeescript'
-    super opts
+class CoffeeConvention extends SourceMapConvention
 
   createSourceSets : =>
-    for x in [ 'main', 'test' ]
-      @create x, SourceSetContainer unless @exists x
-
-    unless @sourceSetExists 'main.output'
-      @createSourceSet 'main.output', SourceSetOutput, dir : 'dist'
+    super()
 
     unless @sourceSetExists 'main.coffeescript'
       src = @createSourceSet 'main.coffeescript', CopySpec, allMethods : true
-      src.srcDir = 'lib'
-      src.include '**/*.coffee'
+      for d in get('main:dirs')
+        src.include "#{d}/**/*.coffee"
 
     unless @sourceSetExists 'test.coffeescript'
-      src = @createSourceSet 'main.coffeescript', CopySpec, allMethods : true
-      src.srcDir = 'test'
-      src.include '**/*.coffee'
+      src = @createSourceSet 'test.coffeescript', CopySpec, allMethods : true
+      for d in get('test:dirs')
+        src.include "#{d}/**/*.coffee"
 
 module.exports = CoffeeConvention

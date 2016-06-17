@@ -1,10 +1,8 @@
-class CoffeeOptions
-  constructor : ->
-    @bare = false
-    @sourceMap = false
-    @literate = false
+_ = require 'lodash'
+rek = require 'rekuire'
+conf = rek 'conf'
+configurable = rek 'configurable'
 
-  hasProperty : ( name ) =>
-    name in [ 'bare', 'sourceMap', 'literate' ]
-
-module.exports = CoffeeOptions
+module.exports = ( f ) ->
+  opt = configurable f
+  _.extend opt, conf.get 'plugin:coffeescript:options', {}

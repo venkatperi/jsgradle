@@ -1,8 +1,6 @@
 Q = require 'q'
 assert = require 'assert'
 prop = require './../util/prop'
-out = require './../util/out'
-log = require('../util/logger') 'TaskInfo'
 {multi} = require 'heterarchy'
 {EventEmitter} = require 'events'
 Clock = require '../util/Clock'
@@ -68,26 +66,22 @@ class TaskInfo extends multi EventEmitter
     @dependenciesProcessed = false
     @hasErrors = 0
 
-  execute : =>
-    @task.configured.then =>
-      log.v tag = "executing #{@task.path}"
-      clock = new Clock()
-      task = @task
-      project = task.project
-      prev = Q()
-      out.eolThen @task.displayName
-      task.actions.forEach ( a ) =>
-        prev = prev.then => project.execTaskAction task, a
-      prev.then =>
-        time = clock.pretty
-        out.ifNewline("> #{task.displayName}")
-        .green(" #{@task.summary()} ")
-        .grey(time).eol()
-      .fail =>
-        out.ifNewline("> #{task.displayName}")
-        .red(" #{@task.summary()} ")
-        .eol()
+  afterEvaluate : =>
+    @task.emit 'task:afterEvaluate:start', @task
+    @task.doAfterEvaluate()
+    .finally =>
+      @task.emit 'task:afterEvaluate:end', @task
 
+  execute : =>
+    @task.emit 'task:execute:start', @task
+    task = @task
+    project = task.project
+    clock = new Clock()
+    prev = Q()
+    task.actions.forEach ( a ) =>
+      prev = prev.then => project.execTaskAction task, a
+    prev.finally =>
+      @task.emit 'task:execute:end', @task, clock.pretty
 
   startExecution : =>
     assert @isReady

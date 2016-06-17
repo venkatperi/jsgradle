@@ -5,6 +5,7 @@ FileSourceSet = rek 'FileSourceSet'
 prop = rek 'prop'
 CompileCoffeeAction = require './CompileCoffeeAction'
 FileTask = rek 'FileTask'
+log = rek('logger')(require('path').basename(__filename).split('.')[0])
 
 class CompileCoffeeTask extends FileTask
 
