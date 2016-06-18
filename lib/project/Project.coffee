@@ -34,9 +34,9 @@ class Project extends BaseObject
 
   prop @, 'continueOnError', get : -> @script.continueOnError
 
-  prop @, 'sourceSets', get : -> @extensions.get 'sourceSets'
+  #prop @, 'sourceSets', get : -> @extensions.get 'sourceSets'
 
-  prop @, 'dependencies', get : -> @extensions.get 'dependencies'
+  #prop @, 'dependencies', get : -> @extensions.get 'dependencies'
 
   prop @, 'rootDir', get : -> @_rootDir
 
@@ -53,13 +53,10 @@ class Project extends BaseObject
   prop @, 'taskQueueNames', get : -> _.map @taskQueue, ( x ) =>
     if @isMultiProject then x.task.path else x.task.displayName
 
-  prop @, 'failedTasks', get : ->
-    @_cache.get 'failedTasks',
-      => @tasks.filter ( x ) -> x.task.failed
+  prop @, 'failedTasks', get : -> @tasks.filter ( x ) -> x.task.failed
 
-  prop @, 'messages', get : ->
-    @_cache.get 'messages',
-      => _.flatten(_.map @failedTasks, ( x ) -> x.messages)
+  prop @, 'messages',
+    get : -> _.flatten(_.map @failedTasks, ( x ) -> x.messages)
 
   prop @, 'description',
     get : -> @_description
@@ -106,7 +103,7 @@ class Project extends BaseObject
     @extensions.add 'dependencies', new DependenciesExt()
 
     @configurations.on 'add', ( name, cfg ) =>
-      @dependencies.onConfigurationAdded name, cfg
+      @extensions.get('dependencies').onConfigurationAdded name, cfg
 
     @description ?= "project #{@name}"
     @version ?= conf.get 'project:build:version'
@@ -121,12 +118,19 @@ class Project extends BaseObject
     for p in conf.get('project:startup:plugins') or []
       @apply plugin : p
 
+  _getErrorMessages : =>
+    _.flatten(_.map @failedTasks, ( x ) -> x.messages)
+
+
   registerProxyFactory : ( target, name ) =>
     @script.registerFactory name,
       new ProxyFactory target : target, script : @script
 
   println : ( args... ) ->
     out.eolThen('').white(args...).eol()
+
+  getSourceSets : =>
+    @extensions.get 'sourceSets'
 
   initialize : =>
 

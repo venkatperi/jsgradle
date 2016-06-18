@@ -19,16 +19,23 @@ nconf.defaults
       buildDir : buildDir
       continueOnError : false
       version : '0.1.0'
-  convention :
+  sourceSets :
     main :
-      dirs : [ 'lib' ]
-    test :
-      dirs : [ 'test' ]
-    output :
-      dir : buildDir
-    coffeescript :
+      'default' :
+        dirs : [ 'lib' ]
+        includes : [ '' ]
+        excludes : [ '' ]
+      coffeescript :
+        from:
+          srcDir: '.'
+          includes: ['index.coffee', 'lib/**/*.coffee']
       output :
-        dir : "#{buildDir}/js"
+        dir : buildDir
+        coffeescript :
+          dir : "#{buildDir}/js" 
+    test :
+      'default' :
+        dirs : [ 'test' ]
   plugin :
     coffeescript :
       options :

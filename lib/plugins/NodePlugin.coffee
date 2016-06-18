@@ -5,8 +5,6 @@ log = rek('logger')(require('path').basename(__filename).split('.')[0])
 
 class NodePlugin extends Plugin
   doApply : =>
-    log.i 'doApply'
-
     @register
       conventions :
         node : NodeConvention

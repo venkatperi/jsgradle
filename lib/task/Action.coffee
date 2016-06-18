@@ -8,12 +8,7 @@ class Action extends BaseObject
 
   prop @, 'project', get : -> @task.project
 
-  prop @, 'failed', get : -> @errors?.length > 0
-
   prop @, 'isSandbox', get : -> @f?.type is 'function'
-
-  prop @, 'messages', get : ->
-    @_cache.get 'messages', => _.map @errors, ( x ) -> x.message
 
   @_addProperties
     required : [ 'task' ]
@@ -21,7 +16,6 @@ class Action extends BaseObject
 
   init : ( opts ) =>
     super opts
-    @errors = []
 
   println : ( msg ) =>
     @project.println msg
@@ -36,9 +30,7 @@ class Action extends BaseObject
 
     if promise
       return promise
-      .fail ( err ) =>
-        @errors ?= []
-        @errors.push err
+      .fail @addError
 
     return new Error "Don't know how to execute action"
 

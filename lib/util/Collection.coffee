@@ -1,17 +1,28 @@
 _ = require 'lodash'
-{EventEmitter} = require 'events'
+rek = require 'rekuire'
+BaseObject = rek 'BaseObject'
+log = rek('logger')(require('path').basename(__filename).split('.')[ 0 ])
 
-class Collection extends EventEmitter
+class Collection extends BaseObject
 
-  constructor : ( {@convertName, @name} = {} ) ->
+  @_addProperties
+    optional : [ 'name', 'convertName', 'parent' ]
+
+  init : ( opts ) =>
+    super opts
     @values = []
     @items = new Map()
     @convertName ?= ( x ) -> x
+
+  setChild : ( child ) =>
+    throw new Error "Child does not have a 'name' field." unless child?.name
+    @add child.name, child
 
   add : ( name, item ) =>
     name = @convertName name
     throw new Error "Item exists: #{name}" if @has name
     @items.set name, item
+    item.name ?= name
     @values.push item
     @emit 'add', name, item
     @
@@ -40,7 +51,7 @@ class Collection extends EventEmitter
 
   some : ( f ) =>  _.some @values, f
 
-  forEach : ( f ) => @items.forEach f
+  forEach : ( f ) => @items?.forEach f
 
   map : ( f ) => _.map @values, f
 

@@ -34,7 +34,7 @@ class Script extends FactoryBuilderSupport
 
   prop @, 'messages', get : ->
     list = _.map @errors, ( x ) -> '> ' + x.message
-    list = _.concat list, @project.messages
+    list = _.concat list, @project?.messages
     list.join '\n'
 
   constructor : ( opts = {} ) ->
@@ -47,7 +47,10 @@ class Script extends FactoryBuilderSupport
     @continueOnError = opts.continueOnError or conf.get 'project:build:continueOnError'
     @tasks = opts.tasks
     @_registerFactories()
-  #@on 'error', ( err ) ->  console.log err.message
+    @mode ?= 'debug'
+    @on 'error', ( err ) =>  
+      if @mode is 'debug'
+        console.log err.stack
 
   build : ( stage = 'execute' ) =>
     @.initialize().then =>
@@ -60,9 +63,10 @@ class Script extends FactoryBuilderSupport
         return if stage is @stage
         return if @failed
         @execute()
+      .fail ( err ) =>
+        console.log err
+        @errors.push err
     .then => @report()
-    .fail ( err ) =>
-      @errors.push err
 
   listenTo : ( obj ) =>
     @reporters.forEach ( r ) -> r.listenTo obj
@@ -116,6 +120,7 @@ class Script extends FactoryBuilderSupport
       @evaluate @contents, coffee : true
       @project._tasksToExecute = @tasks if @tasks?.length
     .fail ( err ) =>
+      console.log err
       @errors.push err
 
   _loadScript : =>

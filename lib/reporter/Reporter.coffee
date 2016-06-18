@@ -39,6 +39,7 @@ class Reporter
   constructor : ( opts = {} ) ->
 
   listenTo : ( obj ) =>
+    obj.on 'error', @onError
     for e in events
       handler = 'on' + _.map(e.split(':'), ( x ) -> _.upperFirst x).join('')
       obj.on e, @[ handler ] if @[ handler ]?

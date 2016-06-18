@@ -1,6 +1,6 @@
 rek = require 'rekuire'
-CopySpec = rek 'CopySpec'
+FilesSpec = rek 'FilesSpec'
 
-class GulpSpec extends CopySpec
+class GulpSpec extends FilesSpec
 
 module.exports = GulpSpec

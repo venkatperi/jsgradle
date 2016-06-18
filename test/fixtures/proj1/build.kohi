@@ -1,27 +1,27 @@
 apply plugin : 'greeting'
 #apply plugin : 'package'
-apply plugin : 'coffee'
+apply plugin : 'coffeescript'
 #apply plugin : 'gulp'
 
 description = 'test project'
 version = '0.2.0'
 
-defaultTasks 'hello', 'ls', 'test'
+defaultTasks 'hello', 'test'
 
 dependencies ->
-  runtime 'abc', '1.0.3'
-  runtime 'abcd:^1.0.4'
+  production 'abc', '1.0.3'
+  production 'abcd:^1.0.4'
 
 #pkg ->
 #  name = 'test'
 #  scripts ->
 #    abc = 123
 
-#sourceSets ->
-#  main ->
-#    coffeescript ->
-#      from '.', ->
-#        include '*.coffee'
+sourceSets ->
+  #main ->
+  #  coffeescript ->
+  #    from '.', ->
+  #      include '*.coffee'
 
 greeting ->
   name = 'world'

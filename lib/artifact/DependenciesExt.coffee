@@ -20,9 +20,8 @@ class DependenciesExt extends BaseObject
     @[ name ] = ( args... ) =>
       deps = parse args...
       for d in deps
-        #log.i d.toString()
         configuration.dependencies.add d.name, d
     @_properties.exportedMethods ?= []
-    @._properties.exportedMethods.push name
+    @_properties.exportedMethods.push name
 
 module.exports = DependenciesExt

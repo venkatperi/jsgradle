@@ -13,7 +13,7 @@ class CompileCoffeeTask extends FileTask
     opts = _.extend opts,
       spec : @project.sourceSets.get 'main.coffeescript'
       options : @project.extensions.get 'coffeescript'
-      output : @project.sourceSets.get 'main.output'
+      output : @project.sourceSets.get 'main.output.coffeescript'
       actionType : CompileCoffeeAction
     super opts
 

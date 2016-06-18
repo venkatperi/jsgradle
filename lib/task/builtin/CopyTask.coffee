@@ -1,6 +1,7 @@
 _ = require 'lodash'
+rek = require 'rekuire'
 FileTask = require '../FileTask'
-CopySpec = require './CopySpec'
+CopySpec = rek 'FilesSpec'
 CopyAction = require './CopyAction'
 
 class CopyTask extends FileTask

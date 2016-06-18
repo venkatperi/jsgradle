@@ -9,6 +9,6 @@ class Configuration extends BaseObject
 
   init : ( opts ) =>
     super opts
-    @dependencies = new DependencySet()
+    @dependencies = new DependencySet parent: @, name: @name
 
 module.exports = Configuration

@@ -1,9 +1,9 @@
 path = require 'path'
 rek = require 'rekuire'
-BaseObject = rek 'BaseObject'
+Collection = rek 'Collection'
 
-class SourceSetOutput extends BaseObject
-  
+class SourceSetOutput extends Collection
+
   @_addProperties
     required : [ 'dir' ]
     optional : [ 'parent' ]

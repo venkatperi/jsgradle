@@ -5,6 +5,9 @@ Reporter = require './Reporter'
 
 class ConsoleReporter extends Reporter
 
+  onError: (err) =>
+    console.log err
+  
   onScriptConfigureStart : ( script ) =>
     out.eolThen 'Configuring... '
 
@@ -25,7 +28,7 @@ class ConsoleReporter extends Reporter
       out.eolThen().white 'The following tasks failed in `afterEvaluate`'
       project.failedTasks.forEach ( t ) ->
         out.eolThen("#{t.displayName}")
-        .red(" #{t.task.summary()} ")
+        .red(" #{t.task.messages} ")
         .eol()
 
   onProjectExecuteStart : ( project ) =>

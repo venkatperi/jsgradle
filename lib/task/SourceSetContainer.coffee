@@ -15,17 +15,11 @@ class SourceSetContainer extends Collection
   constructor : ( opts = {} ) ->
     super opts
     @parent = opts.parent or throw new Error "Missing option: parent"
-    @methods = []
     @on 'add', ( name, obj ) =>
-      #log.i "add: #{@name} -> #{name}"
-      @methods.push name
-      #@root.registerProxyFactory obj, name
+      @_properties.exportedMethods.push name
       @[ name ] = ( f ) =>
         log.v "configuring #{name}"
         f = f[ 0 ] if Array.isArray f
         @root.callScriptMethod @.get(name), f if f?
-
-  hasMethod : ( name ) =>
-    name in @methods
 
 module.exports = SourceSetContainer

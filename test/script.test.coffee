@@ -29,9 +29,9 @@ describe 'Script', ->
       scriptFile : path.join __dirname, 'fixtures', 'script1.coffee'
     s.build()
     .then ->
-      s.project.name.should.equal 'proj1'
-      s.project.description.should.equal 'test project'
-      s.project.version.should.equal '0.2.0'
+      s.project?.name.should.equal 'proj1'
+      s.project?.description.should.equal 'test project'
+      s.project?.version.should.equal '0.2.0'
       done()
     .done()
 

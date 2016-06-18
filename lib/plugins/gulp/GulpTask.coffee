@@ -36,12 +36,12 @@ class GulpTask extends Task
 
   onAfterEvaluate : =>
     gulpPlugin = require @gulpType
-    dest = @spec?.allDest
-    dest = dest?[ 0 ] or @output
+    dest = @output
+    dest ?= @spec?.allDest?[0]
     throw new Error "No destinations" unless dest
 
     gulp.task @path, =>
-      gulp.src @spec.patterns
+      gulp.src @spec.patterns, base: '.'
       .pipe countFiles ( err, count ) => @didWork = count
       .pipe gulpPlugin @options
       .pipe gulp.dest dest

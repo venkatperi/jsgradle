@@ -1,9 +1,7 @@
 rek = require 'rekuire'
 CompileConvention = rek 'CompileConvention'
-_conf = rek 'conf'
 SourceSetContainer = rek 'SourceSetContainer'
 SourceSetOutput = rek 'SourceSetOutput'
-CopySpec = rek 'CopySpec'
 
 class SourceMapConvention extends CompileConvention
 

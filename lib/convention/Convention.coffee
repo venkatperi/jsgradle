@@ -3,8 +3,12 @@ rek = require 'rekuire'
 BaseObject = rek 'BaseObject'
 prop = rek 'prop'
 Configuration = rek 'Configuration'
+log = rek('logger')(require('path').basename(__filename).split('.')[0])
 
 class Convention extends BaseObject
+
+  @_addProperties
+    required : ['name']
 
   apply : ( project ) =>
     return if @initialized?
@@ -15,7 +19,8 @@ class Convention extends BaseObject
 
   sourceSetExists : ( name ) => @getSourceSet(name)?
 
-  getSourceSet : ( name ) => @project.sourceSets.get name
+  getSourceSet : ( name ) =>
+    @project.getSourceSets().get name
 
   configurationExists : ( name ) => @getConfiguration(name)?
 
@@ -30,7 +35,7 @@ class Convention extends BaseObject
     throw new Error "empty path" unless parts.length > 0
     parentName = parts[ ..-2 ]
     [...,name] = parts
-    parent = (if parentName.length is 0 then @project.sourceSets else
+    parent = (if parentName.length is 0 then @project.getSourceSets() else
       @getSourceSet parentName.join '.')
     throw new Error "bad path: #{path}" unless parent?
 

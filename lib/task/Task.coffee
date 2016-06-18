@@ -25,29 +25,30 @@ class Task extends BaseObject
 
   p @, 'temporaryDir', get : -> os.tmpdir()
 
-  p @, 'failed', get : ->
-    @errors.length > 0 or _.some @actions, ( x ) -> x.failed
-
   p @, 'failedActions', get : ->
     @_cache.get 'failedActions', =>
       _.filter @actions, ( x ) -> x.failed
-
-  p @, 'messages', get : ->
-    @_cache.get 'messages', =>
-      list = _.map @failedActions, ( x ) -> x.messages
-      list = _.concat list, _.map @errors, ( x ) -> x.message
-      _.map _.flatten(list), ( x ) -> '> ' + x
 
   init : ( opts ) =>
     @description ?= "task #{@name}"
     @enabled = true
     @dependencies = []
     @actions = []
-    @errors = []
     @_onlyIfSpec = []
     @_path = new Path @project._path.absolutePath @name
     @didWork = 0
+    @on 'error', =>
+      @_cache.delete 'failedActions'
     super opts
+
+  _checkFailed : =>
+    super() or _.some @actions, ( x ) -> x.failed
+
+  _getErrorMessages : =>
+    list = _.map @failedActions, ( x ) -> x.messages
+    list = _.concat list, _.map @errors, ( x ) -> x.message
+    _.map _.flatten(list), ( x ) -> '> ' + x
+
 
   enable : ( v = true ) =>
     @enabled = v
@@ -55,13 +56,15 @@ class Task extends BaseObject
       @project.tasks.get(d).task.enable()
 
   summary : =>
-    @_cache.get 'summary', =>
-      if @failed
+    if @failed
+      if @messages
         msg = Array.from @messages
-        msg.unshift 'FAILED'
-        msg.join '\n'
       else
-        if @checkDidWork() then "OK" else "UP-TO-DATE"
+        msg = []
+      msg.unshift 'FAILED'
+      msg.join '\n'
+    else
+      if @checkDidWork() then "OK" else "UP-TO-DATE"
 
   checkDidWork : =>
     @_cache.get 'checkDidWork', =>
@@ -73,7 +76,7 @@ class Task extends BaseObject
     @emit 'task:afterEvaluate:start', @
     @configured = Q.try @onAfterEvaluate
     .fail ( err ) =>
-      @errors.push err
+      @addError err
     .finally =>
       @emit 'task:afterEvaluate:end', @
 

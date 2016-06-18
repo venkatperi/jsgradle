@@ -3,8 +3,8 @@ rek = require 'rekuire'
 TaskFactory = rek 'TaskFactory'
 BaseObject = rek 'BaseObject'
 
-toObj = ( x ) ->
-  if _.isFunction(x) then new x() else x
+toObj = ( x, opts ) ->
+  if _.isFunction(x) then new x(opts) else x
 
 class Plugin extends BaseObject
 
@@ -37,10 +37,10 @@ class Plugin extends BaseObject
       @project.extensions.add k, toObj v
 
     for own k,v of opts.conventions
-      @project.conventions.add k, toObj v
+      @project.conventions.add k, toObj v, name: k
 
     for own k,v of opts.configurations
-      @project.configurations.add k, toObj v
+      @project.configurations.add k, toObj v, name: k
 
     for own k,v of opts.taskFactory
       TaskFactory.register k, if !v.name then v else ( x ) -> new v(x)

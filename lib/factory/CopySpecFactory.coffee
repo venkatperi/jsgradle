@@ -1,9 +1,9 @@
 BaseFactory = require './BaseFactory'
 rek = require 'rekuire'
 log = rek('logger')(require('path').basename(__filename).split('.')[ 0 ])
-CopySpec = rek 'CopySpec'
+FilesSpec = rek 'FilesSpec'
 
-class CopySpecFactory extends BaseFactory
+class FilesSpecFactory extends BaseFactory
 
   newInstance : ( builder, name, value, args ) =>
     log.v 'newInstance'
@@ -12,6 +12,6 @@ class CopySpecFactory extends BaseFactory
       when 'from' then opts.srcDir = value
       when 'into' then opts.dest = value
       when 'filter' then opts.filter = value
-    new CopySpec opts
+    new FilesSpec opts
 
-module.exports = CopySpecFactory
+module.exports = FilesSpecFactory
