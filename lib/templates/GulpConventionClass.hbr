@@ -1,0 +1,6 @@
+rek = require 'rekuire'
+SourceMapConvention = rek 'SourceMapConvention'
+
+class {{name}}Convention extends SourceMapConvention
+
+module.exports = {{name}}Convention

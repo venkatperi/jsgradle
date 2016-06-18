@@ -4,7 +4,7 @@ fs = require 'fs'
 mkdirp = require 'mkdirp'
 rmdir = require 'rmdir'
 
-mkdirp = Q.denodeify mkdirp
+#mkdirp = Q.denodeify mkdirp
 rmdir = Q.denodeify rmdir
 stat = Q.denodeify fs.stat
 unlink = Q.denodeify fs.unlink
@@ -85,6 +85,11 @@ writeFileMkdir = ( file, data ) ->
   dir = path.dirname(file)
   mkdirp(dir).then -> writeFile(file, data)
 
+writeFileMkdirSync = ( file, data ) ->
+  dir = path.dirname(file)
+  mkdirp.sync(dir)
+  fs.writeFileSync(file, data)
+
 module.exports = {
   mkdirp,
   readFile
@@ -92,9 +97,11 @@ module.exports = {
   unlink
   writeFile
   writeFileMkdir
+  writeFileMkdirSync
   changeExt
   isDir
   isFile
   readFileSync : fs.readFileSync
+  writeFileSync : fs.writeFileSync
   rmdir
 }

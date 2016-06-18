@@ -21,6 +21,7 @@ TaskGraphExecutor = require './TaskGraphExecutor'
 DependenciesExt = rek 'DependenciesExt'
 Dependency = rek 'Dependency'
 conf = rek 'conf'
+Templates = require '../templates'
 configurable = rek 'configurable'
 log = rek('logger')(require('path').basename(__filename).split('.')[ 0 ])
 
@@ -93,6 +94,10 @@ class Project extends BaseObject
     @extensions = new ExtensionContainer()
     @fileResolver = new FileResolver projectDir : @projectDir
     @plugins = new PluginContainer()
+    @templates = new Templates()
+    @templates.on 'error', ( err ) =>
+      console.log err
+      @addError err
 
     @extensions.on 'add', ( name, ext ) =>
       return if _.startsWith name, '__'

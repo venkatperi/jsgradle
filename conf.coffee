@@ -17,6 +17,7 @@ nconf.defaults
       plugins : [ 'node' ]
     build :
       buildDir : buildDir
+      genDir : "#{buildDir}/gen"
       continueOnError : false
       version : '0.1.0'
   sourceSets :
@@ -26,18 +27,20 @@ nconf.defaults
         includes : [ '' ]
         excludes : [ '' ]
       coffeescript :
-        from:
-          srcDir: '.'
-          includes: ['index.coffee', 'lib/**/*.coffee']
+        from :
+          srcDir : '.'
+          includes : [ 'index.coffee', 'lib/**/*.coffee' ]
       output :
         dir : buildDir
         coffeescript :
-          dir : "#{buildDir}/js" 
+          dir : "#{buildDir}/js"
     test :
       'default' :
         dirs : [ 'test' ]
   plugin :
     coffeescript :
+      uses : 'GulpCompilePlugin'
+      gulpType : 'gulp-coffee'
       options :
         bare : true
         header : false
