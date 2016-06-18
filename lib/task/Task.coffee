@@ -7,7 +7,9 @@ Path = require './../project/Path'
 Action = require './Action'
 BaseObject = rek 'BaseObject'
 conf = rek 'conf'
-log = rek('logger')(require('path').basename(__filename).split('.')[ 0 ])
+TaskStats = require './TaskStats'
+log = rek('logger')(require('path').basename(__filename).split('.')[0])
+
 
 class Task extends BaseObject
 
@@ -25,21 +27,30 @@ class Task extends BaseObject
 
   p @, 'temporaryDir', get : -> os.tmpdir()
 
+  p @, 'didWork', 
+    get : -> @_didWork()
+    set: (v) -> @_taskDidWork = v
+
   p @, 'failedActions', get : ->
     @_cache.get 'failedActions', =>
       _.filter @actions, ( x ) -> x.failed
 
   init : ( opts ) =>
+    @stats = new TaskStats()
     @description ?= "task #{@name}"
     @enabled = true
     @dependencies = []
     @actions = []
     @_onlyIfSpec = []
     @_path = new Path @project._path.absolutePath @name
-    @didWork = 0
     @on 'error', =>
       @_cache.delete 'failedActions'
     super opts
+
+  _didWork : =>
+    return true if @_taskDidWork
+    return true if @stats.didWork
+    false
 
   _checkFailed : =>
     super() or _.some @actions, ( x ) -> x.failed
@@ -48,7 +59,6 @@ class Task extends BaseObject
     list = _.map @failedActions, ( x ) -> x.messages
     list = _.concat list, _.map @errors, ( x ) -> x.message
     _.map _.flatten(list), ( x ) -> '> ' + x
-
 
   enable : ( v = true ) =>
     @enabled = v
@@ -64,13 +74,20 @@ class Task extends BaseObject
       msg.unshift 'FAILED'
       msg.join '\n'
     else
-      if @checkDidWork() then "OK" else "UP-TO-DATE"
+      return 'UP-TO-DATE' unless @checkDidWork()
+      str = []
+      if @stats.hasFiles
+        str.push "#{@stats.notCached}(#{@stats.files}) file(s)"
+
+      str.push 'OK'
+      str.join ' '
+
 
   checkDidWork : =>
-    @_cache.get 'checkDidWork', =>
-      return true if @didWork
-      for d in @dependencies
-        return true if @project.tasks.get(d).task.checkDidWork()
+    #@_cache.get 'checkDidWork', =>
+    return true if @didWork
+    for d in @dependencies
+      return true if @project.tasks.get(d).task.checkDidWork()
 
   doAfterEvaluate : =>
     @emit 'task:afterEvaluate:start', @

@@ -15,6 +15,8 @@ nconf.defaults
   project :
     startup :
       plugins : [ 'node' ]
+    cache :
+      cacheDir : '.kohi/gulp-cache'
     build :
       buildDir : buildDir
       genDir : "#{buildDir}/gen"

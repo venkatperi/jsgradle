@@ -4,7 +4,6 @@ fs = require 'fs'
 mkdirp = require 'mkdirp'
 rmdir = require 'rmdir'
 
-#mkdirp = Q.denodeify mkdirp
 rmdir = Q.denodeify rmdir
 stat = Q.denodeify fs.stat
 unlink = Q.denodeify fs.unlink
