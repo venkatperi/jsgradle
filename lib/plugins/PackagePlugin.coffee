@@ -6,6 +6,7 @@ TaskFactory = rek 'TaskFactory'
 configurable = rek 'configurable'
 fs = require 'fs'
 _ = require 'lodash'
+conf = rek 'conf'
 
 load = ( file, obj ) =>
   pkg = JSON.parse fs.readFileSync file, 'utf8'

@@ -39,7 +39,7 @@ nconf.defaults
     test :
       'default' :
         dirs : [ 'test' ]
-  plugin :
+  plugins :
     coffeescript :
       uses : 'GulpCompilePlugin'
       gulpType : 'gulp-coffee'

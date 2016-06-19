@@ -87,14 +87,14 @@ class Project extends BaseObject
     @isMultiProject = false
     @rootProject = @parent?.rootProject or @
     @_defaultTasks = conf.get 'project:build:defaultTasks', []
-    @pluginsRegistry = new PluginsRegistry()
+    @templates = new Templates()
+    @fileResolver = new FileResolver projectDir : @projectDir
+    @pluginsRegistry = new PluginsRegistry project: @
     @tasks = new TaskContainer()
     @conventions = new ConventionContainer()
     @configurations = new ConfigurationContainer()
     @extensions = new ExtensionContainer()
-    @fileResolver = new FileResolver projectDir : @projectDir
-    @plugins = new PluginContainer()
-    @templates = new Templates()
+    @plugins = new PluginContainer
     @templates.on 'error', ( err ) =>
       console.log err
       @addError err

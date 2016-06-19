@@ -25,14 +25,14 @@ class GulpCompilePlugin extends Plugin
 
   _createExt : =>
     ext = configurable @project.callScriptMethod
-    _.extend ext, conf.get "plugin:#{@name}:options", {}
+    _.extend ext, conf.get "plugins:#{@name}:options", {}
 
   _createCompileTask : ( opts ) =>
     options = @project.extensions.get @name
     output = @project.getSourceSets().get("main.output.#{@name}").dir
     spec = @project.getSourceSets().get "main.#{@name}"
 
-    @gulpType = conf.get "plugin:#{@name}:gulpType"
+    @gulpType = conf.get "plugins:#{@name}:gulpType"
     _opts = _.extend {}, opts
     _.extend _opts,
       options : options,
@@ -42,13 +42,11 @@ class GulpCompilePlugin extends Plugin
     new GulpTask _opts
 
   doApply : =>
-    assert @gulpType, 'Missing option: gulpType'
+    #assert @gulpType, 'Missing option: gulpType'
     @applyPlugin 'build'
     @applyPlugin 'sourceSets'
 
     upperName = _.upperFirst @name
-    conventionName = upperName + 'Convention'
-    #conventionKlass = require "./#{@name}/#{conventionName}"
     conventionKlass = @_generateConventionClass()
     compileTaskType = 'Compile' + upperName
     compileTaskName = 'compile' + upperName

@@ -1,0 +1,6 @@
+rek = require 'rekuire'
+{{super}} = rek '{{super}}'
+
+class {{name}}Plugin extends {{super}}
+
+module.exports = {{name}}Plugin

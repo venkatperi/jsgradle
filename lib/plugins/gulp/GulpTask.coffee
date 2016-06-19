@@ -37,10 +37,6 @@ class GulpTask extends Task
     @spec ?= new GulpSpec()
     @spec.setChild c
 
-  #summary : =>
-  #  return super() if @failed
-  #  if @didWork then "#{@didWork} file(s) OK" else "UP-TO-DATE"
-
   onAfterEvaluate : =>
     gulpPlugin = require(@gulpType)(@options)
     unless @noCache
@@ -59,7 +55,6 @@ class GulpTask extends Task
 
     gulp.task @path, =>
       gulp.src @spec.patterns, base : '.'
-      #.pipe countFiles @stats
       .pipe gulpPlugin
       .pipe gulp.dest dest
 
