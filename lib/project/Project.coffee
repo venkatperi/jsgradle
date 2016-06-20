@@ -24,6 +24,7 @@ conf = rek 'conf'
 Templates = require '../templates'
 configurable = rek 'configurable'
 log = rek('logger')(require('path').basename(__filename).split('.')[ 0 ])
+qflow = rek 'qflow'
 
 class Project extends BaseObject
 
@@ -35,9 +36,9 @@ class Project extends BaseObject
 
   prop @, 'continueOnError', get : -> @script.continueOnError
 
-  #prop @, 'sourceSets', get : -> @extensions.get 'sourceSets'
-
-  #prop @, 'dependencies', get : -> @extensions.get 'dependencies'
+  prop @, 'cacheDir', get : ->
+    @_cache.get 'cacheDir',
+      => @fileResolver.file conf.get('project:cache:cacheDir')
 
   prop @, 'rootDir', get : -> @_rootDir
 
@@ -89,7 +90,7 @@ class Project extends BaseObject
     @_defaultTasks = conf.get 'project:build:defaultTasks', []
     @templates = new Templates()
     @fileResolver = new FileResolver projectDir : @projectDir
-    @pluginsRegistry = new PluginsRegistry project: @
+    @pluginsRegistry = new PluginsRegistry project : @
     @tasks = new TaskContainer()
     @conventions = new ConventionContainer()
     @configurations = new ConfigurationContainer()
@@ -126,7 +127,6 @@ class Project extends BaseObject
   _getErrorMessages : =>
     _.flatten(_.map @failedTasks, ( x ) -> x.messages)
 
-
   registerProxyFactory : ( target, name ) =>
     @script.registerFactory name,
       new ProxyFactory target : target, script : @script
@@ -141,27 +141,39 @@ class Project extends BaseObject
 
   afterEvaluate : =>
     @emit 'project:afterEvaluate:start', @
-    executor = new TaskGraphExecutor(@tasks)
-    tasks = @_tasksToExecute or @_defaultTasks
-    nodes = (@tasks.get t for t in _.flatten tasks)
-    n.task.enable() for n in nodes
-    executor.add nodes
+    numTasks = @tasks.size
+    afterSize = 0
+    iters = 0
+    qflow.until =>
+      numTasks = @tasks.size
+      executor = new TaskGraphExecutor(@tasks)
+      tasks = @_tasksToExecute or @_defaultTasks
+      nodes = (@tasks.get t for t in _.flatten tasks)
+      n.task.enable() for n in nodes
+      executor.add nodes
 
-    @taskQueue = queue = executor.determineExecutionPlan()
-    prev = Q()
-    queue.forEach ( t ) =>
-      prev = prev.then -> t.afterEvaluate()
-    prev.finally =>
+      @taskQueue = executor.determineExecutionPlan()
+
+      qflow.each @taskQueue, ( t ) -> t.afterEvaluate()
+      .then =>
+        afterSize = @tasks.size
+        numTasks is afterSize
+
+    .finally =>
       @emit 'project:afterEvaluate:end', @
 
   execute : =>
     return if @failed
     @emit 'project:execute:start', @
-    prev = Q()
-    @taskQueue.forEach ( t ) =>
-      prev = prev.then -> t.execute()
-    prev.finally =>
+    qflow.each @taskQueue, ( t ) -> t.execute()
+    .finally =>
       @emit 'project:execute:end', @
+
+  configure : =>
+    @emit 'project:configure:start', @
+    @tasks.forEachp ( t ) -> t.configure()
+    .finally =>
+      @emit 'project:configure:end', @
 
   report : =>
     errors = []
@@ -232,9 +244,6 @@ class Project extends BaseObject
       @[ name ] = val
       @emit 'change', name, val, old
     @
-
-  onCompleted : =>
-    #console.log @configurations.get('runtime').dependencies.items
 
   toString : => "project #{name}"
 

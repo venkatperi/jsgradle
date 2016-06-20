@@ -8,6 +8,7 @@
   "preferGlobal": false,
   "description": "NEEDS DESCRIPTION",
   "dependencies": {
+    "cache-swap": "^0.2.3",
     "colors": "^1.1.2",
     "deep-copy": "^1.1.2",
     "deep-equal": "^1.0.1",
@@ -18,6 +19,7 @@
     "gulp": "^3.9.1",
     "gulp-cache": "^0.4.5",
     "gulp-coffee": "^2.3.2",
+    "gulp-less": "^3.1.0",
     "handlebars": "^4.0.5",
     "heterarchy": "^1.0.5",
     "json-stringify-safe": "^5.0.1",
@@ -34,6 +36,7 @@
     "rekuire": "^0.1.9",
     "rmdir": "^1.2.0",
     "semver": "^5.1.0",
+    "sha1": "^1.1.1",
     "split": "^1.0.0",
     "taglog": "^1.1.0",
     "through": "^2.3.8",
@@ -61,6 +64,7 @@
     "grunt-istanbul": "^0.7.0",
     "json-stringify-safe": "^5.0.1",
     "lodash": "^4.12.0",
+    "lorem-hipsum": "^0.1.7",
     "should": "^8.3.1"
   },
   "author": "Venkat Peri <venkatperi@gmail.com> (http://www.vperi.com/)",

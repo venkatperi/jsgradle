@@ -16,7 +16,7 @@ nconf.defaults
     startup :
       plugins : [ 'node' ]
     cache :
-      cacheDir : '.kohi/gulp-cache'
+      cacheDir : '.kohi'
     build :
       buildDir : buildDir
       genDir : "#{buildDir}/gen"
@@ -32,10 +32,16 @@ nconf.defaults
         from :
           srcDir : '.'
           includes : [ 'index.coffee', 'lib/**/*.coffee' ]
+      less :
+        from :
+          srcDir : '.'
+          includes : [ 'less/**/*.less', 'assets/less/**/*.less' ]
       output :
         dir : buildDir
         coffeescript :
           dir : "#{buildDir}/js"
+        less :
+          dir : "#{buildDir}/public/css"
     test :
       'default' :
         dirs : [ 'test' ]
@@ -43,9 +49,13 @@ nconf.defaults
     coffeescript :
       uses : 'GulpCompilePlugin'
       gulpType : 'gulp-coffee'
+      base: '.'
       options :
         bare : true
         header : false
+    less :
+      uses : 'GulpCompilePlugin'
+      gulpType : 'gulp-less'
 
   module.exports =
     nconf : nconf

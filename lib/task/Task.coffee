@@ -8,14 +8,14 @@ Action = require './Action'
 BaseObject = rek 'BaseObject'
 conf = rek 'conf'
 TaskStats = require './TaskStats'
-log = rek('logger')(require('path').basename(__filename).split('.')[0])
-
+sha1 = require 'sha1'
+log = rek('logger')(require('path').basename(__filename).split('.')[ 0 ])
 
 class Task extends BaseObject
 
   @_addProperties
     required : [ 'name', 'project', 'type' ]
-    optional : [ 'description' ]
+    optional : [ 'description', 'options', ]
     exported : [ 'description', 'didWork', 'enabled' ]
     exportedReadOnly : [ 'name', 'actions', 'dependencies',
       'temporaryDir' ]
@@ -25,11 +25,14 @@ class Task extends BaseObject
 
   p @, 'displayName', get : -> ":#{@name}"
 
+  p @, 'capitalizedName', get : ->
+    @_cache.get 'capitalizedName', => _.upperFirst @name
+
   p @, 'temporaryDir', get : -> os.tmpdir()
 
-  p @, 'didWork', 
+  p @, 'didWork',
     get : -> @_didWork()
-    set: (v) -> @_taskDidWork = v
+    set : ( v ) -> @_taskDidWork = v
 
   p @, 'failedActions', get : ->
     @_cache.get 'failedActions', =>
@@ -47,6 +50,8 @@ class Task extends BaseObject
       @_cache.delete 'failedActions'
     super opts
 
+  configure: =>
+    
   _didWork : =>
     return true if @_taskDidWork
     return true if @stats.didWork
@@ -82,9 +87,7 @@ class Task extends BaseObject
       str.push 'OK'
       str.join ' '
 
-
   checkDidWork : =>
-    #@_cache.get 'checkDidWork', =>
     return true if @didWork
     for d in @dependencies
       return true if @project.tasks.get(d).task.checkDidWork()

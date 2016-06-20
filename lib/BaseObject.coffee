@@ -88,7 +88,8 @@ class BaseObject extends EventEmitter
 
   toString : =>
     inspect = ( k, v ) ->
-      return if k in [ 'parent', 'items' ] or _.startsWith(k, '_event')
+      return if k in [ 'parent', 'items', 'project',
+        'task' ] or _.startsWith(k, '_event')
       if whatClass(v) in [ 'Object', 'Array' ]
         return if _.isEmpty v
       v.__type = v.constructor.name unless v.__type?

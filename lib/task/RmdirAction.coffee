@@ -15,7 +15,7 @@ class RmdirAction extends Action
   exec : ( resolve ) =>
     resolve Q.all(_.map @dirs,
       ( x ) =>
-        @task.didWork++
+        @task.didWork = true
         rmdir x
     )
 

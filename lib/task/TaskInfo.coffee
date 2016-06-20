@@ -4,6 +4,9 @@ prop = require './../util/prop'
 {multi} = require 'heterarchy'
 {EventEmitter} = require 'events'
 Clock = require '../util/Clock'
+rek = require 'rekuire'
+log = rek('logger')(require('path').basename(__filename).split('.')[ 0 ])
+qflow = rek 'qflow'
 
 STATE = {
   Unknown : 'Unknown',
@@ -56,6 +59,9 @@ class TaskInfo extends multi EventEmitter
     get : -> @task.state.failure
 
   constructor : ( @task, opts ) ->
+    @reset()
+
+  reset : =>
     @state = STATE.Unknown
     @configurators = []
     @dependencyPredecessors = new Set()
@@ -66,7 +72,12 @@ class TaskInfo extends multi EventEmitter
     @dependenciesProcessed = false
     @hasErrors = 0
 
+  configure : =>
+    @task.configure()
+
   afterEvaluate : =>
+    return if @evaluated
+    @evaluated = true
     @task.emit 'task:afterEvaluate:start', @task
     @task.doAfterEvaluate()
     .finally =>
@@ -77,10 +88,9 @@ class TaskInfo extends multi EventEmitter
     task = @task
     project = task.project
     clock = new Clock()
-    prev = Q()
-    task.actions.forEach ( a ) =>
-      prev = prev.then => project.execTaskAction task, a
-    prev.finally =>
+    qflow.each task.actions, ( a ) ->
+      project.execTaskAction task, a
+    .finally =>
       @task.emit 'task:execute:end', @task, clock.pretty
 
   startExecution : =>

@@ -2,7 +2,7 @@ rek = require 'rekuire'
 prop = rek 'prop'
 
 class TaskStats
-  prop @, 'didWork', get : -> @notCached > 0 
+  prop @, 'didWork', get : -> @notCached > 0
 
   prop @, 'hasFiles', get : -> @files?
 
@@ -12,9 +12,8 @@ class TaskStats
 
   file : ( cached ) =>
     @files ?= 0
+    @cached ?= 0
     @files++
-    if cached
-      @cached ?= 0
-      @cached++
+    @cached++ if cached
 
 module.exports = TaskStats

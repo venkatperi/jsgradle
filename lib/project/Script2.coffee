@@ -119,6 +119,7 @@ class Script extends FactoryBuilderSupport
     Q.try =>
       @evaluate @contents, coffee : true
       @project._tasksToExecute = @tasks if @tasks?.length
+      @project.configure()
     .fail ( err ) =>
       console.log err
       @errors.push err

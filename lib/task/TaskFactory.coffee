@@ -2,6 +2,9 @@ Task = require './Task'
 Collection = require '../util/Collection'
 CopyTask = require './builtin/CopyTask'
 ExecTask = require './builtin/ExecTask'
+rek = require 'rekuire'
+ClearCacheTask = rek 'ClearCacheTask'
+RmdirTask = rek 'RmdirTask'
 
 class TaskFactory extends Collection
 
@@ -10,6 +13,8 @@ class TaskFactory extends Collection
     @register 'default', ( x ) -> new Task x
     @register 'Copy', ( x ) -> new CopyTask x
     @register 'Exec', ( x ) -> new ExecTask x
+    @register 'Rmdir', ( x ) -> new RmdirTask x
+    @register 'ClearCacheTask', ( x ) -> new ClearCacheTask x
 
   register : ( type, create ) => @add type, create
 

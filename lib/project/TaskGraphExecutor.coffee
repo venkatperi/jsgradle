@@ -2,22 +2,20 @@ _ = require 'lodash'
 Multimap = require 'multimap'
 {EventEmitter} = require 'events'
 rek = require 'rekuire'
-log = rek('logger')(require('path').basename(__filename).split('.')[0])
-
+log = rek('logger')(require('path').basename(__filename).split('.')[ 0 ])
 
 class TaskGraphExecutor extends EventEmitter
 
   constructor : ( @container ) ->
+    @container.forEach ( t ) -> t.reset()
     @executionPlan = new Set()
     @executionQueue = []
     @entryTasks = []
-    @filter = (x) -> x.enabled
+    @filter = ( x ) -> x.enabled
 
   add : ( nodes ) =>
     queue = []
     sorted = Array.from nodes
-    #for own k,v of nodes
-    #  sorted.push v
     sorted = sorted.sort ( a, b ) -> a.task.compareTo b.task
 
     for node in sorted when node?
@@ -90,8 +88,8 @@ class TaskGraphExecutor extends EventEmitter
         successors = Array.from(taskNode.dependencySuccessors).reverse()
         for successor in successors
           #if visitingNodes.has successor, currentSegment
-            #console.log "circular? #{successor.toString()}, #{currentSegment}"
-            #throw new Error 'circular dep'
+          #console.log "circular? #{successor.toString()}, #{currentSegment}"
+          #throw new Error 'circular dep'
           nodeQueue.splice 0, 0,
             taskInfo : successor,
             visitingSegment : currentSegment

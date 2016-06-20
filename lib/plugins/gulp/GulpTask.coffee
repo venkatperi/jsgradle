@@ -1,6 +1,5 @@
-Q = require 'q'
 rek = require 'rekuire'
-Task = rek 'lib/task/Task'
+CachingTask = rek 'lib/task/CachingTask'
 objectOmit = require 'object.omit'
 objectAssign = require 'object-assign'
 File = require 'vinyl'
@@ -8,8 +7,9 @@ gulp = require 'gulp'
 cache = require 'gulp-cache'
 GulpSpec = rek 'GulpSpec'
 GulpAction = require './GulpAction'
-log = rek('logger')(require('path').basename(__filename).split('.')[ 0 ])
 conf = rek 'conf'
+sha1 = require 'sha1'
+log = rek('logger')(require('path').basename(__filename).split('.')[ 0 ])
 
 restore = ( restored ) ->
   if restored.contents
@@ -27,11 +27,11 @@ restore = ( restored ) ->
   # but omit the normal properties of the file
   objectAssign restoredFile, extraTaskProperties
 
-class GulpTask extends Task
+class GulpTask extends CachingTask
 
   @_addProperties
     required : [ 'gulpType' ]
-    optional : [ 'spec', 'output', 'options', 'gulpType', 'noCache' ]
+    optional : [ 'spec', 'output', 'base' ]
 
   setChild : ( c ) =>
     @spec ?= new GulpSpec()
@@ -41,10 +41,9 @@ class GulpTask extends Task
     gulpPlugin = require(@gulpType)(@options)
     unless @noCache
       gulpPlugin = cache gulpPlugin,
-        fileCache : new cache.Cache
-          cacheDirName : 'kohi-cache'
+        fileCache : @fileCache
         name : @name
-        restore: restore
+        restore : restore
 
     dest = @output
     dest ?= @spec?.allDest?[ 0 ]
@@ -53,8 +52,10 @@ class GulpTask extends Task
     gulpPlugin.on 'data', ( file ) =>
       @stats.file file.fromCache
 
+    srcOpts = {}
+    srcOpts.base = @base if @base
     gulp.task @path, =>
-      gulp.src @spec.patterns, base : '.'
+      gulp.src @spec.patterns, srcOpts
       .pipe gulpPlugin
       .pipe gulp.dest dest
 

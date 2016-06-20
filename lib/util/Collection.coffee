@@ -2,8 +2,12 @@ _ = require 'lodash'
 rek = require 'rekuire'
 BaseObject = rek 'BaseObject'
 log = rek('logger')(require('path').basename(__filename).split('.')[ 0 ])
+prop = rek 'prop'
+Q = require 'q'
 
 class Collection extends BaseObject
+
+  prop @, 'size', get : -> @items.size
 
   @_addProperties
     optional : [ 'name', 'convertName', 'parent' ]
@@ -52,6 +56,12 @@ class Collection extends BaseObject
   some : ( f ) =>  _.some @values, f
 
   forEach : ( f ) => @items?.forEach f
+
+  forEachp : ( f ) =>
+    res = Q()
+    @items.forEach ( x ) ->
+      res = res.then -> f(x)
+    res
 
   map : ( f ) => _.map @values, f
 

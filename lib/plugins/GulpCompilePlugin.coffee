@@ -12,7 +12,7 @@ assert = require 'assert'
 configurable = rek 'configurable'
 conf = rek 'conf'
 path = require 'path'
-log = rek('logger')(require('path').basename(__filename).split('.')[0])
+log = rek('logger')(require('path').basename(__filename).split('.')[ 0 ])
 
 class GulpCompilePlugin extends Plugin
 
@@ -33,10 +33,12 @@ class GulpCompilePlugin extends Plugin
     spec = @project.getSourceSets().get "main.#{@name}"
 
     @gulpType = conf.get "plugins:#{@name}:gulpType"
+    base = conf.get "plugins:#{@name}:base"
     _opts = _.extend {}, opts
     _.extend _opts,
       options : options,
       gulpType : @gulpType
+      base : base
       output : output
       spec : spec
     new GulpTask _opts
@@ -50,6 +52,7 @@ class GulpCompilePlugin extends Plugin
     conventionKlass = @_generateConventionClass()
     compileTaskType = 'Compile' + upperName
     compileTaskName = 'compile' + upperName
+    clearCacheTaskName = 'clearCache' + _.upperFirst(compileTaskName)
     cleanTaskType = 'Clean' + upperName
     cleanTaskName = 'clean' + upperName
 
@@ -64,6 +67,7 @@ class GulpCompilePlugin extends Plugin
     @register obj
 
     @createTask compileTaskName, type : compileTaskType
+    @createTask clearCacheTaskName, type : 'ClearCacheTask', target : compileTaskName
     @createTask cleanTaskName, type : cleanTaskType
     @task('build').dependsOn compileTaskName
     @task('clean').dependsOn cleanTaskName

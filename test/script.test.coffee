@@ -27,6 +27,7 @@ describe 'Script', ->
   it 'execute', ( done ) ->
     s = new Script
       scriptFile : path.join __dirname, 'fixtures', 'script1.coffee'
+      #tasks: ['clearCacheCoffeescript']
     s.build()
     .then ->
       s.project?.name.should.equal 'proj1'
