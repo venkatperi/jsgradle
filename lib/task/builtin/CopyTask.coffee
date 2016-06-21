@@ -6,7 +6,7 @@ CopyAction = require './CopyAction'
 
 class CopyTask extends FileTask
 
-  init : ( opts = {} ) =>
+  _init : ( opts = {} ) =>
     opts = _.extend opts,
       spec : new CopySpec()
       actionType : CopyAction

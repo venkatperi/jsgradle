@@ -31,31 +31,42 @@ nconf.defaults
       coffeescript :
         from :
           srcDir : '.'
-          includes : [ 'index.coffee', 'lib/**/*.coffee' ]
+          includes : [ 'index.coffee', '{src,lib}/**/*.coffee' ]
+      sass :
+        from :
+          srcDir : '.'
+          includes : [ 'src/style/**/*.scss' ]
       less :
         from :
           srcDir : '.'
-          includes : [ 'less/**/*.less', 'assets/less/**/*.less' ]
+          includes : [ 'src/style/**/*.less' ]
       output :
         dir : buildDir
         coffeescript :
           dir : "#{buildDir}/js"
+        sass :
+          dir : "#{buildDir}/public/style"
         less :
-          dir : "#{buildDir}/public/css"
+          dir : "#{buildDir}/public/style"
     test :
       'default' :
         dirs : [ 'test' ]
   plugins :
     coffeescript :
       uses : 'GulpCompilePlugin'
-      gulpType : 'gulp-coffee'
-      base: '.'
+      package: 'gulp-coffee'
+      base : '.'
       options :
         bare : true
         header : false
+    sass :
+      uses : 'GulpCompilePlugin'
+      package: 'gulp-sass'
+      options :
+        style : 'compressed'
     less :
       uses : 'GulpCompilePlugin'
-      gulpType : 'gulp-less'
+      package: 'gulp-less'
 
   module.exports =
     nconf : nconf

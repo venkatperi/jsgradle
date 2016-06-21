@@ -37,8 +37,5 @@ s = new Script
   buildDir : options.projectDir,
   tasks : options._
   continueOnError : options.continue
-s.initialize()
-.then -> s.configure()
-.then -> s.execute()
-.then -> s.report()
+s.build()
 .fail onError

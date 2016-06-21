@@ -1,11 +1,47 @@
-apply plugin : 'coffee'
+apply plugin : 'greeting'
+apply plugin : 'coffeescript'
+apply plugin : 'less'
+apply plugin : 'sass'
 
-description = 'gradle-esq Nodejs build tool'
+description = 'test project'
 version = '0.2.0'
 
+defaultTasks 'hello', 'test'
+
+dependencies ->
+  production 'abc', '1.0.3'
+  production 'abcd:^1.0.4'
+
+coffeescript ->
+
+
+#pkg ->
+#  name = 'test'
+#  scripts ->
+#    abc = 123
+
 sourceSets ->
-  main ->
-    coffeescript ->
-      from '.', ->
-        include 'index.coffee'
+  #main ->
+  #  coffeescript ->
+  #    from '.', ->
+  #      include '*.coffee'
+
+greeting ->
+  name = 'world'
+
+#task 'copy', type : Copy, ->
+#  from 'lib', ->
+#    include '**/*.coffee'
+#    exclude '**/T*.coffee'
+#    filter ( line ) -> line.toLowerCase()
+#  into 'dist'
+
+task ls, type : Exec, ->
+  executable '/bin/xls'
+  workingDir '/'
+
+task test, ->
+  from 'lib', ->
+    include '**/*.coffee'
+  into 'dist'
 

@@ -1,11 +1,8 @@
-Q = require 'q'
 assert = require 'assert'
 prop = require './../util/prop'
-{multi} = require 'heterarchy'
 {EventEmitter} = require 'events'
 Clock = require '../util/Clock'
 rek = require 'rekuire'
-log = rek('logger')(require('path').basename(__filename).split('.')[ 0 ])
 qflow = rek 'qflow'
 
 STATE = {
@@ -19,7 +16,7 @@ STATE = {
   Skipped : 'Skipped'
 }
 
-class TaskInfo extends multi EventEmitter
+class TaskInfo extends EventEmitter
   #@STATE : STATE
 
   prop @, 'name', get : -> @task.name
@@ -79,7 +76,7 @@ class TaskInfo extends multi EventEmitter
     return if @evaluated
     @evaluated = true
     @task.emit 'task:afterEvaluate:start', @task
-    @task.doAfterEvaluate()
+    @task._doAfterEvaluate()
     .finally =>
       @task.emit 'task:afterEvaluate:end', @task
 

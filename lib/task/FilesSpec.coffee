@@ -39,7 +39,7 @@ class CopySpec extends Collection
     exportedMethods : [ 'caseSensitive', 'with', 'include', 'exclude', 'from',
       'into' ]
 
-  init : ( opts = {} ) =>
+  _init : ( opts = {} ) =>
     super opts
     @loadFrom opts.from if opts.from?
     if opts.filter?

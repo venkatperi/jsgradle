@@ -14,7 +14,7 @@ class Action extends BaseObject
     required : [ 'task' ]
     optional : [ 'f' ]
 
-  init : ( opts ) =>
+  _init : ( opts ) =>
     super opts
 
   println : ( msg ) =>

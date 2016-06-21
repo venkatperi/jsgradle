@@ -12,39 +12,36 @@ assert = require 'assert'
 configurable = rek 'configurable'
 conf = rek 'conf'
 path = require 'path'
-log = rek('logger')(require('path').basename(__filename).split('.')[ 0 ])
+prop = rek 'prop'
 
 class GulpCompilePlugin extends Plugin
 
+  prop @, 'config', get : ->
+    conf.get "plugins:#{@name}"
+
   _generateConventionClass : =>
     upperName = _.upperFirst @name
-    genDir = @project.fileResolver.file conf.get("project:build:genDir")
+    genDir = @project.genDir
     outFile = path.join genDir, "#{upperName}Convention.coffee"
     @project.templates.generate 'GulpConventionClass', { name : upperName }, outFile
     require outFile
 
   _createExt : =>
     ext = configurable @project.callScriptMethod
-    _.extend ext, conf.get "plugins:#{@name}:options", {}
+    _.extend ext, @config.options, {}
 
   _createCompileTask : ( opts ) =>
-    options = @project.extensions.get @name
     output = @project.getSourceSets().get("main.output.#{@name}").dir
     spec = @project.getSourceSets().get "main.#{@name}"
 
-    @gulpType = conf.get "plugins:#{@name}:gulpType"
-    base = conf.get "plugins:#{@name}:base"
-    _opts = _.extend {}, opts
-    _.extend _opts,
-      options : options,
-      gulpType : @gulpType
-      base : base
+    taskOptions = _.omit @config, 'uses'
+    taskOptions.options ?= {}
+    _.extend taskOptions.options, @project.extensions.get @name
+    new GulpTask _.extend {}, opts, taskOptions,
       output : output
       spec : spec
-    new GulpTask _opts
 
   doApply : =>
-    #assert @gulpType, 'Missing option: gulpType'
     @applyPlugin 'build'
     @applyPlugin 'sourceSets'
 
@@ -67,7 +64,8 @@ class GulpCompilePlugin extends Plugin
     @register obj
 
     @createTask compileTaskName, type : compileTaskType
-    @createTask clearCacheTaskName, type : 'ClearCacheTask', target : compileTaskName
+    @createTask clearCacheTaskName,
+      type : 'ClearCacheTask', target : compileTaskName
     @createTask cleanTaskName, type : cleanTaskType
     @task('build').dependsOn compileTaskName
     @task('clean').dependsOn cleanTaskName

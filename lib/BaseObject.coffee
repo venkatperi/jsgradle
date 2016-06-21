@@ -5,8 +5,6 @@ rek = require 'rekuire'
 prop = rek 'prop'
 cache = require 'guava-cache'
 deepCopy = require 'deep-copy'
-traverse = require 'traverse'
-json = rek 'json'
 whatClass = require 'what-class'
 
 class BaseObject extends EventEmitter
@@ -58,9 +56,9 @@ class BaseObject extends EventEmitter
     ensureOptions opts, @_properties.required if @_properties?.required
     _.extend @, _.pick opts, @_allProperties
     @errors = []
-    @init opts
+    @_init opts
 
-  init : =>
+  _init : =>
 
   _checkFailed : => @_failed
 

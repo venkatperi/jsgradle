@@ -1,6 +1,6 @@
 rek = require 'rekuire'
 prop = rek 'prop'
-Collection = require '../util/Collection'
+Collection = require '../common/Collection'
 log = rek('logger')(require('path').basename(__filename).split('.')[ 0 ])
 
 class SourceSetContainer extends Collection

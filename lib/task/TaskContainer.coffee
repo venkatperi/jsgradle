@@ -1,5 +1,5 @@
 TaskFactory = require './TaskFactory'
-Collection = require '../util/Collection'
+Collection = require '../common/Collection'
 TaskInfo = require './TaskInfo'
 
 class TaskContainer extends Collection

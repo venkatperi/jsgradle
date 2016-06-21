@@ -2,7 +2,7 @@ rek = require 'rekuire'
 fs = require 'fs'
 path = require 'path'
 _ = require 'lodash'
-Collection = rek 'lib/util/Collection'
+Collection = rek 'lib/common/Collection'
 conf = rek 'conf'
 
 pluginRegex = /(\w+)Plugin\.coffee/

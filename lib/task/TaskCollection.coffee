@@ -1,5 +1,5 @@
 _ = require 'lodash'
-Collection = require '../util/Collection'
+Collection = require '../common/Collection'
 
 class TaskCollection extends Collection
   constructor : ->

@@ -1,3 +1,4 @@
+path = require 'path'
 rek = require 'rekuire'
 Q = require 'q'
 _ = require 'lodash'
@@ -6,7 +7,7 @@ Clock = rek 'Clock'
 ExtensionContainer = rek 'lib/ext/ExtensionContainer'
 FileResolver = rek 'FileResolver'
 out = rek 'lib/util/out'
-Path = require './Path'
+Path = require './../common/Path'
 PluginContainer = require './../plugins/PluginContainer'
 ConventionContainer = rek 'ConventionContainer'
 ConfigurationContainer = rek 'ConfigurationContainer'
@@ -41,6 +42,15 @@ class Project extends BaseObject
       => @fileResolver.file conf.get('project:cache:cacheDir')
 
   prop @, 'rootDir', get : -> @_rootDir
+
+  prop @, 'buildDir', get : ->
+    @_cache.get 'buildDir',
+      => path.join @projectDir, conf.get 'project:build:buildDir', 'build'
+
+  prop @, 'genDir', get : ->
+    @_cache.get 'genDir',
+      => @file(conf.get 'project:build:genDir', 'gen')
+    
 
   prop @, 'buildFile', get : -> @_buildFile
 
@@ -83,8 +93,7 @@ class Project extends BaseObject
     exportedReadOnly : []
     exportedMethods : [ 'apply', 'defaultTasks', 'println' ]
 
-  init : =>
-    @buildDir ?= "#{@projectDir}/#{conf.get 'project:build:buildDir'}"
+  _init : =>
     @isMultiProject = false
     @rootProject = @parent?.rootProject or @
     @_defaultTasks = conf.get 'project:build:defaultTasks', []
@@ -137,13 +146,15 @@ class Project extends BaseObject
   getSourceSets : =>
     @extensions.get 'sourceSets'
 
+  file : ( name ) =>
+    @fileResolver.file name
+
   initialize : =>
 
   afterEvaluate : =>
     @emit 'project:afterEvaluate:start', @
     numTasks = @tasks.size
     afterSize = 0
-    iters = 0
     qflow.until =>
       numTasks = @tasks.size
       executor = new TaskGraphExecutor(@tasks)

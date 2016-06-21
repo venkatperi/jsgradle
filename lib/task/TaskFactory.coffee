@@ -1,5 +1,5 @@
 Task = require './Task'
-Collection = require '../util/Collection'
+Collection = require '../common/Collection'
 CopyTask = require './builtin/CopyTask'
 ExecTask = require './builtin/ExecTask'
 rek = require 'rekuire'

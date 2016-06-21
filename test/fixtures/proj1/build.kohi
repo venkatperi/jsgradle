@@ -1,6 +1,7 @@
 apply plugin : 'greeting'
 apply plugin : 'coffeescript'
 apply plugin : 'less'
+apply plugin : 'sass'
 
 description = 'test project'
 version = '0.2.0'

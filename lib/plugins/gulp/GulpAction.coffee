@@ -3,7 +3,7 @@ Action = rek 'Action'
 through = require 'through'
 class GulpAction extends Action
 
-  init : ( opts = {} ) =>
+  _init : ( opts = {} ) =>
     @gulp = opts.gulp
     @taskName = opts.taskName
 

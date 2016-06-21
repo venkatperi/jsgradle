@@ -6,7 +6,7 @@ prop = rek 'prop'
 
 class UpdatePkgAction extends Action
 
-  init : ( opts = {} )=>
+  _init : ( opts = {} )=>
     {@filename, @pkg} = ensureOptions opts, 'filename', 'pkg'
 
   exec : ( resolve ) =>

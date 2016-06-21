@@ -1,3 +1,4 @@
+
 path = require 'path'
 assert = require 'assert'
 should = require 'should'
@@ -21,4 +22,3 @@ describe 'OSPath', ->
   it 'relative', ->
     p = new OSPath()
     console.log p.relative 'test'
-

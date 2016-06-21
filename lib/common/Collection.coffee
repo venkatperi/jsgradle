@@ -12,7 +12,7 @@ class Collection extends BaseObject
   @_addProperties
     optional : [ 'name', 'convertName', 'parent' ]
 
-  init : ( opts ) =>
+  _init : ( opts ) =>
     super opts
     @values = []
     @items = new Map()
@@ -31,7 +31,8 @@ class Collection extends BaseObject
     @emit 'add', name, item
     @
 
-  has : ( name ) => @items.has @convertName name
+  has : ( name ) => 
+    @items.has @convertName name
 
   get : ( name ) =>
     return unless name?

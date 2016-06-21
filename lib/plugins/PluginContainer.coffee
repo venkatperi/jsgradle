@@ -1,6 +1,6 @@
 rek = require 'rekuire'
 prop = rek 'prop'
-Collection = rek 'lib/util/Collection'
+Collection = rek 'lib/common/Collection'
 
 class PluginContainer extends Collection
 

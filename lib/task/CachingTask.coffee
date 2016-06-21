@@ -1,9 +1,7 @@
 rek = require 'rekuire'
-_ = require 'lodash'
-Q = require 'q'
 os = require 'os'
 p = rek 'lib/util/prop'
-Path = require './../project/Path'
+Path = require './../common/Path'
 Action = require './Action'
 BaseObject = rek 'BaseObject'
 conf = rek 'conf'
@@ -11,11 +9,17 @@ Task = rek 'Task'
 TaskStats = require './TaskStats'
 FileCache = rek 'FileCache'
 sha1 = require 'sha1'
+GlobChanges = require('glob-changes').GlobChanges
 
 class CachingTask extends Task
 
   @_addProperties
     optional : [ 'noCache' ]
+
+  p @, 'targetDir', get : ->
+    dest = @output
+    dest ?= @spec?.allDest?[ 0 ]
+    dest
 
   p @, 'fileCache', get : ->
     @_cache.get 'fileCache',
@@ -24,6 +28,10 @@ class CachingTask extends Task
   p @, 'cacheDir', get : ->
     @_cache.get 'cacheDir',
       => @project.fileResolver.file @fileCache.cacheDir
+
+  p @, 'changedFiles', get : ->
+    new GlobChanges(fileCache : @fileCache).changes @name, @spec.patterns,
+      realpath: true
 
   configure : =>
     @didOptionsChange()
@@ -43,5 +51,12 @@ class CachingTask extends Task
       opt = JSON.stringify @options
       hash = sha1 opt
       @fileCache.set(hash, opt)
+
+  _init : =>
+    super()
+    @_createSpec()
+
+  _createSpec : =>
+    @spec ?= new FileSpec()
 
 module.exports = CachingTask
