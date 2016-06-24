@@ -1,4 +1,4 @@
-var CachingTask, CountFiles, GulpAction, GulpSpec, GulpTask, _, cache, changeExt, conf, gulp, path, rek,
+var CachingTask, CountFiles, GulpAction, GulpSpec, GulpTask, _, changeExt, conf, gulp, path, rek, requireInstall,
   bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
   extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
   hasProp = {}.hasOwnProperty;
@@ -11,8 +11,6 @@ CachingTask = rek('lib/task/CachingTask');
 
 gulp = require('gulp');
 
-cache = require('gulp-cache');
-
 GulpSpec = rek('GulpSpec');
 
 GulpAction = require('./GulpAction');
@@ -24,6 +22,8 @@ path = require('path');
 changeExt = rek('fileOps').changeExt;
 
 CountFiles = rek('CountFiles');
+
+requireInstall = rek('require-install');
 
 GulpTask = (function(superClass) {
   extend(GulpTask, superClass);
@@ -56,7 +56,7 @@ GulpTask = (function(superClass) {
   GulpTask.prototype._onAfterEvaluate = function() {
     return this.changedFiles.then((function(_this) {
       return function(files) {
-        var counter, dest, modified, srcOpts;
+        var counter, dest, modified, plugin, srcOpts;
         if (files == null) {
           return;
         }
@@ -78,9 +78,11 @@ GulpTask = (function(superClass) {
         counter.on('count', function(count) {
           return _this.stats.cached = _this.stats.files - count;
         });
+        plugin = requireInstall(_this["package"])(_this.options);
+        plugin.on('error', function(err) {
+          throw err;
+        });
         gulp.task(_this.path, function() {
-          var plugin;
-          plugin = require(_this["package"])(_this.options);
           return gulp.src(modified, srcOpts).pipe(counter.plugin).pipe(plugin).pipe(gulp.dest(dest));
         });
         return _this.doFirst(new GulpAction({

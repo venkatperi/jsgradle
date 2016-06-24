@@ -66,7 +66,7 @@ PluginsRegistry = (function(superClass) {
         continue;
       }
       upper = _.upperFirst(k);
-      dest = this.project.fileResolver.file(conf.get('project:build:genDir'));
+      dest = this.project.file(conf.get('project:build:genDir'));
       destFile = path.join(dest, upper + "Plugin.coffee");
       this.project.templates.generate('GulpPluginClass', {
         name: upper,

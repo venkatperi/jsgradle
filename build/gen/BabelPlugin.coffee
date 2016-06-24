@@ -5,6 +5,6 @@ try
 catch
   Plugin = require('kohi').GulpCompilePlugin
 
-class LessPlugin extends Plugin
+class BabelPlugin extends Plugin
 
-module.exports = LessPlugin
+module.exports = BabelPlugin

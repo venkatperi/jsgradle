@@ -1,0 +1,2026 @@
+{
+  "/Users/venkat/proj/repos/kohi/lib/project/Script2.coffee": {
+    "lodash": "/Users/venkat/proj/repos/kohi/node_modules/lodash/lodash.js",
+    "q": "/Users/venkat/proj/repos/kohi/node_modules/q/q.js",
+    "path": "path",
+    "fs": "fs",
+    "coffee-dsl": "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/index.coffee",
+    "node-walkup": "/Users/venkat/proj/repos/kohi/node_modules/node-walkup/dist/index.js",
+    "rekuire": "/Users/venkat/proj/repos/kohi/node_modules/rekuire/lib/main.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/index.coffee": {
+    "./lib/FactoryBuilderSupport": "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/lib/FactoryBuilderSupport.coffee",
+    "./lib/AbstractFactory": "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/lib/AbstractFactory.coffee",
+    "./lib/Script": "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/lib/Script.coffee"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/lib/FactoryBuilderSupport.coffee": {
+    "lodash": "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/node_modules/lodash/lodash.js",
+    "./JSInterpreter": "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/lib/JSInterpreter.coffee",
+    "taglog": "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/node_modules/taglog/dist/index.js",
+    "what-class": "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/node_modules/what-class/dist/index.js",
+    "./util/util": "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/lib/util/util.coffee",
+    "rekuire": "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/node_modules/rekuire/lib/main.js",
+    "path": "path",
+    "./util/errors": "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/lib/util/errors.coffee"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/lib/JSInterpreter.coffee": {
+    "JS-Interpreter": "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/node_modules/JS-Interpreter/index.coffee",
+    "util": "util",
+    "./compile-coffee": "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/lib/compile-coffee.coffee",
+    "q": "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/node_modules/q/q.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/node_modules/JS-Interpreter/index.coffee": {
+    "./Interpreter2": "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/node_modules/JS-Interpreter/Interpreter2.coffee",
+    "./DefaultDelegate": "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/node_modules/JS-Interpreter/DefaultDelegate.coffee"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/node_modules/JS-Interpreter/Interpreter2.coffee": {
+    "lodash": "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/node_modules/JS-Interpreter/node_modules/lodash/lodash.js",
+    "./interpreter": "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/node_modules/JS-Interpreter/interpreter.js",
+    "./DefaultDelegate": "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/node_modules/JS-Interpreter/DefaultDelegate.coffee",
+    "ntimer": "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/node_modules/JS-Interpreter/node_modules/ntimer/dist/index.js",
+    "async": "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/node_modules/JS-Interpreter/node_modules/async/dist/async.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/node_modules/JS-Interpreter/interpreter.js": {
+    "./acorn": "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/node_modules/JS-Interpreter/acorn.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/node_modules/JS-Interpreter/DefaultDelegate.coffee": {
+    "lodash": "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/node_modules/JS-Interpreter/node_modules/lodash/lodash.js",
+    "rekuire": "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/node_modules/rekuire/lib/main.js",
+    "path": "path",
+    "events": "events"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/node_modules/rekuire/lib/main.js": {
+    "path": "path",
+    "./helpers/scanner": "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/node_modules/rekuire/lib/helpers/scanner.js",
+    "./helpers/findBase": "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/node_modules/rekuire/lib/helpers/findBase.js",
+    "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/node_modules/JS-Interpreter/package.json": "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/node_modules/JS-Interpreter/package.json",
+    "underscore": "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/node_modules/underscore/underscore.js",
+    "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/node_modules/JS-Interpreter/logger.coffee": "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/node_modules/JS-Interpreter/logger.coffee"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/node_modules/rekuire/lib/helpers/scanner.js": {
+    "fs": "fs",
+    "path": "path"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/node_modules/rekuire/lib/helpers/findBase.js": {
+    "fs": "fs",
+    "path": "path",
+    "underscore": "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/node_modules/underscore/underscore.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/node_modules/JS-Interpreter/logger.coffee": {
+    "taglog": "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/node_modules/JS-Interpreter/node_modules/taglog/dist/index.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/node_modules/JS-Interpreter/node_modules/taglog/dist/index.js": {
+    "moment": "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/node_modules/JS-Interpreter/node_modules/moment/moment.js",
+    "what-class": "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/node_modules/JS-Interpreter/node_modules/what-class/dist/index.js",
+    "prettyjson": "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/node_modules/JS-Interpreter/node_modules/prettyjson/lib/prettyjson.js",
+    "os": "os",
+    "colors/safe": "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/node_modules/JS-Interpreter/node_modules/colors/safe.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/node_modules/JS-Interpreter/node_modules/prettyjson/lib/prettyjson.js": {
+    "colors": "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/node_modules/JS-Interpreter/node_modules/colors/lib/index.js",
+    "./utils": "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/node_modules/JS-Interpreter/node_modules/prettyjson/lib/utils.js",
+    "../package.json": "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/node_modules/JS-Interpreter/node_modules/prettyjson/package.json"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/node_modules/JS-Interpreter/node_modules/colors/lib/index.js": {
+    "./colors": "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/node_modules/JS-Interpreter/node_modules/colors/lib/colors.js",
+    "./extendStringPrototype": "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/node_modules/JS-Interpreter/node_modules/colors/lib/extendStringPrototype.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/node_modules/JS-Interpreter/node_modules/colors/lib/colors.js": {
+    "./styles": "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/node_modules/JS-Interpreter/node_modules/colors/lib/styles.js",
+    "./system/supports-colors": "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/node_modules/JS-Interpreter/node_modules/colors/lib/system/supports-colors.js",
+    "./custom/trap": "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/node_modules/JS-Interpreter/node_modules/colors/lib/custom/trap.js",
+    "./custom/zalgo": "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/node_modules/JS-Interpreter/node_modules/colors/lib/custom/zalgo.js",
+    "./maps/america": "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/node_modules/JS-Interpreter/node_modules/colors/lib/maps/america.js",
+    "./maps/zebra": "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/node_modules/JS-Interpreter/node_modules/colors/lib/maps/zebra.js",
+    "./maps/rainbow": "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/node_modules/JS-Interpreter/node_modules/colors/lib/maps/rainbow.js",
+    "./maps/random": "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/node_modules/JS-Interpreter/node_modules/colors/lib/maps/random.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/node_modules/JS-Interpreter/node_modules/colors/lib/maps/america.js": {
+    "../colors": "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/node_modules/JS-Interpreter/node_modules/colors/lib/colors.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/node_modules/JS-Interpreter/node_modules/colors/lib/maps/zebra.js": {
+    "../colors": "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/node_modules/JS-Interpreter/node_modules/colors/lib/colors.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/node_modules/JS-Interpreter/node_modules/colors/lib/maps/rainbow.js": {
+    "../colors": "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/node_modules/JS-Interpreter/node_modules/colors/lib/colors.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/node_modules/JS-Interpreter/node_modules/colors/lib/maps/random.js": {
+    "../colors": "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/node_modules/JS-Interpreter/node_modules/colors/lib/colors.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/node_modules/JS-Interpreter/node_modules/colors/lib/extendStringPrototype.js": {
+    "./colors": "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/node_modules/JS-Interpreter/node_modules/colors/lib/colors.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/node_modules/JS-Interpreter/node_modules/colors/safe.js": {
+    "./lib/colors": "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/node_modules/JS-Interpreter/node_modules/colors/lib/colors.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/node_modules/JS-Interpreter/node_modules/ntimer/dist/index.js": {
+    "./lib/Timer": "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/node_modules/JS-Interpreter/node_modules/ntimer/dist/lib/Timer.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/node_modules/JS-Interpreter/node_modules/ntimer/dist/lib/Timer.js": {
+    "events": "events",
+    "error/typed": "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/node_modules/JS-Interpreter/node_modules/error/typed.js",
+    "millisecond": "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/node_modules/JS-Interpreter/node_modules/millisecond/index.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/node_modules/JS-Interpreter/node_modules/error/typed.js": {
+    "string-template": "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/node_modules/JS-Interpreter/node_modules/string-template/index.js",
+    "xtend/mutable": "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/node_modules/JS-Interpreter/node_modules/xtend/mutable.js",
+    "assert": "assert"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/lib/compile-coffee.coffee": {
+    "lodash": "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/node_modules/lodash/lodash.js",
+    "coffee-script": "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/node_modules/coffee-script/lib/coffee-script/coffee-script.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/node_modules/coffee-script/lib/coffee-script/coffee-script.js": {
+    "fs": "fs",
+    "vm": "vm",
+    "path": "path",
+    "./lexer": "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/node_modules/coffee-script/lib/coffee-script/lexer.js",
+    "./parser": "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/node_modules/coffee-script/lib/coffee-script/parser.js",
+    "./helpers": "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/node_modules/coffee-script/lib/coffee-script/helpers.js",
+    "./sourcemap": "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/node_modules/coffee-script/lib/coffee-script/sourcemap.js",
+    "./nodes": "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/node_modules/coffee-script/lib/coffee-script/nodes.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/node_modules/coffee-script/lib/coffee-script/lexer.js": {
+    "./rewriter": "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/node_modules/coffee-script/lib/coffee-script/rewriter.js",
+    "./helpers": "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/node_modules/coffee-script/lib/coffee-script/helpers.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/node_modules/coffee-script/lib/coffee-script/nodes.js": {
+    "./scope": "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/node_modules/coffee-script/lib/coffee-script/scope.js",
+    "./lexer": "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/node_modules/coffee-script/lib/coffee-script/lexer.js",
+    "./helpers": "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/node_modules/coffee-script/lib/coffee-script/helpers.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/node_modules/taglog/dist/index.js": {
+    "moment": "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/node_modules/moment/moment.js",
+    "what-class": "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/node_modules/what-class/dist/index.js",
+    "prettyjson": "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/node_modules/prettyjson/lib/prettyjson.js",
+    "os": "os",
+    "colors/safe": "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/node_modules/taglog/node_modules/colors/safe.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/node_modules/prettyjson/lib/prettyjson.js": {
+    "colors": "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/node_modules/prettyjson/node_modules/colors/lib/index.js",
+    "./utils": "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/node_modules/prettyjson/lib/utils.js",
+    "../package.json": "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/node_modules/prettyjson/package.json"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/node_modules/prettyjson/node_modules/colors/lib/index.js": {
+    "./colors": "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/node_modules/prettyjson/node_modules/colors/lib/colors.js",
+    "./extendStringPrototype": "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/node_modules/prettyjson/node_modules/colors/lib/extendStringPrototype.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/node_modules/prettyjson/node_modules/colors/lib/colors.js": {
+    "./styles": "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/node_modules/prettyjson/node_modules/colors/lib/styles.js",
+    "./system/supports-colors": "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/node_modules/prettyjson/node_modules/colors/lib/system/supports-colors.js",
+    "./custom/trap": "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/node_modules/prettyjson/node_modules/colors/lib/custom/trap.js",
+    "./custom/zalgo": "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/node_modules/prettyjson/node_modules/colors/lib/custom/zalgo.js",
+    "./maps/america": "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/node_modules/prettyjson/node_modules/colors/lib/maps/america.js",
+    "./maps/zebra": "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/node_modules/prettyjson/node_modules/colors/lib/maps/zebra.js",
+    "./maps/rainbow": "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/node_modules/prettyjson/node_modules/colors/lib/maps/rainbow.js",
+    "./maps/random": "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/node_modules/prettyjson/node_modules/colors/lib/maps/random.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/node_modules/prettyjson/node_modules/colors/lib/maps/america.js": {
+    "../colors": "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/node_modules/prettyjson/node_modules/colors/lib/colors.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/node_modules/prettyjson/node_modules/colors/lib/maps/zebra.js": {
+    "../colors": "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/node_modules/prettyjson/node_modules/colors/lib/colors.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/node_modules/prettyjson/node_modules/colors/lib/maps/rainbow.js": {
+    "../colors": "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/node_modules/prettyjson/node_modules/colors/lib/colors.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/node_modules/prettyjson/node_modules/colors/lib/maps/random.js": {
+    "../colors": "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/node_modules/prettyjson/node_modules/colors/lib/colors.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/node_modules/prettyjson/node_modules/colors/lib/extendStringPrototype.js": {
+    "./colors": "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/node_modules/prettyjson/node_modules/colors/lib/colors.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/node_modules/taglog/node_modules/colors/safe.js": {
+    "./lib/colors": "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/node_modules/taglog/node_modules/colors/lib/colors.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/node_modules/taglog/node_modules/colors/lib/colors.js": {
+    "./styles": "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/node_modules/taglog/node_modules/colors/lib/styles.js",
+    "./system/supports-colors": "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/node_modules/taglog/node_modules/colors/lib/system/supports-colors.js",
+    "./custom/trap": "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/node_modules/taglog/node_modules/colors/lib/custom/trap.js",
+    "./custom/zalgo": "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/node_modules/taglog/node_modules/colors/lib/custom/zalgo.js",
+    "./maps/america": "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/node_modules/taglog/node_modules/colors/lib/maps/america.js",
+    "./maps/zebra": "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/node_modules/taglog/node_modules/colors/lib/maps/zebra.js",
+    "./maps/rainbow": "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/node_modules/taglog/node_modules/colors/lib/maps/rainbow.js",
+    "./maps/random": "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/node_modules/taglog/node_modules/colors/lib/maps/random.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/node_modules/taglog/node_modules/colors/lib/maps/america.js": {
+    "../colors": "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/node_modules/taglog/node_modules/colors/lib/colors.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/node_modules/taglog/node_modules/colors/lib/maps/zebra.js": {
+    "../colors": "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/node_modules/taglog/node_modules/colors/lib/colors.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/node_modules/taglog/node_modules/colors/lib/maps/rainbow.js": {
+    "../colors": "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/node_modules/taglog/node_modules/colors/lib/colors.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/node_modules/taglog/node_modules/colors/lib/maps/random.js": {
+    "../colors": "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/node_modules/taglog/node_modules/colors/lib/colors.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/lib/util/util.coffee": {
+    "util": "util"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/lib/util/errors.coffee": {
+    "error/typed": "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/node_modules/error/typed.js",
+    "error/wrapped": "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/node_modules/error/wrapped.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/node_modules/error/typed.js": {
+    "string-template": "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/node_modules/string-template/index.js",
+    "xtend/mutable": "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/node_modules/xtend/mutable.js",
+    "assert": "assert"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/node_modules/error/wrapped.js": {
+    "xtend/mutable": "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/node_modules/xtend/mutable.js",
+    "assert": "assert",
+    "./typed.js": "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/node_modules/error/typed.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/lib/Script.coffee": {
+    "events": "events",
+    "lodash": "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/node_modules/lodash/lodash.js",
+    "vm": "vm",
+    "coffee-script": "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/node_modules/coffee-script/lib/coffee-script/coffee-script.js",
+    "./Context": "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/lib/Context.coffee"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/node-walkup/dist/index.js": {
+    "./lib/walkup": "/Users/venkat/proj/repos/kohi/node_modules/node-walkup/dist/lib/walkup.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/node-walkup/dist/lib/walkup.js": {
+    "path": "path",
+    "fs": "fs",
+    "glob": "/Users/venkat/proj/repos/kohi/node_modules/glob/glob.js",
+    "underscore": "/Users/venkat/proj/repos/kohi/node_modules/node-walkup/node_modules/underscore/underscore.js",
+    "events": "events",
+    "q": "/Users/venkat/proj/repos/kohi/node_modules/q/q.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/glob/glob.js": {
+    "fs": "fs",
+    "fs.realpath": "/Users/venkat/proj/repos/kohi/node_modules/fs.realpath/index.js",
+    "minimatch": "/Users/venkat/proj/repos/kohi/node_modules/minimatch/minimatch.js",
+    "inherits": "/Users/venkat/proj/repos/kohi/node_modules/inherits/inherits.js",
+    "events": "events",
+    "path": "path",
+    "assert": "assert",
+    "path-is-absolute": "/Users/venkat/proj/repos/kohi/node_modules/path-is-absolute/index.js",
+    "./sync.js": "/Users/venkat/proj/repos/kohi/node_modules/glob/sync.js",
+    "./common.js": "/Users/venkat/proj/repos/kohi/node_modules/glob/common.js",
+    "inflight": "/Users/venkat/proj/repos/kohi/node_modules/inflight/inflight.js",
+    "util": "util",
+    "once": "/Users/venkat/proj/repos/kohi/node_modules/once/once.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/fs.realpath/index.js": {
+    "fs": "fs",
+    "./old.js": "/Users/venkat/proj/repos/kohi/node_modules/fs.realpath/old.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/fs.realpath/old.js": {
+    "path": "path",
+    "fs": "fs"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/minimatch/minimatch.js": {
+    "path": "path",
+    "brace-expansion": "/Users/venkat/proj/repos/kohi/node_modules/brace-expansion/index.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/brace-expansion/index.js": {
+    "concat-map": "/Users/venkat/proj/repos/kohi/node_modules/concat-map/index.js",
+    "balanced-match": "/Users/venkat/proj/repos/kohi/node_modules/balanced-match/index.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/inherits/inherits.js": {
+    "util": "util"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/glob/sync.js": {
+    "fs": "fs",
+    "fs.realpath": "/Users/venkat/proj/repos/kohi/node_modules/fs.realpath/index.js",
+    "minimatch": "/Users/venkat/proj/repos/kohi/node_modules/minimatch/minimatch.js",
+    "./glob.js": "/Users/venkat/proj/repos/kohi/node_modules/glob/glob.js",
+    "util": "util",
+    "path": "path",
+    "assert": "assert",
+    "path-is-absolute": "/Users/venkat/proj/repos/kohi/node_modules/path-is-absolute/index.js",
+    "./common.js": "/Users/venkat/proj/repos/kohi/node_modules/glob/common.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/glob/common.js": {
+    "path": "path",
+    "minimatch": "/Users/venkat/proj/repos/kohi/node_modules/minimatch/minimatch.js",
+    "path-is-absolute": "/Users/venkat/proj/repos/kohi/node_modules/path-is-absolute/index.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/inflight/inflight.js": {
+    "wrappy": "/Users/venkat/proj/repos/kohi/node_modules/wrappy/wrappy.js",
+    "once": "/Users/venkat/proj/repos/kohi/node_modules/once/once.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/once/once.js": {
+    "wrappy": "/Users/venkat/proj/repos/kohi/node_modules/wrappy/wrappy.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/rekuire/lib/main.js": {
+    "path": "path",
+    "./helpers/scanner": "/Users/venkat/proj/repos/kohi/node_modules/rekuire/lib/helpers/scanner.js",
+    "./helpers/findBase": "/Users/venkat/proj/repos/kohi/node_modules/rekuire/lib/helpers/findBase.js",
+    "/Users/venkat/proj/repos/kohi/package.json": "/Users/venkat/proj/repos/kohi/package.json",
+    "underscore": "/Users/venkat/proj/repos/kohi/node_modules/underscore/underscore.js",
+    "/Users/venkat/proj/repos/kohi/lib/project/Project.coffee": "/Users/venkat/proj/repos/kohi/lib/project/Project.coffee",
+    "/Users/venkat/proj/repos/kohi/lib/BaseObject.coffee": "/Users/venkat/proj/repos/kohi/lib/BaseObject.coffee",
+    "/Users/venkat/proj/repos/kohi/lib/util/validate.coffee": "/Users/venkat/proj/repos/kohi/lib/util/validate.coffee",
+    "/Users/venkat/proj/repos/kohi/lib/util/prop.coffee": "/Users/venkat/proj/repos/kohi/lib/util/prop.coffee",
+    "/Users/venkat/proj/repos/kohi/lib/util/Clock.coffee": "/Users/venkat/proj/repos/kohi/lib/util/Clock.coffee",
+    "/Users/venkat/proj/repos/kohi/lib/ext/ExtensionContainer.coffee": "/Users/venkat/proj/repos/kohi/lib/ext/ExtensionContainer.coffee",
+    "/Users/venkat/proj/repos/kohi/lib/task/FileResolver.coffee": "/Users/venkat/proj/repos/kohi/lib/task/FileResolver.coffee",
+    "/Users/venkat/proj/repos/kohi/lib/util/out.coffee": "/Users/venkat/proj/repos/kohi/lib/util/out.coffee",
+    "/Users/venkat/proj/repos/kohi/lib/common/Collection.coffee": "/Users/venkat/proj/repos/kohi/lib/common/Collection.coffee",
+    "/Users/venkat/proj/repos/kohi/lib/util/logger.coffee": "/Users/venkat/proj/repos/kohi/lib/util/logger.coffee",
+    "/Users/venkat/proj/repos/kohi/lib/convention/ConventionContainer.coffee": "/Users/venkat/proj/repos/kohi/lib/convention/ConventionContainer.coffee",
+    "/Users/venkat/proj/repos/kohi/lib/artifact/ConfigurationContainer.coffee": "/Users/venkat/proj/repos/kohi/lib/artifact/ConfigurationContainer.coffee",
+    "/Users/venkat/proj/repos/kohi/conf.coffee": "/Users/venkat/proj/repos/kohi/conf.coffee",
+    "/Users/venkat/proj/repos/kohi/lib/factory/ProxyFactory.coffee": "/Users/venkat/proj/repos/kohi/lib/factory/ProxyFactory.coffee",
+    "/Users/venkat/proj/repos/kohi/lib/task/SourceSetContainer.coffee": "/Users/venkat/proj/repos/kohi/lib/task/SourceSetContainer.coffee",
+    "/Users/venkat/proj/repos/kohi/lib/task/TaskContainer.coffee": "/Users/venkat/proj/repos/kohi/lib/task/TaskContainer.coffee",
+    "/Users/venkat/proj/repos/kohi/lib/task/Action.coffee": "/Users/venkat/proj/repos/kohi/lib/task/Action.coffee",
+    "/Users/venkat/proj/repos/kohi/lib/util/glob.coffee": "/Users/venkat/proj/repos/kohi/lib/util/glob.coffee",
+    "/Users/venkat/proj/repos/kohi/lib/task/FilesSpec.coffee": "/Users/venkat/proj/repos/kohi/lib/task/FilesSpec.coffee",
+    "/Users/venkat/proj/repos/kohi/lib/task/ClearCacheTask.coffee": "/Users/venkat/proj/repos/kohi/lib/task/ClearCacheTask.coffee",
+    "/Users/venkat/proj/repos/kohi/lib/util/fileOps.coffee": "/Users/venkat/proj/repos/kohi/lib/util/fileOps.coffee",
+    "/Users/venkat/proj/repos/kohi/lib/task/RmdirTask.coffee": "/Users/venkat/proj/repos/kohi/lib/task/RmdirTask.coffee",
+    "/Users/venkat/proj/repos/kohi/lib/util/qflow.coffee": "/Users/venkat/proj/repos/kohi/lib/util/qflow.coffee",
+    "/Users/venkat/proj/repos/kohi/lib/task/TaskFactory.coffee": "/Users/venkat/proj/repos/kohi/lib/task/TaskFactory.coffee",
+    "/Users/venkat/proj/repos/kohi/lib/artifact/DependenciesExt.coffee": "/Users/venkat/proj/repos/kohi/lib/artifact/DependenciesExt.coffee",
+    "/Users/venkat/proj/repos/kohi/lib/artifact/Dependency.coffee": "/Users/venkat/proj/repos/kohi/lib/artifact/Dependency.coffee",
+    "/Users/venkat/proj/repos/kohi/lib/util/configurable.coffee": "/Users/venkat/proj/repos/kohi/lib/util/configurable.coffee",
+    "/Users/venkat/proj/repos/kohi/lib/factory/TaskBuilderFactory.coffee": "/Users/venkat/proj/repos/kohi/lib/factory/TaskBuilderFactory.coffee",
+    "/Users/venkat/proj/repos/kohi/lib/factory/ProjectFactory.coffee": "/Users/venkat/proj/repos/kohi/lib/factory/ProjectFactory.coffee",
+    "/Users/venkat/proj/repos/kohi/lib/factory/CopySpecFactory.coffee": "/Users/venkat/proj/repos/kohi/lib/factory/CopySpecFactory.coffee",
+    "/Users/venkat/proj/repos/kohi/lib/factory/OptionsFactory.coffee": "/Users/venkat/proj/repos/kohi/lib/factory/OptionsFactory.coffee",
+    "/Users/venkat/proj/repos/kohi/lib/util/time.coffee": "/Users/venkat/proj/repos/kohi/lib/util/time.coffee",
+    "/Users/venkat/proj/repos/kohi/lib/util/HrTime.coffee": "/Users/venkat/proj/repos/kohi/lib/util/HrTime.coffee",
+    "/Users/venkat/proj/repos/kohi/lib/reporter/ConsoleReporter.coffee": "/Users/venkat/proj/repos/kohi/lib/reporter/ConsoleReporter.coffee",
+    "/Users/venkat/proj/repos/kohi/lib/convention/SourceMapConvention.coffee": "/Users/venkat/proj/repos/kohi/lib/convention/SourceMapConvention.coffee",
+    "/Users/venkat/proj/repos/kohi/lib/convention/CompileConvention.coffee": "/Users/venkat/proj/repos/kohi/lib/convention/CompileConvention.coffee",
+    "/Users/venkat/proj/repos/kohi/lib/convention/Convention.coffee": "/Users/venkat/proj/repos/kohi/lib/convention/Convention.coffee",
+    "/Users/venkat/proj/repos/kohi/lib/artifact/Configuration.coffee": "/Users/venkat/proj/repos/kohi/lib/artifact/Configuration.coffee",
+    "/Users/venkat/proj/repos/kohi/lib/artifact/DependencySet.coffee": "/Users/venkat/proj/repos/kohi/lib/artifact/DependencySet.coffee",
+    "/Users/venkat/proj/repos/kohi/lib/task/SourceSetOutput.coffee": "/Users/venkat/proj/repos/kohi/lib/task/SourceSetOutput.coffee",
+    "/Users/venkat/proj/repos/kohi/lib/common/CleanMainOutputTask.coffee": "/Users/venkat/proj/repos/kohi/lib/common/CleanMainOutputTask.coffee",
+    "/Users/venkat/proj/repos/kohi/lib/plugins/gulp/GulpTask.coffee": "/Users/venkat/proj/repos/kohi/lib/plugins/gulp/GulpTask.coffee",
+    "/Users/venkat/proj/repos/kohi/lib/task/CachingTask.coffee": "/Users/venkat/proj/repos/kohi/lib/task/CachingTask.coffee",
+    "/Users/venkat/proj/repos/kohi/lib/task/Task.coffee": "/Users/venkat/proj/repos/kohi/lib/task/Task.coffee",
+    "/Users/venkat/proj/repos/kohi/lib/util/FileCache.coffee": "/Users/venkat/proj/repos/kohi/lib/util/FileCache.coffee",
+    "/Users/venkat/proj/repos/kohi/lib/plugins/gulp/GulpSpec.coffee": "/Users/venkat/proj/repos/kohi/lib/plugins/gulp/GulpSpec.coffee",
+    "/Users/venkat/proj/repos/kohi/lib/plugins/gulp/CountFiles.coffee": "/Users/venkat/proj/repos/kohi/lib/plugins/gulp/CountFiles.coffee",
+    "/Users/venkat/proj/repos/kohi/lib/plugins/gulp/GulpThrough.coffee": "/Users/venkat/proj/repos/kohi/lib/plugins/gulp/GulpThrough.coffee",
+    "/Users/venkat/proj/repos/kohi/lib/plugins/node/NodeConvention.coffee": "/Users/venkat/proj/repos/kohi/lib/plugins/node/NodeConvention.coffee",
+    "/Users/venkat/proj/repos/kohi/lib/plugins/package/PackageOptions.coffee": "/Users/venkat/proj/repos/kohi/lib/plugins/package/PackageOptions.coffee",
+    "/Users/venkat/proj/repos/kohi/lib/plugins/package/UpdatePkgTask.coffee": "/Users/venkat/proj/repos/kohi/lib/plugins/package/UpdatePkgTask.coffee",
+    "/Users/venkat/proj/repos/kohi/lib/plugins/GulpCompilePlugin.coffee": "/Users/venkat/proj/repos/kohi/lib/plugins/GulpCompilePlugin.coffee",
+    "/Users/venkat/proj/repos/kohi/lib/util/require-install.coffee": "/Users/venkat/proj/repos/kohi/lib/util/require-install.coffee"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/rekuire/lib/helpers/scanner.js": {
+    "fs": "fs",
+    "path": "path"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/rekuire/lib/helpers/findBase.js": {
+    "fs": "fs",
+    "path": "path",
+    "underscore": "/Users/venkat/proj/repos/kohi/node_modules/underscore/underscore.js"
+  },
+  "/Users/venkat/proj/repos/kohi/lib/project/Project.coffee": {
+    "path": "path",
+    "rekuire": "/Users/venkat/proj/repos/kohi/node_modules/rekuire/lib/main.js",
+    "q": "/Users/venkat/proj/repos/kohi/node_modules/q/q.js",
+    "lodash": "/Users/venkat/proj/repos/kohi/node_modules/lodash/lodash.js",
+    "./../common/Path": "/Users/venkat/proj/repos/kohi/lib/common/Path.coffee",
+    "./../plugins/PluginContainer": "/Users/venkat/proj/repos/kohi/lib/plugins/PluginContainer.coffee",
+    "./../plugins/PluginsRegistry": "/Users/venkat/proj/repos/kohi/lib/plugins/PluginsRegistry.coffee",
+    "./ScriptPhase": "/Users/venkat/proj/repos/kohi/lib/project/ScriptPhase.coffee",
+    "./TaskGraphExecutor": "/Users/venkat/proj/repos/kohi/lib/project/TaskGraphExecutor.coffee",
+    "../templates": "/Users/venkat/proj/repos/kohi/lib/templates/index.coffee"
+  },
+  "/Users/venkat/proj/repos/kohi/lib/BaseObject.coffee": {
+    "lodash": "/Users/venkat/proj/repos/kohi/node_modules/lodash/lodash.js",
+    "rekuire": "/Users/venkat/proj/repos/kohi/node_modules/rekuire/lib/main.js",
+    "events": "events",
+    "guava-cache": "/Users/venkat/proj/repos/kohi/node_modules/guava-cache/dist/index.js",
+    "deep-copy": "/Users/venkat/proj/repos/kohi/node_modules/deep-copy/index.js",
+    "what-class": "/Users/venkat/proj/repos/kohi/node_modules/what-class/dist/index.js"
+  },
+  "/Users/venkat/proj/repos/kohi/lib/util/validate.coffee": {
+    "lodash": "/Users/venkat/proj/repos/kohi/node_modules/lodash/lodash.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/guava-cache/dist/index.js": {
+    "./lib/LoadingCache": "/Users/venkat/proj/repos/kohi/node_modules/guava-cache/dist/lib/LoadingCache.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/guava-cache/dist/lib/LoadingCache.js": {
+    "events": "events",
+    "prop-it": "/Users/venkat/proj/repos/kohi/node_modules/prop-it/dist/index.js",
+    "millisecond": "/Users/venkat/proj/repos/kohi/node_modules/millisecond/index.js",
+    "./Stats": "/Users/venkat/proj/repos/kohi/node_modules/guava-cache/dist/lib/Stats.js",
+    "moment": "/Users/venkat/proj/repos/kohi/node_modules/moment/moment.js",
+    "seqx": "/Users/venkat/proj/repos/kohi/node_modules/seqx/dist/index.js",
+    "flatten": "/Users/venkat/proj/repos/kohi/node_modules/flatten/index.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/prop-it/dist/index.js": {
+    "common-errors": "/Users/venkat/proj/repos/kohi/node_modules/common-errors/index.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/common-errors/index.js": {
+    "util": "util",
+    "./lib/helpers/class-generator": "/Users/venkat/proj/repos/kohi/node_modules/common-errors/lib/helpers/class-generator.js",
+    "./lib/middleware/errorHandler": "/Users/venkat/proj/repos/kohi/node_modules/common-errors/lib/middleware/errorHandler.js",
+    "./lib/middleware/crashProtector": "/Users/venkat/proj/repos/kohi/node_modules/common-errors/lib/middleware/crashProtector.js",
+    "./lib/alreadyInUse": "/Users/venkat/proj/repos/kohi/node_modules/common-errors/lib/alreadyInUse.js",
+    "./lib/argument": "/Users/venkat/proj/repos/kohi/node_modules/common-errors/lib/argument.js",
+    "./lib/argumentNull": "/Users/venkat/proj/repos/kohi/node_modules/common-errors/lib/argumentNull.js",
+    "./lib/authenticationRequired": "/Users/venkat/proj/repos/kohi/node_modules/common-errors/lib/authenticationRequired.js",
+    "./lib/http-status": "/Users/venkat/proj/repos/kohi/node_modules/common-errors/lib/http-status.js",
+    "./lib/invalid-operation": "/Users/venkat/proj/repos/kohi/node_modules/common-errors/lib/invalid-operation.js",
+    "./lib/not-found": "/Users/venkat/proj/repos/kohi/node_modules/common-errors/lib/not-found.js",
+    "./lib/not-supported": "/Users/venkat/proj/repos/kohi/node_modules/common-errors/lib/not-supported.js",
+    "./lib/notPermitted": "/Users/venkat/proj/repos/kohi/node_modules/common-errors/lib/notPermitted.js",
+    "./lib/timeout.js": "/Users/venkat/proj/repos/kohi/node_modules/common-errors/lib/timeout.js",
+    "./lib/validation": "/Users/venkat/proj/repos/kohi/node_modules/common-errors/lib/validation.js",
+    "./lib/io/io": "/Users/venkat/proj/repos/kohi/node_modules/common-errors/lib/io/io.js",
+    "./lib/io/file-load": "/Users/venkat/proj/repos/kohi/node_modules/common-errors/lib/io/file-load.js",
+    "./lib/io/file-not-found": "/Users/venkat/proj/repos/kohi/node_modules/common-errors/lib/io/file-not-found.js",
+    "./lib/data/data": "/Users/venkat/proj/repos/kohi/node_modules/common-errors/lib/data/data.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/common-errors/lib/helpers/class-generator.js": {
+    "util": "util",
+    "../internal/globalize": "/Users/venkat/proj/repos/kohi/node_modules/common-errors/lib/internal/globalize.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/common-errors/lib/internal/globalize.js": {
+    "util": "util"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/common-errors/lib/middleware/errorHandler.js": {
+    "../http-status": "/Users/venkat/proj/repos/kohi/node_modules/common-errors/lib/http-status.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/common-errors/lib/http-status.js": {
+    "http": "http",
+    "util": "util"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/common-errors/lib/alreadyInUse.js": {
+    "./helpers/class-generator": "/Users/venkat/proj/repos/kohi/node_modules/common-errors/lib/helpers/class-generator.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/common-errors/lib/argument.js": {
+    "./helpers/class-generator": "/Users/venkat/proj/repos/kohi/node_modules/common-errors/lib/helpers/class-generator.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/common-errors/lib/argumentNull.js": {
+    "./helpers/class-generator": "/Users/venkat/proj/repos/kohi/node_modules/common-errors/lib/helpers/class-generator.js",
+    "./argument": "/Users/venkat/proj/repos/kohi/node_modules/common-errors/lib/argument.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/common-errors/lib/authenticationRequired.js": {
+    "./helpers/class-generator": "/Users/venkat/proj/repos/kohi/node_modules/common-errors/lib/helpers/class-generator.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/common-errors/lib/invalid-operation.js": {
+    "./helpers/class-generator": "/Users/venkat/proj/repos/kohi/node_modules/common-errors/lib/helpers/class-generator.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/common-errors/lib/not-found.js": {
+    "./helpers/class-generator": "/Users/venkat/proj/repos/kohi/node_modules/common-errors/lib/helpers/class-generator.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/common-errors/lib/not-supported.js": {
+    "./helpers/class-generator": "/Users/venkat/proj/repos/kohi/node_modules/common-errors/lib/helpers/class-generator.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/common-errors/lib/notPermitted.js": {
+    "./helpers/class-generator": "/Users/venkat/proj/repos/kohi/node_modules/common-errors/lib/helpers/class-generator.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/common-errors/lib/timeout.js": {
+    "./helpers/class-generator": "/Users/venkat/proj/repos/kohi/node_modules/common-errors/lib/helpers/class-generator.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/common-errors/lib/validation.js": {
+    "./helpers/class-generator": "/Users/venkat/proj/repos/kohi/node_modules/common-errors/lib/helpers/class-generator.js",
+    "./argument": "/Users/venkat/proj/repos/kohi/node_modules/common-errors/lib/argument.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/common-errors/lib/io/io.js": {
+    "../helpers/class-generator": "/Users/venkat/proj/repos/kohi/node_modules/common-errors/lib/helpers/class-generator.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/common-errors/lib/io/file-load.js": {
+    "../helpers/class-generator": "/Users/venkat/proj/repos/kohi/node_modules/common-errors/lib/helpers/class-generator.js",
+    "./io": "/Users/venkat/proj/repos/kohi/node_modules/common-errors/lib/io/io.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/common-errors/lib/io/file-not-found.js": {
+    "../helpers/class-generator": "/Users/venkat/proj/repos/kohi/node_modules/common-errors/lib/helpers/class-generator.js",
+    "./io": "/Users/venkat/proj/repos/kohi/node_modules/common-errors/lib/io/io.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/common-errors/lib/data/data.js": {
+    "../helpers/class-generator": "/Users/venkat/proj/repos/kohi/node_modules/common-errors/lib/helpers/class-generator.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/seqx/dist/index.js": {
+    "./lib/SeqX": "/Users/venkat/proj/repos/kohi/node_modules/seqx/dist/lib/SeqX.js",
+    "./lib/ParX": "/Users/venkat/proj/repos/kohi/node_modules/seqx/dist/lib/ParX.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/seqx/dist/lib/SeqX.js": {
+    "q": "/Users/venkat/proj/repos/kohi/node_modules/seqx/node_modules/q/q.js",
+    "events": "events"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/seqx/dist/lib/ParX.js": {
+    "lodash": "/Users/venkat/proj/repos/kohi/node_modules/seqx/node_modules/lodash/lodash.js",
+    "q": "/Users/venkat/proj/repos/kohi/node_modules/seqx/node_modules/q/q.js",
+    "events": "events"
+  },
+  "/Users/venkat/proj/repos/kohi/lib/util/Clock.coffee": {
+    "pretty-hrtime": "/Users/venkat/proj/repos/kohi/node_modules/pretty-hrtime/index.js",
+    "./prop": "/Users/venkat/proj/repos/kohi/lib/util/prop.coffee"
+  },
+  "/Users/venkat/proj/repos/kohi/lib/ext/ExtensionContainer.coffee": {
+    "events": "events"
+  },
+  "/Users/venkat/proj/repos/kohi/lib/task/FileResolver.coffee": {
+    "path": "path"
+  },
+  "/Users/venkat/proj/repos/kohi/lib/util/out.coffee": {
+    "colors/safe": "/Users/venkat/proj/repos/kohi/node_modules/colors/safe.js",
+    "./prop": "/Users/venkat/proj/repos/kohi/lib/util/prop.coffee",
+    "os": "os"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/colors/safe.js": {
+    "./lib/colors": "/Users/venkat/proj/repos/kohi/node_modules/colors/lib/colors.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/colors/lib/colors.js": {
+    "./styles": "/Users/venkat/proj/repos/kohi/node_modules/colors/lib/styles.js",
+    "./system/supports-colors": "/Users/venkat/proj/repos/kohi/node_modules/colors/lib/system/supports-colors.js",
+    "./custom/trap": "/Users/venkat/proj/repos/kohi/node_modules/colors/lib/custom/trap.js",
+    "./custom/zalgo": "/Users/venkat/proj/repos/kohi/node_modules/colors/lib/custom/zalgo.js",
+    "./maps/america": "/Users/venkat/proj/repos/kohi/node_modules/colors/lib/maps/america.js",
+    "./maps/zebra": "/Users/venkat/proj/repos/kohi/node_modules/colors/lib/maps/zebra.js",
+    "./maps/rainbow": "/Users/venkat/proj/repos/kohi/node_modules/colors/lib/maps/rainbow.js",
+    "./maps/random": "/Users/venkat/proj/repos/kohi/node_modules/colors/lib/maps/random.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/colors/lib/maps/america.js": {
+    "../colors": "/Users/venkat/proj/repos/kohi/node_modules/colors/lib/colors.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/colors/lib/maps/zebra.js": {
+    "../colors": "/Users/venkat/proj/repos/kohi/node_modules/colors/lib/colors.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/colors/lib/maps/rainbow.js": {
+    "../colors": "/Users/venkat/proj/repos/kohi/node_modules/colors/lib/colors.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/colors/lib/maps/random.js": {
+    "../colors": "/Users/venkat/proj/repos/kohi/node_modules/colors/lib/colors.js"
+  },
+  "/Users/venkat/proj/repos/kohi/lib/common/Path.coffee": {
+    "rekuire": "/Users/venkat/proj/repos/kohi/node_modules/rekuire/lib/main.js"
+  },
+  "/Users/venkat/proj/repos/kohi/lib/plugins/PluginContainer.coffee": {
+    "rekuire": "/Users/venkat/proj/repos/kohi/node_modules/rekuire/lib/main.js"
+  },
+  "/Users/venkat/proj/repos/kohi/lib/common/Collection.coffee": {
+    "lodash": "/Users/venkat/proj/repos/kohi/node_modules/lodash/lodash.js",
+    "rekuire": "/Users/venkat/proj/repos/kohi/node_modules/rekuire/lib/main.js",
+    "path": "path",
+    "q": "/Users/venkat/proj/repos/kohi/node_modules/q/q.js"
+  },
+  "/Users/venkat/proj/repos/kohi/lib/util/logger.coffee": {
+    "taglog": "/Users/venkat/proj/repos/kohi/node_modules/taglog/dist/index.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/taglog/dist/index.js": {
+    "moment": "/Users/venkat/proj/repos/kohi/node_modules/moment/moment.js",
+    "what-class": "/Users/venkat/proj/repos/kohi/node_modules/what-class/dist/index.js",
+    "prettyjson": "/Users/venkat/proj/repos/kohi/node_modules/prettyjson/lib/prettyjson.js",
+    "os": "os",
+    "colors/safe": "/Users/venkat/proj/repos/kohi/node_modules/taglog/node_modules/colors/safe.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/prettyjson/lib/prettyjson.js": {
+    "colors": "/Users/venkat/proj/repos/kohi/node_modules/prettyjson/node_modules/colors/lib/index.js",
+    "./utils": "/Users/venkat/proj/repos/kohi/node_modules/prettyjson/lib/utils.js",
+    "../package.json": "/Users/venkat/proj/repos/kohi/node_modules/prettyjson/package.json"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/prettyjson/node_modules/colors/lib/index.js": {
+    "./colors": "/Users/venkat/proj/repos/kohi/node_modules/prettyjson/node_modules/colors/lib/colors.js",
+    "./extendStringPrototype": "/Users/venkat/proj/repos/kohi/node_modules/prettyjson/node_modules/colors/lib/extendStringPrototype.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/prettyjson/node_modules/colors/lib/colors.js": {
+    "./styles": "/Users/venkat/proj/repos/kohi/node_modules/prettyjson/node_modules/colors/lib/styles.js",
+    "./system/supports-colors": "/Users/venkat/proj/repos/kohi/node_modules/prettyjson/node_modules/colors/lib/system/supports-colors.js",
+    "./custom/trap": "/Users/venkat/proj/repos/kohi/node_modules/prettyjson/node_modules/colors/lib/custom/trap.js",
+    "./custom/zalgo": "/Users/venkat/proj/repos/kohi/node_modules/prettyjson/node_modules/colors/lib/custom/zalgo.js",
+    "./maps/america": "/Users/venkat/proj/repos/kohi/node_modules/prettyjson/node_modules/colors/lib/maps/america.js",
+    "./maps/zebra": "/Users/venkat/proj/repos/kohi/node_modules/prettyjson/node_modules/colors/lib/maps/zebra.js",
+    "./maps/rainbow": "/Users/venkat/proj/repos/kohi/node_modules/prettyjson/node_modules/colors/lib/maps/rainbow.js",
+    "./maps/random": "/Users/venkat/proj/repos/kohi/node_modules/prettyjson/node_modules/colors/lib/maps/random.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/prettyjson/node_modules/colors/lib/maps/america.js": {
+    "../colors": "/Users/venkat/proj/repos/kohi/node_modules/prettyjson/node_modules/colors/lib/colors.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/prettyjson/node_modules/colors/lib/maps/zebra.js": {
+    "../colors": "/Users/venkat/proj/repos/kohi/node_modules/prettyjson/node_modules/colors/lib/colors.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/prettyjson/node_modules/colors/lib/maps/rainbow.js": {
+    "../colors": "/Users/venkat/proj/repos/kohi/node_modules/prettyjson/node_modules/colors/lib/colors.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/prettyjson/node_modules/colors/lib/maps/random.js": {
+    "../colors": "/Users/venkat/proj/repos/kohi/node_modules/prettyjson/node_modules/colors/lib/colors.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/prettyjson/node_modules/colors/lib/extendStringPrototype.js": {
+    "./colors": "/Users/venkat/proj/repos/kohi/node_modules/prettyjson/node_modules/colors/lib/colors.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/taglog/node_modules/colors/safe.js": {
+    "./lib/colors": "/Users/venkat/proj/repos/kohi/node_modules/taglog/node_modules/colors/lib/colors.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/taglog/node_modules/colors/lib/colors.js": {
+    "./styles": "/Users/venkat/proj/repos/kohi/node_modules/taglog/node_modules/colors/lib/styles.js",
+    "./system/supports-colors": "/Users/venkat/proj/repos/kohi/node_modules/taglog/node_modules/colors/lib/system/supports-colors.js",
+    "./custom/trap": "/Users/venkat/proj/repos/kohi/node_modules/taglog/node_modules/colors/lib/custom/trap.js",
+    "./custom/zalgo": "/Users/venkat/proj/repos/kohi/node_modules/taglog/node_modules/colors/lib/custom/zalgo.js",
+    "./maps/america": "/Users/venkat/proj/repos/kohi/node_modules/taglog/node_modules/colors/lib/maps/america.js",
+    "./maps/zebra": "/Users/venkat/proj/repos/kohi/node_modules/taglog/node_modules/colors/lib/maps/zebra.js",
+    "./maps/rainbow": "/Users/venkat/proj/repos/kohi/node_modules/taglog/node_modules/colors/lib/maps/rainbow.js",
+    "./maps/random": "/Users/venkat/proj/repos/kohi/node_modules/taglog/node_modules/colors/lib/maps/random.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/taglog/node_modules/colors/lib/maps/america.js": {
+    "../colors": "/Users/venkat/proj/repos/kohi/node_modules/taglog/node_modules/colors/lib/colors.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/taglog/node_modules/colors/lib/maps/zebra.js": {
+    "../colors": "/Users/venkat/proj/repos/kohi/node_modules/taglog/node_modules/colors/lib/colors.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/taglog/node_modules/colors/lib/maps/rainbow.js": {
+    "../colors": "/Users/venkat/proj/repos/kohi/node_modules/taglog/node_modules/colors/lib/colors.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/taglog/node_modules/colors/lib/maps/random.js": {
+    "../colors": "/Users/venkat/proj/repos/kohi/node_modules/taglog/node_modules/colors/lib/colors.js"
+  },
+  "/Users/venkat/proj/repos/kohi/lib/convention/ConventionContainer.coffee": {
+    "rekuire": "/Users/venkat/proj/repos/kohi/node_modules/rekuire/lib/main.js"
+  },
+  "/Users/venkat/proj/repos/kohi/lib/artifact/ConfigurationContainer.coffee": {
+    "rekuire": "/Users/venkat/proj/repos/kohi/node_modules/rekuire/lib/main.js"
+  },
+  "/Users/venkat/proj/repos/kohi/lib/plugins/PluginsRegistry.coffee": {
+    "rekuire": "/Users/venkat/proj/repos/kohi/node_modules/rekuire/lib/main.js",
+    "fs": "fs",
+    "path": "path",
+    "lodash": "/Users/venkat/proj/repos/kohi/node_modules/lodash/lodash.js",
+    "/Users/venkat/proj/repos/kohi/lib/plugins/BuildPlugin.coffee": "/Users/venkat/proj/repos/kohi/lib/plugins/BuildPlugin.coffee",
+    "/Users/venkat/proj/repos/kohi/lib/plugins/GreetingPlugin.coffee": "/Users/venkat/proj/repos/kohi/lib/plugins/GreetingPlugin.coffee",
+    "/Users/venkat/proj/repos/kohi/lib/plugins/GulpCompilePlugin.coffee": "/Users/venkat/proj/repos/kohi/lib/plugins/GulpCompilePlugin.coffee",
+    "/Users/venkat/proj/repos/kohi/lib/plugins/GulpPlugin.coffee": "/Users/venkat/proj/repos/kohi/lib/plugins/GulpPlugin.coffee",
+    "/Users/venkat/proj/repos/kohi/lib/plugins/NodePlugin.coffee": "/Users/venkat/proj/repos/kohi/lib/plugins/NodePlugin.coffee",
+    "/Users/venkat/proj/repos/kohi/lib/plugins/PackagePlugin.coffee": "/Users/venkat/proj/repos/kohi/lib/plugins/PackagePlugin.coffee",
+    "/Users/venkat/proj/repos/kohi/lib/plugins/SourceSetsPlugin.coffee": "/Users/venkat/proj/repos/kohi/lib/plugins/SourceSetsPlugin.coffee",
+    "/Users/venkat/proj/repos/kohi/test/fixtures/proj1/build/gen/CoffeescriptPlugin.coffee": "/Users/venkat/proj/repos/kohi/test/fixtures/proj1/build/gen/CoffeescriptPlugin.coffee",
+    "/Users/venkat/proj/repos/kohi/test/fixtures/proj1/build/gen/SassPlugin.coffee": "/Users/venkat/proj/repos/kohi/test/fixtures/proj1/build/gen/SassPlugin.coffee",
+    "/Users/venkat/proj/repos/kohi/test/fixtures/proj1/build/gen/LessPlugin.coffee": "/Users/venkat/proj/repos/kohi/test/fixtures/proj1/build/gen/LessPlugin.coffee",
+    "/Users/venkat/proj/repos/kohi/test/fixtures/proj1/build/gen/BabelPlugin.coffee": "/Users/venkat/proj/repos/kohi/test/fixtures/proj1/build/gen/BabelPlugin.coffee"
+  },
+  "/Users/venkat/proj/repos/kohi/conf.coffee": {
+    "path": "path",
+    "nconf": "/Users/venkat/proj/repos/kohi/node_modules/nconf/lib/nconf.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/nconf/lib/nconf.js": {
+    "fs": "fs",
+    "async": "/Users/venkat/proj/repos/kohi/node_modules/nconf/node_modules/async/lib/async.js",
+    "./nconf/common": "/Users/venkat/proj/repos/kohi/node_modules/nconf/lib/nconf/common.js",
+    "./nconf/provider": "/Users/venkat/proj/repos/kohi/node_modules/nconf/lib/nconf/provider.js",
+    "../package.json": "/Users/venkat/proj/repos/kohi/node_modules/nconf/package.json",
+    "./nconf/formats": "/Users/venkat/proj/repos/kohi/node_modules/nconf/lib/nconf/formats.js",
+    "./nconf/stores/file": "/Users/venkat/proj/repos/kohi/node_modules/nconf/lib/nconf/stores/file.js",
+    "./nconf/stores/literal": "/Users/venkat/proj/repos/kohi/node_modules/nconf/lib/nconf/stores/literal.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/nconf/lib/nconf/common.js": {
+    "fs": "fs",
+    "async": "/Users/venkat/proj/repos/kohi/node_modules/nconf/node_modules/async/lib/async.js",
+    "./formats": "/Users/venkat/proj/repos/kohi/node_modules/nconf/lib/nconf/formats.js",
+    "./stores/memory": "/Users/venkat/proj/repos/kohi/node_modules/nconf/lib/nconf/stores/memory.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/nconf/lib/nconf/formats.js": {
+    "ini": "/Users/venkat/proj/repos/kohi/node_modules/ini/ini.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/nconf/lib/nconf/stores/memory.js": {
+    "../common": "/Users/venkat/proj/repos/kohi/node_modules/nconf/lib/nconf/common.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/nconf/lib/nconf/provider.js": {
+    "async": "/Users/venkat/proj/repos/kohi/node_modules/nconf/node_modules/async/lib/async.js",
+    "./common": "/Users/venkat/proj/repos/kohi/node_modules/nconf/lib/nconf/common.js",
+    "../nconf": "/Users/venkat/proj/repos/kohi/node_modules/nconf/lib/nconf.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/nconf/lib/nconf/stores/file.js": {
+    "crypto": "crypto",
+    "fs": "fs",
+    "path": "path",
+    "util": "util",
+    "secure-keys": "/Users/venkat/proj/repos/kohi/node_modules/secure-keys/index.js",
+    "../formats": "/Users/venkat/proj/repos/kohi/node_modules/nconf/lib/nconf/formats.js",
+    "./memory": "/Users/venkat/proj/repos/kohi/node_modules/nconf/lib/nconf/stores/memory.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/secure-keys/index.js": {
+    "crypto": "crypto"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/nconf/lib/nconf/stores/literal.js": {
+    "util": "util",
+    "./memory": "/Users/venkat/proj/repos/kohi/node_modules/nconf/lib/nconf/stores/memory.js"
+  },
+  "/Users/venkat/proj/repos/kohi/lib/factory/ProxyFactory.coffee": {
+    "./BaseFactory": "/Users/venkat/proj/repos/kohi/lib/factory/BaseFactory.coffee",
+    "rekuire": "/Users/venkat/proj/repos/kohi/node_modules/rekuire/lib/main.js",
+    "path": "path"
+  },
+  "/Users/venkat/proj/repos/kohi/lib/factory/BaseFactory.coffee": {
+    "coffee-dsl": "/Users/venkat/proj/repos/kohi/node_modules/coffee-dsl/index.coffee"
+  },
+  "/Users/venkat/proj/repos/kohi/lib/task/SourceSetContainer.coffee": {
+    "rekuire": "/Users/venkat/proj/repos/kohi/node_modules/rekuire/lib/main.js",
+    "../common/Collection": "/Users/venkat/proj/repos/kohi/lib/common/Collection.coffee",
+    "path": "path"
+  },
+  "/Users/venkat/proj/repos/kohi/lib/task/TaskContainer.coffee": {
+    "./TaskFactory": "/Users/venkat/proj/repos/kohi/lib/task/TaskFactory.coffee",
+    "../common/Collection": "/Users/venkat/proj/repos/kohi/lib/common/Collection.coffee",
+    "./TaskInfo": "/Users/venkat/proj/repos/kohi/lib/task/TaskInfo.coffee"
+  },
+  "/Users/venkat/proj/repos/kohi/lib/task/TaskFactory.coffee": {
+    "./Task": "/Users/venkat/proj/repos/kohi/lib/task/Task.coffee",
+    "../common/Collection": "/Users/venkat/proj/repos/kohi/lib/common/Collection.coffee",
+    "./builtin/CopyTask": "/Users/venkat/proj/repos/kohi/lib/task/builtin/CopyTask.coffee",
+    "./builtin/ExecTask": "/Users/venkat/proj/repos/kohi/lib/task/builtin/ExecTask.coffee",
+    "rekuire": "/Users/venkat/proj/repos/kohi/node_modules/rekuire/lib/main.js"
+  },
+  "/Users/venkat/proj/repos/kohi/lib/task/Task.coffee": {
+    "rekuire": "/Users/venkat/proj/repos/kohi/node_modules/rekuire/lib/main.js",
+    "lodash": "/Users/venkat/proj/repos/kohi/node_modules/lodash/lodash.js",
+    "q": "/Users/venkat/proj/repos/kohi/node_modules/q/q.js",
+    "os": "os",
+    "../common/Path": "/Users/venkat/proj/repos/kohi/lib/common/Path.coffee",
+    "./TaskStats": "/Users/venkat/proj/repos/kohi/lib/task/TaskStats.coffee"
+  },
+  "/Users/venkat/proj/repos/kohi/lib/task/Action.coffee": {
+    "lodash": "/Users/venkat/proj/repos/kohi/node_modules/lodash/lodash.js",
+    "rekuire": "/Users/venkat/proj/repos/kohi/node_modules/rekuire/lib/main.js",
+    "q": "/Users/venkat/proj/repos/kohi/node_modules/q/q.js"
+  },
+  "/Users/venkat/proj/repos/kohi/lib/task/TaskStats.coffee": {
+    "rekuire": "/Users/venkat/proj/repos/kohi/node_modules/rekuire/lib/main.js"
+  },
+  "/Users/venkat/proj/repos/kohi/lib/task/builtin/CopyTask.coffee": {
+    "lodash": "/Users/venkat/proj/repos/kohi/node_modules/lodash/lodash.js",
+    "rekuire": "/Users/venkat/proj/repos/kohi/node_modules/rekuire/lib/main.js",
+    "../FileTask": "/Users/venkat/proj/repos/kohi/lib/task/FileTask.coffee",
+    "./CopyAction": "/Users/venkat/proj/repos/kohi/lib/task/builtin/CopyAction.coffee"
+  },
+  "/Users/venkat/proj/repos/kohi/lib/task/FileTask.coffee": {
+    "rekuire": "/Users/venkat/proj/repos/kohi/node_modules/rekuire/lib/main.js",
+    "./Task": "/Users/venkat/proj/repos/kohi/lib/task/Task.coffee",
+    "./FileSourceSet": "/Users/venkat/proj/repos/kohi/lib/task/FileSourceSet.coffee"
+  },
+  "/Users/venkat/proj/repos/kohi/lib/task/FileSourceSet.coffee": {
+    "q": "/Users/venkat/proj/repos/kohi/node_modules/q/q.js",
+    "lodash": "/Users/venkat/proj/repos/kohi/node_modules/lodash/lodash.js",
+    "rekuire": "/Users/venkat/proj/repos/kohi/node_modules/rekuire/lib/main.js",
+    "path": "path"
+  },
+  "/Users/venkat/proj/repos/kohi/lib/util/glob.coffee": {
+    "q": "/Users/venkat/proj/repos/kohi/node_modules/q/q.js",
+    "glob": "/Users/venkat/proj/repos/kohi/node_modules/glob/glob.js"
+  },
+  "/Users/venkat/proj/repos/kohi/lib/task/FilesSpec.coffee": {
+    "lodash": "/Users/venkat/proj/repos/kohi/node_modules/lodash/lodash.js",
+    "rekuire": "/Users/venkat/proj/repos/kohi/node_modules/rekuire/lib/main.js",
+    "path": "path"
+  },
+  "/Users/venkat/proj/repos/kohi/lib/task/builtin/CopyAction.coffee": {
+    "os": "os",
+    "../Action": "/Users/venkat/proj/repos/kohi/lib/task/Action.coffee",
+    "path": "path",
+    "../../util/logger": "/Users/venkat/proj/repos/kohi/lib/util/logger.coffee",
+    "../../util/fileOps": "/Users/venkat/proj/repos/kohi/lib/util/fileOps.coffee",
+    "split": "/Users/venkat/proj/repos/kohi/node_modules/split/index.js"
+  },
+  "/Users/venkat/proj/repos/kohi/lib/util/fileOps.coffee": {
+    "path": "path",
+    "q": "/Users/venkat/proj/repos/kohi/node_modules/q/q.js",
+    "fs": "fs",
+    "mkdirp": "/Users/venkat/proj/repos/kohi/node_modules/mkdirp/index.js",
+    "rmdir": "/Users/venkat/proj/repos/kohi/node_modules/rmdir/index.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/mkdirp/index.js": {
+    "path": "path",
+    "fs": "fs"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/rmdir/index.js": {
+    "./lib/rmdir": "/Users/venkat/proj/repos/kohi/node_modules/rmdir/lib/rmdir.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/rmdir/lib/rmdir.js": {
+    "fs": "fs",
+    "node.flow": "/Users/venkat/proj/repos/kohi/node_modules/node.flow/index.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/node.flow/index.js": {
+    "./lib/flow": "/Users/venkat/proj/repos/kohi/node_modules/node.flow/lib/flow.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/node.flow/lib/flow.js": {
+    "fs": "fs",
+    "node.extend": "/Users/venkat/proj/repos/kohi/node_modules/node.extend/index.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/node.extend/index.js": {
+    "./lib/extend": "/Users/venkat/proj/repos/kohi/node_modules/node.extend/lib/extend.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/node.extend/lib/extend.js": {
+    "is": "/Users/venkat/proj/repos/kohi/node_modules/is/index.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/split/index.js": {
+    "through": "/Users/venkat/proj/repos/kohi/node_modules/through/index.js",
+    "string_decoder": "string_decoder"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/through/index.js": {
+    "stream": "stream"
+  },
+  "/Users/venkat/proj/repos/kohi/lib/task/builtin/ExecTask.coffee": {
+    "rekuire": "/Users/venkat/proj/repos/kohi/node_modules/rekuire/lib/main.js",
+    "../Task": "/Users/venkat/proj/repos/kohi/lib/task/Task.coffee",
+    "./ExecAction": "/Users/venkat/proj/repos/kohi/lib/task/builtin/ExecAction.coffee"
+  },
+  "/Users/venkat/proj/repos/kohi/lib/task/builtin/ExecAction.coffee": {
+    "../Action": "/Users/venkat/proj/repos/kohi/lib/task/Action.coffee",
+    "../../util/out": "/Users/venkat/proj/repos/kohi/lib/util/out.coffee",
+    "child_process": "child_process"
+  },
+  "/Users/venkat/proj/repos/kohi/lib/task/ClearCacheTask.coffee": {
+    "lodash": "/Users/venkat/proj/repos/kohi/node_modules/lodash/lodash.js",
+    "./RmdirTask": "/Users/venkat/proj/repos/kohi/lib/task/RmdirTask.coffee"
+  },
+  "/Users/venkat/proj/repos/kohi/lib/task/RmdirTask.coffee": {
+    "lodash": "/Users/venkat/proj/repos/kohi/node_modules/lodash/lodash.js",
+    "./Task": "/Users/venkat/proj/repos/kohi/lib/task/Task.coffee",
+    "./RmdirAction": "/Users/venkat/proj/repos/kohi/lib/task/RmdirAction.coffee"
+  },
+  "/Users/venkat/proj/repos/kohi/lib/task/RmdirAction.coffee": {
+    "lodash": "/Users/venkat/proj/repos/kohi/node_modules/lodash/lodash.js",
+    "q": "/Users/venkat/proj/repos/kohi/node_modules/q/q.js",
+    "rekuire": "/Users/venkat/proj/repos/kohi/node_modules/rekuire/lib/main.js",
+    "./Action": "/Users/venkat/proj/repos/kohi/lib/task/Action.coffee",
+    "path": "path"
+  },
+  "/Users/venkat/proj/repos/kohi/lib/task/TaskInfo.coffee": {
+    "assert": "assert",
+    "./../util/prop": "/Users/venkat/proj/repos/kohi/lib/util/prop.coffee",
+    "events": "events",
+    "../util/Clock": "/Users/venkat/proj/repos/kohi/lib/util/Clock.coffee",
+    "rekuire": "/Users/venkat/proj/repos/kohi/node_modules/rekuire/lib/main.js"
+  },
+  "/Users/venkat/proj/repos/kohi/lib/util/qflow.coffee": {
+    "q": "/Users/venkat/proj/repos/kohi/node_modules/q/q.js"
+  },
+  "/Users/venkat/proj/repos/kohi/lib/project/TaskGraphExecutor.coffee": {
+    "lodash": "/Users/venkat/proj/repos/kohi/node_modules/lodash/lodash.js",
+    "multimap": "/Users/venkat/proj/repos/kohi/node_modules/multimap/index.js",
+    "events": "events",
+    "rekuire": "/Users/venkat/proj/repos/kohi/node_modules/rekuire/lib/main.js",
+    "path": "path"
+  },
+  "/Users/venkat/proj/repos/kohi/lib/artifact/DependenciesExt.coffee": {
+    "lodash": "/Users/venkat/proj/repos/kohi/node_modules/lodash/lodash.js",
+    "rekuire": "/Users/venkat/proj/repos/kohi/node_modules/rekuire/lib/main.js",
+    "path": "path",
+    "semver": "/Users/venkat/proj/repos/kohi/node_modules/semver/semver.js"
+  },
+  "/Users/venkat/proj/repos/kohi/lib/artifact/Dependency.coffee": {
+    "lodash": "/Users/venkat/proj/repos/kohi/node_modules/lodash/lodash.js",
+    "rekuire": "/Users/venkat/proj/repos/kohi/node_modules/rekuire/lib/main.js",
+    "semver": "/Users/venkat/proj/repos/kohi/node_modules/semver/semver.js"
+  },
+  "/Users/venkat/proj/repos/kohi/lib/templates/index.coffee": {
+    "handlebars": "/Users/venkat/proj/repos/kohi/node_modules/handlebars/lib/index.js",
+    "rekuire": "/Users/venkat/proj/repos/kohi/node_modules/rekuire/lib/main.js",
+    "guava-cache": "/Users/venkat/proj/repos/kohi/node_modules/guava-cache/dist/index.js",
+    "path": "path",
+    "events": "events"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/handlebars/lib/index.js": {
+    "../dist/cjs/handlebars": "/Users/venkat/proj/repos/kohi/node_modules/handlebars/dist/cjs/handlebars.js",
+    "../dist/cjs/handlebars/compiler/printer": "/Users/venkat/proj/repos/kohi/node_modules/handlebars/dist/cjs/handlebars/compiler/printer.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/handlebars/dist/cjs/handlebars.js": {
+    "./handlebars.runtime": "/Users/venkat/proj/repos/kohi/node_modules/handlebars/dist/cjs/handlebars.runtime.js",
+    "./handlebars/compiler/ast": "/Users/venkat/proj/repos/kohi/node_modules/handlebars/dist/cjs/handlebars/compiler/ast.js",
+    "./handlebars/compiler/base": "/Users/venkat/proj/repos/kohi/node_modules/handlebars/dist/cjs/handlebars/compiler/base.js",
+    "./handlebars/compiler/compiler": "/Users/venkat/proj/repos/kohi/node_modules/handlebars/dist/cjs/handlebars/compiler/compiler.js",
+    "./handlebars/compiler/javascript-compiler": "/Users/venkat/proj/repos/kohi/node_modules/handlebars/dist/cjs/handlebars/compiler/javascript-compiler.js",
+    "./handlebars/compiler/visitor": "/Users/venkat/proj/repos/kohi/node_modules/handlebars/dist/cjs/handlebars/compiler/visitor.js",
+    "./handlebars/no-conflict": "/Users/venkat/proj/repos/kohi/node_modules/handlebars/dist/cjs/handlebars/no-conflict.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/handlebars/dist/cjs/handlebars.runtime.js": {
+    "./handlebars/base": "/Users/venkat/proj/repos/kohi/node_modules/handlebars/dist/cjs/handlebars/base.js",
+    "./handlebars/safe-string": "/Users/venkat/proj/repos/kohi/node_modules/handlebars/dist/cjs/handlebars/safe-string.js",
+    "./handlebars/exception": "/Users/venkat/proj/repos/kohi/node_modules/handlebars/dist/cjs/handlebars/exception.js",
+    "./handlebars/utils": "/Users/venkat/proj/repos/kohi/node_modules/handlebars/dist/cjs/handlebars/utils.js",
+    "./handlebars/runtime": "/Users/venkat/proj/repos/kohi/node_modules/handlebars/dist/cjs/handlebars/runtime.js",
+    "./handlebars/no-conflict": "/Users/venkat/proj/repos/kohi/node_modules/handlebars/dist/cjs/handlebars/no-conflict.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/handlebars/dist/cjs/handlebars/base.js": {
+    "./utils": "/Users/venkat/proj/repos/kohi/node_modules/handlebars/dist/cjs/handlebars/utils.js",
+    "./exception": "/Users/venkat/proj/repos/kohi/node_modules/handlebars/dist/cjs/handlebars/exception.js",
+    "./helpers": "/Users/venkat/proj/repos/kohi/node_modules/handlebars/dist/cjs/handlebars/helpers.js",
+    "./decorators": "/Users/venkat/proj/repos/kohi/node_modules/handlebars/dist/cjs/handlebars/decorators.js",
+    "./logger": "/Users/venkat/proj/repos/kohi/node_modules/handlebars/dist/cjs/handlebars/logger.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/handlebars/dist/cjs/handlebars/helpers.js": {
+    "./helpers/block-helper-missing": "/Users/venkat/proj/repos/kohi/node_modules/handlebars/dist/cjs/handlebars/helpers/block-helper-missing.js",
+    "./helpers/each": "/Users/venkat/proj/repos/kohi/node_modules/handlebars/dist/cjs/handlebars/helpers/each.js",
+    "./helpers/helper-missing": "/Users/venkat/proj/repos/kohi/node_modules/handlebars/dist/cjs/handlebars/helpers/helper-missing.js",
+    "./helpers/if": "/Users/venkat/proj/repos/kohi/node_modules/handlebars/dist/cjs/handlebars/helpers/if.js",
+    "./helpers/log": "/Users/venkat/proj/repos/kohi/node_modules/handlebars/dist/cjs/handlebars/helpers/log.js",
+    "./helpers/lookup": "/Users/venkat/proj/repos/kohi/node_modules/handlebars/dist/cjs/handlebars/helpers/lookup.js",
+    "./helpers/with": "/Users/venkat/proj/repos/kohi/node_modules/handlebars/dist/cjs/handlebars/helpers/with.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/handlebars/dist/cjs/handlebars/helpers/block-helper-missing.js": {
+    "../utils": "/Users/venkat/proj/repos/kohi/node_modules/handlebars/dist/cjs/handlebars/utils.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/handlebars/dist/cjs/handlebars/helpers/each.js": {
+    "../utils": "/Users/venkat/proj/repos/kohi/node_modules/handlebars/dist/cjs/handlebars/utils.js",
+    "../exception": "/Users/venkat/proj/repos/kohi/node_modules/handlebars/dist/cjs/handlebars/exception.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/handlebars/dist/cjs/handlebars/helpers/helper-missing.js": {
+    "../exception": "/Users/venkat/proj/repos/kohi/node_modules/handlebars/dist/cjs/handlebars/exception.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/handlebars/dist/cjs/handlebars/helpers/if.js": {
+    "../utils": "/Users/venkat/proj/repos/kohi/node_modules/handlebars/dist/cjs/handlebars/utils.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/handlebars/dist/cjs/handlebars/helpers/with.js": {
+    "../utils": "/Users/venkat/proj/repos/kohi/node_modules/handlebars/dist/cjs/handlebars/utils.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/handlebars/dist/cjs/handlebars/decorators.js": {
+    "./decorators/inline": "/Users/venkat/proj/repos/kohi/node_modules/handlebars/dist/cjs/handlebars/decorators/inline.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/handlebars/dist/cjs/handlebars/decorators/inline.js": {
+    "../utils": "/Users/venkat/proj/repos/kohi/node_modules/handlebars/dist/cjs/handlebars/utils.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/handlebars/dist/cjs/handlebars/logger.js": {
+    "./utils": "/Users/venkat/proj/repos/kohi/node_modules/handlebars/dist/cjs/handlebars/utils.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/handlebars/dist/cjs/handlebars/runtime.js": {
+    "./utils": "/Users/venkat/proj/repos/kohi/node_modules/handlebars/dist/cjs/handlebars/utils.js",
+    "./exception": "/Users/venkat/proj/repos/kohi/node_modules/handlebars/dist/cjs/handlebars/exception.js",
+    "./base": "/Users/venkat/proj/repos/kohi/node_modules/handlebars/dist/cjs/handlebars/base.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/handlebars/dist/cjs/handlebars/compiler/base.js": {
+    "./parser": "/Users/venkat/proj/repos/kohi/node_modules/handlebars/dist/cjs/handlebars/compiler/parser.js",
+    "./whitespace-control": "/Users/venkat/proj/repos/kohi/node_modules/handlebars/dist/cjs/handlebars/compiler/whitespace-control.js",
+    "./helpers": "/Users/venkat/proj/repos/kohi/node_modules/handlebars/dist/cjs/handlebars/compiler/helpers.js",
+    "../utils": "/Users/venkat/proj/repos/kohi/node_modules/handlebars/dist/cjs/handlebars/utils.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/handlebars/dist/cjs/handlebars/compiler/whitespace-control.js": {
+    "./visitor": "/Users/venkat/proj/repos/kohi/node_modules/handlebars/dist/cjs/handlebars/compiler/visitor.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/handlebars/dist/cjs/handlebars/compiler/visitor.js": {
+    "../exception": "/Users/venkat/proj/repos/kohi/node_modules/handlebars/dist/cjs/handlebars/exception.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/handlebars/dist/cjs/handlebars/compiler/helpers.js": {
+    "../exception": "/Users/venkat/proj/repos/kohi/node_modules/handlebars/dist/cjs/handlebars/exception.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/handlebars/dist/cjs/handlebars/compiler/compiler.js": {
+    "../exception": "/Users/venkat/proj/repos/kohi/node_modules/handlebars/dist/cjs/handlebars/exception.js",
+    "../utils": "/Users/venkat/proj/repos/kohi/node_modules/handlebars/dist/cjs/handlebars/utils.js",
+    "./ast": "/Users/venkat/proj/repos/kohi/node_modules/handlebars/dist/cjs/handlebars/compiler/ast.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/handlebars/dist/cjs/handlebars/compiler/javascript-compiler.js": {
+    "../base": "/Users/venkat/proj/repos/kohi/node_modules/handlebars/dist/cjs/handlebars/base.js",
+    "../exception": "/Users/venkat/proj/repos/kohi/node_modules/handlebars/dist/cjs/handlebars/exception.js",
+    "../utils": "/Users/venkat/proj/repos/kohi/node_modules/handlebars/dist/cjs/handlebars/utils.js",
+    "./code-gen": "/Users/venkat/proj/repos/kohi/node_modules/handlebars/dist/cjs/handlebars/compiler/code-gen.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/handlebars/dist/cjs/handlebars/compiler/code-gen.js": {
+    "../utils": "/Users/venkat/proj/repos/kohi/node_modules/handlebars/dist/cjs/handlebars/utils.js",
+    "source-map": "/Users/venkat/proj/repos/kohi/node_modules/handlebars/node_modules/source-map/lib/source-map.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/handlebars/node_modules/source-map/lib/source-map.js": {
+    "./source-map/source-map-generator": "/Users/venkat/proj/repos/kohi/node_modules/handlebars/node_modules/source-map/lib/source-map/source-map-generator.js",
+    "./source-map/source-map-consumer": "/Users/venkat/proj/repos/kohi/node_modules/handlebars/node_modules/source-map/lib/source-map/source-map-consumer.js",
+    "./source-map/source-node": "/Users/venkat/proj/repos/kohi/node_modules/handlebars/node_modules/source-map/lib/source-map/source-node.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/handlebars/node_modules/source-map/lib/source-map/source-map-generator.js": {
+    "amdefine": "/Users/venkat/proj/repos/kohi/node_modules/amdefine/amdefine.js",
+    "./base64-vlq": "/Users/venkat/proj/repos/kohi/node_modules/handlebars/node_modules/source-map/lib/source-map/base64-vlq.js",
+    "./util": "/Users/venkat/proj/repos/kohi/node_modules/handlebars/node_modules/source-map/lib/source-map/util.js",
+    "./array-set": "/Users/venkat/proj/repos/kohi/node_modules/handlebars/node_modules/source-map/lib/source-map/array-set.js",
+    "./mapping-list": "/Users/venkat/proj/repos/kohi/node_modules/handlebars/node_modules/source-map/lib/source-map/mapping-list.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/amdefine/amdefine.js": {
+    "path": "path"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/handlebars/node_modules/source-map/lib/source-map/base64-vlq.js": {
+    "amdefine": "/Users/venkat/proj/repos/kohi/node_modules/amdefine/amdefine.js",
+    "./base64": "/Users/venkat/proj/repos/kohi/node_modules/handlebars/node_modules/source-map/lib/source-map/base64.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/handlebars/node_modules/source-map/lib/source-map/base64.js": {
+    "amdefine": "/Users/venkat/proj/repos/kohi/node_modules/amdefine/amdefine.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/handlebars/node_modules/source-map/lib/source-map/util.js": {
+    "amdefine": "/Users/venkat/proj/repos/kohi/node_modules/amdefine/amdefine.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/handlebars/node_modules/source-map/lib/source-map/array-set.js": {
+    "amdefine": "/Users/venkat/proj/repos/kohi/node_modules/amdefine/amdefine.js",
+    "./util": "/Users/venkat/proj/repos/kohi/node_modules/handlebars/node_modules/source-map/lib/source-map/util.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/handlebars/node_modules/source-map/lib/source-map/mapping-list.js": {
+    "amdefine": "/Users/venkat/proj/repos/kohi/node_modules/amdefine/amdefine.js",
+    "./util": "/Users/venkat/proj/repos/kohi/node_modules/handlebars/node_modules/source-map/lib/source-map/util.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/handlebars/node_modules/source-map/lib/source-map/source-map-consumer.js": {
+    "amdefine": "/Users/venkat/proj/repos/kohi/node_modules/amdefine/amdefine.js",
+    "./util": "/Users/venkat/proj/repos/kohi/node_modules/handlebars/node_modules/source-map/lib/source-map/util.js",
+    "./binary-search": "/Users/venkat/proj/repos/kohi/node_modules/handlebars/node_modules/source-map/lib/source-map/binary-search.js",
+    "./array-set": "/Users/venkat/proj/repos/kohi/node_modules/handlebars/node_modules/source-map/lib/source-map/array-set.js",
+    "./base64-vlq": "/Users/venkat/proj/repos/kohi/node_modules/handlebars/node_modules/source-map/lib/source-map/base64-vlq.js",
+    "./quick-sort": "/Users/venkat/proj/repos/kohi/node_modules/handlebars/node_modules/source-map/lib/source-map/quick-sort.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/handlebars/node_modules/source-map/lib/source-map/binary-search.js": {
+    "amdefine": "/Users/venkat/proj/repos/kohi/node_modules/amdefine/amdefine.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/handlebars/node_modules/source-map/lib/source-map/quick-sort.js": {
+    "amdefine": "/Users/venkat/proj/repos/kohi/node_modules/amdefine/amdefine.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/handlebars/node_modules/source-map/lib/source-map/source-node.js": {
+    "amdefine": "/Users/venkat/proj/repos/kohi/node_modules/amdefine/amdefine.js",
+    "./source-map-generator": "/Users/venkat/proj/repos/kohi/node_modules/handlebars/node_modules/source-map/lib/source-map/source-map-generator.js",
+    "./util": "/Users/venkat/proj/repos/kohi/node_modules/handlebars/node_modules/source-map/lib/source-map/util.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/handlebars/dist/cjs/handlebars/compiler/printer.js": {
+    "./visitor": "/Users/venkat/proj/repos/kohi/node_modules/handlebars/dist/cjs/handlebars/compiler/visitor.js"
+  },
+  "/Users/venkat/proj/repos/kohi/lib/util/configurable.coffee": {
+    "util": "util",
+    "lodash": "/Users/venkat/proj/repos/kohi/node_modules/lodash/lodash.js",
+    "rekuire": "/Users/venkat/proj/repos/kohi/node_modules/rekuire/lib/main.js",
+    "path": "path"
+  },
+  "/Users/venkat/proj/repos/kohi/lib/factory/TaskBuilderFactory.coffee": {
+    "./BaseFactory": "/Users/venkat/proj/repos/kohi/lib/factory/BaseFactory.coffee",
+    "util": "util",
+    "rekuire": "/Users/venkat/proj/repos/kohi/node_modules/rekuire/lib/main.js",
+    "path": "path",
+    "lodash": "/Users/venkat/proj/repos/kohi/node_modules/lodash/lodash.js"
+  },
+  "/Users/venkat/proj/repos/kohi/lib/factory/ProjectFactory.coffee": {
+    "lodash": "/Users/venkat/proj/repos/kohi/node_modules/lodash/lodash.js",
+    "./BaseFactory": "/Users/venkat/proj/repos/kohi/lib/factory/BaseFactory.coffee",
+    "rekuire": "/Users/venkat/proj/repos/kohi/node_modules/rekuire/lib/main.js",
+    "path": "path"
+  },
+  "/Users/venkat/proj/repos/kohi/lib/factory/CopySpecFactory.coffee": {
+    "./BaseFactory": "/Users/venkat/proj/repos/kohi/lib/factory/BaseFactory.coffee",
+    "rekuire": "/Users/venkat/proj/repos/kohi/node_modules/rekuire/lib/main.js",
+    "path": "path"
+  },
+  "/Users/venkat/proj/repos/kohi/lib/factory/OptionsFactory.coffee": {
+    "./BaseFactory": "/Users/venkat/proj/repos/kohi/lib/factory/BaseFactory.coffee",
+    "rekuire": "/Users/venkat/proj/repos/kohi/node_modules/rekuire/lib/main.js"
+  },
+  "/Users/venkat/proj/repos/kohi/lib/util/time.coffee": {
+    "q": "/Users/venkat/proj/repos/kohi/node_modules/q/q.js",
+    "./HrTime": "/Users/venkat/proj/repos/kohi/lib/util/HrTime.coffee"
+  },
+  "/Users/venkat/proj/repos/kohi/lib/util/HrTime.coffee": {
+    "pretty-hrtime": "/Users/venkat/proj/repos/kohi/node_modules/pretty-hrtime/index.js",
+    "./prop": "/Users/venkat/proj/repos/kohi/lib/util/prop.coffee"
+  },
+  "/Users/venkat/proj/repos/kohi/lib/reporter/ConsoleReporter.coffee": {
+    "rekuire": "/Users/venkat/proj/repos/kohi/node_modules/rekuire/lib/main.js",
+    "./Reporter": "/Users/venkat/proj/repos/kohi/lib/reporter/Reporter.coffee"
+  },
+  "/Users/venkat/proj/repos/kohi/lib/reporter/Reporter.coffee": {
+    "lodash": "/Users/venkat/proj/repos/kohi/node_modules/lodash/lodash.js"
+  },
+  "/Users/venkat/proj/repos/kohi/test/script.test.coffee": {
+    "../lib/util/logger": "/Users/venkat/proj/repos/kohi/lib/util/logger.coffee"
+  },
+  "/Applications/WebStorm.app/Contents/plugins/NodeJS/js/mocha-intellij/lib/mochaIntellijUtil.js": {
+    "path": "path",
+    "/usr/local/lib/node_modules/mocha/lib/reporters/base.js": "/usr/local/lib/node_modules/mocha/lib/reporters/base.js"
+  },
+  "/Users/venkat/proj/repos/kohi/lib/plugins/BuildPlugin.coffee": {
+    "./Plugin": "/Users/venkat/proj/repos/kohi/lib/plugins/Plugin.coffee"
+  },
+  "/Users/venkat/proj/repos/kohi/lib/plugins/Plugin.coffee": {
+    "lodash": "/Users/venkat/proj/repos/kohi/node_modules/lodash/lodash.js",
+    "rekuire": "/Users/venkat/proj/repos/kohi/node_modules/rekuire/lib/main.js"
+  },
+  "/Users/venkat/proj/repos/kohi/lib/plugins/GreetingPlugin.coffee": {
+    "./Plugin": "/Users/venkat/proj/repos/kohi/lib/plugins/Plugin.coffee",
+    "rekuire": "/Users/venkat/proj/repos/kohi/node_modules/rekuire/lib/main.js"
+  },
+  "/Users/venkat/proj/repos/kohi/lib/plugins/GulpCompilePlugin.coffee": {
+    "lodash": "/Users/venkat/proj/repos/kohi/node_modules/lodash/lodash.js",
+    "rekuire": "/Users/venkat/proj/repos/kohi/node_modules/rekuire/lib/main.js",
+    "./Plugin": "/Users/venkat/proj/repos/kohi/lib/plugins/Plugin.coffee",
+    "assert": "assert",
+    "path": "path",
+    "/Users/venkat/proj/repos/kohi/test/fixtures/proj1/build/gen/CoffeescriptConvention.coffee": "/Users/venkat/proj/repos/kohi/test/fixtures/proj1/build/gen/CoffeescriptConvention.coffee",
+    "/Users/venkat/proj/repos/kohi/test/fixtures/proj1/build/gen/LessConvention.coffee": "/Users/venkat/proj/repos/kohi/test/fixtures/proj1/build/gen/LessConvention.coffee",
+    "/Users/venkat/proj/repos/kohi/test/fixtures/proj1/build/gen/SassConvention.coffee": "/Users/venkat/proj/repos/kohi/test/fixtures/proj1/build/gen/SassConvention.coffee"
+  },
+  "/Users/venkat/proj/repos/kohi/lib/convention/SourceMapConvention.coffee": {
+    "rekuire": "/Users/venkat/proj/repos/kohi/node_modules/rekuire/lib/main.js"
+  },
+  "/Users/venkat/proj/repos/kohi/lib/convention/CompileConvention.coffee": {
+    "lodash": "/Users/venkat/proj/repos/kohi/node_modules/lodash/lodash.js",
+    "rekuire": "/Users/venkat/proj/repos/kohi/node_modules/rekuire/lib/main.js",
+    "assert": "assert",
+    "path": "path"
+  },
+  "/Users/venkat/proj/repos/kohi/lib/convention/Convention.coffee": {
+    "lodash": "/Users/venkat/proj/repos/kohi/node_modules/lodash/lodash.js",
+    "rekuire": "/Users/venkat/proj/repos/kohi/node_modules/rekuire/lib/main.js",
+    "path": "path"
+  },
+  "/Users/venkat/proj/repos/kohi/lib/artifact/Configuration.coffee": {
+    "rekuire": "/Users/venkat/proj/repos/kohi/node_modules/rekuire/lib/main.js"
+  },
+  "/Users/venkat/proj/repos/kohi/lib/artifact/DependencySet.coffee": {
+    "rekuire": "/Users/venkat/proj/repos/kohi/node_modules/rekuire/lib/main.js"
+  },
+  "/Users/venkat/proj/repos/kohi/lib/task/SourceSetOutput.coffee": {
+    "path": "path",
+    "rekuire": "/Users/venkat/proj/repos/kohi/node_modules/rekuire/lib/main.js"
+  },
+  "/Users/venkat/proj/repos/kohi/lib/common/CleanMainOutputTask.coffee": {
+    "rekuire": "/Users/venkat/proj/repos/kohi/node_modules/rekuire/lib/main.js",
+    "path": "path"
+  },
+  "/Users/venkat/proj/repos/kohi/lib/plugins/gulp/GulpTask.coffee": {
+    "lodash": "/Users/venkat/proj/repos/kohi/node_modules/lodash/lodash.js",
+    "rekuire": "/Users/venkat/proj/repos/kohi/node_modules/rekuire/lib/main.js",
+    "gulp": "/Users/venkat/proj/repos/kohi/node_modules/gulp/index.js",
+    "gulp-cache": "/Users/venkat/proj/repos/kohi/node_modules/gulp-cache/index.js",
+    "./GulpAction": "/Users/venkat/proj/repos/kohi/lib/plugins/gulp/GulpAction.coffee",
+    "path": "path"
+  },
+  "/Users/venkat/proj/repos/kohi/lib/task/CachingTask.coffee": {
+    "rekuire": "/Users/venkat/proj/repos/kohi/node_modules/rekuire/lib/main.js",
+    "os": "os",
+    "./../common/Path": "/Users/venkat/proj/repos/kohi/lib/common/Path.coffee",
+    "./Action": "/Users/venkat/proj/repos/kohi/lib/task/Action.coffee",
+    "./TaskStats": "/Users/venkat/proj/repos/kohi/lib/task/TaskStats.coffee",
+    "sha1": "/Users/venkat/proj/repos/kohi/node_modules/sha1/sha1.js",
+    "glob-changes": "/Users/venkat/proj/repos/kohi/node_modules/glob-changes/dist/index.js"
+  },
+  "/Users/venkat/proj/repos/kohi/lib/util/FileCache.coffee": {
+    "cache-swap": "/Users/venkat/proj/repos/kohi/node_modules/cache-swap/index.js",
+    "rekuire": "/Users/venkat/proj/repos/kohi/node_modules/rekuire/lib/main.js",
+    "q": "/Users/venkat/proj/repos/kohi/node_modules/q/q.js",
+    "lodash": "/Users/venkat/proj/repos/kohi/node_modules/lodash/lodash.js",
+    "path": "path"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/cache-swap/index.js": {
+    "path": "path",
+    "object-assign": "/Users/venkat/proj/repos/kohi/node_modules/object-assign/index.js",
+    "graceful-fs": "/Users/venkat/proj/repos/kohi/node_modules/graceful-fs/graceful-fs.js",
+    "mkdirp": "/Users/venkat/proj/repos/kohi/node_modules/mkdirp/index.js",
+    "rimraf": "/Users/venkat/proj/repos/kohi/node_modules/cache-swap/node_modules/rimraf/rimraf.js",
+    "os": "os"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/graceful-fs/graceful-fs.js": {
+    "fs": "fs",
+    "./polyfills.js": "/Users/venkat/proj/repos/kohi/node_modules/graceful-fs/polyfills.js",
+    "./legacy-streams.js": "/Users/venkat/proj/repos/kohi/node_modules/graceful-fs/legacy-streams.js",
+    "util": "util",
+    "./fs.js": "/Users/venkat/proj/repos/kohi/node_modules/graceful-fs/fs.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/graceful-fs/polyfills.js": {
+    "./fs.js": "/Users/venkat/proj/repos/kohi/node_modules/graceful-fs/fs.js",
+    "constants": "constants"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/graceful-fs/fs.js": {
+    "fs": "fs"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/graceful-fs/legacy-streams.js": {
+    "stream": "stream"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/cache-swap/node_modules/rimraf/rimraf.js": {
+    "assert": "assert",
+    "path": "path",
+    "fs": "fs",
+    "glob": "/Users/venkat/proj/repos/kohi/node_modules/glob/glob.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/sha1/sha1.js": {
+    "crypt": "/Users/venkat/proj/repos/kohi/node_modules/crypt/crypt.js",
+    "charenc": "/Users/venkat/proj/repos/kohi/node_modules/charenc/charenc.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/glob-changes/dist/index.js": {
+    "./lib/GlobChanges": "/Users/venkat/proj/repos/kohi/node_modules/glob-changes/dist/lib/GlobChanges.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/glob-changes/dist/lib/GlobChanges.js": {
+    "q": "/Users/venkat/proj/repos/kohi/node_modules/q/q.js",
+    "lodash": "/Users/venkat/proj/repos/kohi/node_modules/lodash/lodash.js",
+    "cache-swap": "/Users/venkat/proj/repos/kohi/node_modules/cache-swap/index.js",
+    "glob-all": "/Users/venkat/proj/repos/kohi/node_modules/glob-all/glob-all.js",
+    "sha1": "/Users/venkat/proj/repos/kohi/node_modules/sha1/sha1.js",
+    "moment": "/Users/venkat/proj/repos/kohi/node_modules/moment/moment.js",
+    "fs": "fs"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/glob-all/glob-all.js": {
+    "util": "util",
+    "glob": "/Users/venkat/proj/repos/kohi/node_modules/glob-all/node_modules/glob/glob.js",
+    "events": "events"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/glob-all/node_modules/glob/glob.js": {
+    "fs": "fs",
+    "minimatch": "/Users/venkat/proj/repos/kohi/node_modules/glob-all/node_modules/minimatch/minimatch.js",
+    "inherits": "/Users/venkat/proj/repos/kohi/node_modules/inherits/inherits.js",
+    "events": "events",
+    "path": "path",
+    "assert": "assert",
+    "./sync.js": "/Users/venkat/proj/repos/kohi/node_modules/glob-all/node_modules/glob/sync.js",
+    "./common.js": "/Users/venkat/proj/repos/kohi/node_modules/glob-all/node_modules/glob/common.js",
+    "inflight": "/Users/venkat/proj/repos/kohi/node_modules/inflight/inflight.js",
+    "util": "util",
+    "once": "/Users/venkat/proj/repos/kohi/node_modules/once/once.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/glob-all/node_modules/minimatch/minimatch.js": {
+    "path": "path",
+    "brace-expansion": "/Users/venkat/proj/repos/kohi/node_modules/brace-expansion/index.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/glob-all/node_modules/glob/sync.js": {
+    "fs": "fs",
+    "minimatch": "/Users/venkat/proj/repos/kohi/node_modules/glob-all/node_modules/minimatch/minimatch.js",
+    "./glob.js": "/Users/venkat/proj/repos/kohi/node_modules/glob-all/node_modules/glob/glob.js",
+    "util": "util",
+    "path": "path",
+    "assert": "assert",
+    "./common.js": "/Users/venkat/proj/repos/kohi/node_modules/glob-all/node_modules/glob/common.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/glob-all/node_modules/glob/common.js": {
+    "path": "path",
+    "minimatch": "/Users/venkat/proj/repos/kohi/node_modules/glob-all/node_modules/minimatch/minimatch.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/gulp/index.js": {
+    "util": "util",
+    "orchestrator": "/Users/venkat/proj/repos/kohi/node_modules/orchestrator/index.js",
+    "gulp-util": "/Users/venkat/proj/repos/kohi/node_modules/gulp-util/index.js",
+    "deprecated": "/Users/venkat/proj/repos/kohi/node_modules/deprecated/index.js",
+    "vinyl-fs": "/Users/venkat/proj/repos/kohi/node_modules/vinyl-fs/index.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/orchestrator/index.js": {
+    "util": "util",
+    "events": "events",
+    "./lib/runTask": "/Users/venkat/proj/repos/kohi/node_modules/orchestrator/lib/runTask.js",
+    "sequencify": "/Users/venkat/proj/repos/kohi/node_modules/sequencify/index.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/orchestrator/lib/runTask.js": {
+    "end-of-stream": "/Users/venkat/proj/repos/kohi/node_modules/end-of-stream/index.js",
+    "stream-consume": "/Users/venkat/proj/repos/kohi/node_modules/stream-consume/index.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/end-of-stream/index.js": {
+    "once": "/Users/venkat/proj/repos/kohi/node_modules/once/once.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/gulp-util/index.js": {
+    "vinyl": "/Users/venkat/proj/repos/kohi/node_modules/vinyl/index.js",
+    "replace-ext": "/Users/venkat/proj/repos/kohi/node_modules/replace-ext/index.js",
+    "chalk": "/Users/venkat/proj/repos/kohi/node_modules/chalk/index.js",
+    "dateformat": "/Users/venkat/proj/repos/kohi/node_modules/gulp-util/node_modules/dateformat/lib/dateformat.js",
+    "./lib/log": "/Users/venkat/proj/repos/kohi/node_modules/gulp-util/lib/log.js",
+    "./lib/template": "/Users/venkat/proj/repos/kohi/node_modules/gulp-util/lib/template.js",
+    "./lib/env": "/Users/venkat/proj/repos/kohi/node_modules/gulp-util/lib/env.js",
+    "beeper": "/Users/venkat/proj/repos/kohi/node_modules/beeper/index.js",
+    "./lib/noop": "/Users/venkat/proj/repos/kohi/node_modules/gulp-util/lib/noop.js",
+    "./lib/isStream": "/Users/venkat/proj/repos/kohi/node_modules/gulp-util/lib/isStream.js",
+    "./lib/isBuffer": "/Users/venkat/proj/repos/kohi/node_modules/gulp-util/lib/isBuffer.js",
+    "./lib/isNull": "/Users/venkat/proj/repos/kohi/node_modules/gulp-util/lib/isNull.js",
+    "./lib/combine": "/Users/venkat/proj/repos/kohi/node_modules/gulp-util/lib/combine.js",
+    "./lib/buffer": "/Users/venkat/proj/repos/kohi/node_modules/gulp-util/lib/buffer.js",
+    "./lib/PluginError": "/Users/venkat/proj/repos/kohi/node_modules/gulp-util/lib/PluginError.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/vinyl/index.js": {
+    "path": "path",
+    "clone": "/Users/venkat/proj/repos/kohi/node_modules/clone/clone.js",
+    "clone-stats": "/Users/venkat/proj/repos/kohi/node_modules/clone-stats/index.js",
+    "./lib/cloneBuffer": "/Users/venkat/proj/repos/kohi/node_modules/vinyl/lib/cloneBuffer.js",
+    "./lib/isBuffer": "/Users/venkat/proj/repos/kohi/node_modules/vinyl/lib/isBuffer.js",
+    "./lib/isStream": "/Users/venkat/proj/repos/kohi/node_modules/vinyl/lib/isStream.js",
+    "./lib/isNull": "/Users/venkat/proj/repos/kohi/node_modules/vinyl/lib/isNull.js",
+    "./lib/inspectStream": "/Users/venkat/proj/repos/kohi/node_modules/vinyl/lib/inspectStream.js",
+    "stream": "stream",
+    "replace-ext": "/Users/venkat/proj/repos/kohi/node_modules/replace-ext/index.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/clone-stats/index.js": {
+    "fs": "fs"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/vinyl/lib/cloneBuffer.js": {
+    "buffer": "buffer"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/vinyl/lib/isBuffer.js": {
+    "buffer": "buffer"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/vinyl/lib/isStream.js": {
+    "stream": "stream"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/vinyl/lib/inspectStream.js": {
+    "./isStream": "/Users/venkat/proj/repos/kohi/node_modules/vinyl/lib/isStream.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/replace-ext/index.js": {
+    "path": "path"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/chalk/index.js": {
+    "escape-string-regexp": "/Users/venkat/proj/repos/kohi/node_modules/escape-string-regexp/index.js",
+    "ansi-styles": "/Users/venkat/proj/repos/kohi/node_modules/ansi-styles/index.js",
+    "strip-ansi": "/Users/venkat/proj/repos/kohi/node_modules/strip-ansi/index.js",
+    "has-ansi": "/Users/venkat/proj/repos/kohi/node_modules/has-ansi/index.js",
+    "supports-color": "/Users/venkat/proj/repos/kohi/node_modules/supports-color/index.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/strip-ansi/index.js": {
+    "ansi-regex": "/Users/venkat/proj/repos/kohi/node_modules/ansi-regex/index.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/has-ansi/index.js": {
+    "ansi-regex": "/Users/venkat/proj/repos/kohi/node_modules/ansi-regex/index.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/gulp-util/lib/log.js": {
+    "has-gulplog": "/Users/venkat/proj/repos/kohi/node_modules/has-gulplog/index.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/has-gulplog/index.js": {
+    "sparkles": "/Users/venkat/proj/repos/kohi/node_modules/sparkles/index.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/sparkles/index.js": {
+    "events": "events"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/gulp-util/lib/template.js": {
+    "lodash.template": "/Users/venkat/proj/repos/kohi/node_modules/lodash.template/index.js",
+    "lodash._reescape": "/Users/venkat/proj/repos/kohi/node_modules/lodash._reescape/index.js",
+    "lodash._reevaluate": "/Users/venkat/proj/repos/kohi/node_modules/lodash._reevaluate/index.js",
+    "lodash._reinterpolate": "/Users/venkat/proj/repos/kohi/node_modules/lodash._reinterpolate/index.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/lodash.template/index.js": {
+    "lodash._basecopy": "/Users/venkat/proj/repos/kohi/node_modules/lodash._basecopy/index.js",
+    "lodash._basetostring": "/Users/venkat/proj/repos/kohi/node_modules/lodash._basetostring/index.js",
+    "lodash._basevalues": "/Users/venkat/proj/repos/kohi/node_modules/lodash._basevalues/index.js",
+    "lodash._isiterateecall": "/Users/venkat/proj/repos/kohi/node_modules/lodash._isiterateecall/index.js",
+    "lodash._reinterpolate": "/Users/venkat/proj/repos/kohi/node_modules/lodash._reinterpolate/index.js",
+    "lodash.keys": "/Users/venkat/proj/repos/kohi/node_modules/lodash.template/node_modules/lodash.keys/index.js",
+    "lodash.restparam": "/Users/venkat/proj/repos/kohi/node_modules/lodash.restparam/index.js",
+    "lodash.templatesettings": "/Users/venkat/proj/repos/kohi/node_modules/lodash.templatesettings/index.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/lodash.template/node_modules/lodash.keys/index.js": {
+    "lodash._getnative": "/Users/venkat/proj/repos/kohi/node_modules/lodash._getnative/index.js",
+    "lodash.isarguments": "/Users/venkat/proj/repos/kohi/node_modules/lodash.isarguments/index.js",
+    "lodash.isarray": "/Users/venkat/proj/repos/kohi/node_modules/lodash.isarray/index.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/lodash.templatesettings/index.js": {
+    "lodash.escape": "/Users/venkat/proj/repos/kohi/node_modules/lodash.escape/index.js",
+    "lodash._reinterpolate": "/Users/venkat/proj/repos/kohi/node_modules/lodash._reinterpolate/index.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/lodash.escape/index.js": {
+    "lodash._root": "/Users/venkat/proj/repos/kohi/node_modules/lodash._root/index.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/gulp-util/lib/env.js": {
+    "minimist": "/Users/venkat/proj/repos/kohi/node_modules/gulp-util/node_modules/minimist/index.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/gulp-util/lib/noop.js": {
+    "through2": "/Users/venkat/proj/repos/kohi/node_modules/through2/through2.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/through2/through2.js": {
+    "readable-stream/transform": "/Users/venkat/proj/repos/kohi/node_modules/through2/node_modules/readable-stream/transform.js",
+    "util": "util",
+    "xtend": "/Users/venkat/proj/repos/kohi/node_modules/xtend/immutable.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/through2/node_modules/readable-stream/transform.js": {
+    "./lib/_stream_transform.js": "/Users/venkat/proj/repos/kohi/node_modules/through2/node_modules/readable-stream/lib/_stream_transform.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/through2/node_modules/readable-stream/lib/_stream_transform.js": {
+    "./_stream_duplex": "/Users/venkat/proj/repos/kohi/node_modules/through2/node_modules/readable-stream/lib/_stream_duplex.js",
+    "core-util-is": "/Users/venkat/proj/repos/kohi/node_modules/core-util-is/lib/util.js",
+    "inherits": "/Users/venkat/proj/repos/kohi/node_modules/inherits/inherits.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/through2/node_modules/readable-stream/lib/_stream_duplex.js": {
+    "process-nextick-args": "/Users/venkat/proj/repos/kohi/node_modules/process-nextick-args/index.js",
+    "core-util-is": "/Users/venkat/proj/repos/kohi/node_modules/core-util-is/lib/util.js",
+    "inherits": "/Users/venkat/proj/repos/kohi/node_modules/inherits/inherits.js",
+    "./_stream_readable": "/Users/venkat/proj/repos/kohi/node_modules/through2/node_modules/readable-stream/lib/_stream_readable.js",
+    "./_stream_writable": "/Users/venkat/proj/repos/kohi/node_modules/through2/node_modules/readable-stream/lib/_stream_writable.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/through2/node_modules/readable-stream/lib/_stream_readable.js": {
+    "process-nextick-args": "/Users/venkat/proj/repos/kohi/node_modules/process-nextick-args/index.js",
+    "isarray": "/Users/venkat/proj/repos/kohi/node_modules/through2/node_modules/isarray/index.js",
+    "buffer": "buffer",
+    "events": "events",
+    "stream": "stream",
+    "core-util-is": "/Users/venkat/proj/repos/kohi/node_modules/core-util-is/lib/util.js",
+    "inherits": "/Users/venkat/proj/repos/kohi/node_modules/inherits/inherits.js",
+    "util": "util"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/through2/node_modules/readable-stream/lib/_stream_writable.js": {
+    "process-nextick-args": "/Users/venkat/proj/repos/kohi/node_modules/process-nextick-args/index.js",
+    "buffer": "buffer",
+    "core-util-is": "/Users/venkat/proj/repos/kohi/node_modules/core-util-is/lib/util.js",
+    "inherits": "/Users/venkat/proj/repos/kohi/node_modules/inherits/inherits.js",
+    "util-deprecate": "/Users/venkat/proj/repos/kohi/node_modules/util-deprecate/node.js",
+    "stream": "stream"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/util-deprecate/node.js": {
+    "util": "util"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/gulp-util/lib/isStream.js": {
+    "stream": "stream"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/gulp-util/lib/isBuffer.js": {
+    "buffer": "buffer"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/gulp-util/lib/combine.js": {
+    "multipipe": "/Users/venkat/proj/repos/kohi/node_modules/multipipe/index.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/multipipe/index.js": {
+    "duplexer2": "/Users/venkat/proj/repos/kohi/node_modules/duplexer2/index.js",
+    "stream": "stream"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/duplexer2/index.js": {
+    "readable-stream": "/Users/venkat/proj/repos/kohi/node_modules/readable-stream/readable.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/readable-stream/readable.js": {
+    "./lib/_stream_readable.js": "/Users/venkat/proj/repos/kohi/node_modules/readable-stream/lib/_stream_readable.js",
+    "stream": "stream",
+    "./lib/_stream_writable.js": "/Users/venkat/proj/repos/kohi/node_modules/readable-stream/lib/_stream_writable.js",
+    "./lib/_stream_duplex.js": "/Users/venkat/proj/repos/kohi/node_modules/readable-stream/lib/_stream_duplex.js",
+    "./lib/_stream_transform.js": "/Users/venkat/proj/repos/kohi/node_modules/readable-stream/lib/_stream_transform.js",
+    "./lib/_stream_passthrough.js": "/Users/venkat/proj/repos/kohi/node_modules/readable-stream/lib/_stream_passthrough.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/readable-stream/lib/_stream_readable.js": {
+    "isarray": "/Users/venkat/proj/repos/kohi/node_modules/isarray/index.js",
+    "buffer": "buffer",
+    "events": "events",
+    "stream": "stream",
+    "core-util-is": "/Users/venkat/proj/repos/kohi/node_modules/core-util-is/lib/util.js",
+    "inherits": "/Users/venkat/proj/repos/kohi/node_modules/inherits/inherits.js",
+    "util": "util"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/readable-stream/lib/_stream_writable.js": {
+    "buffer": "buffer",
+    "core-util-is": "/Users/venkat/proj/repos/kohi/node_modules/core-util-is/lib/util.js",
+    "inherits": "/Users/venkat/proj/repos/kohi/node_modules/inherits/inherits.js",
+    "stream": "stream"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/readable-stream/lib/_stream_duplex.js": {
+    "core-util-is": "/Users/venkat/proj/repos/kohi/node_modules/core-util-is/lib/util.js",
+    "inherits": "/Users/venkat/proj/repos/kohi/node_modules/inherits/inherits.js",
+    "./_stream_readable": "/Users/venkat/proj/repos/kohi/node_modules/readable-stream/lib/_stream_readable.js",
+    "./_stream_writable": "/Users/venkat/proj/repos/kohi/node_modules/readable-stream/lib/_stream_writable.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/readable-stream/lib/_stream_transform.js": {
+    "./_stream_duplex": "/Users/venkat/proj/repos/kohi/node_modules/readable-stream/lib/_stream_duplex.js",
+    "core-util-is": "/Users/venkat/proj/repos/kohi/node_modules/core-util-is/lib/util.js",
+    "inherits": "/Users/venkat/proj/repos/kohi/node_modules/inherits/inherits.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/readable-stream/lib/_stream_passthrough.js": {
+    "./_stream_transform": "/Users/venkat/proj/repos/kohi/node_modules/readable-stream/lib/_stream_transform.js",
+    "core-util-is": "/Users/venkat/proj/repos/kohi/node_modules/core-util-is/lib/util.js",
+    "inherits": "/Users/venkat/proj/repos/kohi/node_modules/inherits/inherits.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/gulp-util/lib/buffer.js": {
+    "through2": "/Users/venkat/proj/repos/kohi/node_modules/through2/through2.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/gulp-util/lib/PluginError.js": {
+    "util": "util",
+    "array-differ": "/Users/venkat/proj/repos/kohi/node_modules/array-differ/index.js",
+    "array-uniq": "/Users/venkat/proj/repos/kohi/node_modules/array-uniq/index.js",
+    "chalk": "/Users/venkat/proj/repos/kohi/node_modules/chalk/index.js",
+    "object-assign": "/Users/venkat/proj/repos/kohi/node_modules/gulp-util/node_modules/object-assign/index.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/vinyl-fs/index.js": {
+    "./lib/src": "/Users/venkat/proj/repos/kohi/node_modules/vinyl-fs/lib/src/index.js",
+    "./lib/dest": "/Users/venkat/proj/repos/kohi/node_modules/vinyl-fs/lib/dest/index.js",
+    "glob-watcher": "/Users/venkat/proj/repos/kohi/node_modules/glob-watcher/index.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/vinyl-fs/lib/src/index.js": {
+    "defaults": "/Users/venkat/proj/repos/kohi/node_modules/defaults/index.js",
+    "through2": "/Users/venkat/proj/repos/kohi/node_modules/vinyl-fs/node_modules/through2/through2.js",
+    "glob-stream": "/Users/venkat/proj/repos/kohi/node_modules/glob-stream/index.js",
+    "vinyl": "/Users/venkat/proj/repos/kohi/node_modules/vinyl-fs/node_modules/vinyl/index.js",
+    "./getContents": "/Users/venkat/proj/repos/kohi/node_modules/vinyl-fs/lib/src/getContents/index.js",
+    "./getStats": "/Users/venkat/proj/repos/kohi/node_modules/vinyl-fs/lib/src/getStats.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/defaults/index.js": {
+    "clone": "/Users/venkat/proj/repos/kohi/node_modules/clone/clone.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/vinyl-fs/node_modules/through2/through2.js": {
+    "readable-stream/transform": "/Users/venkat/proj/repos/kohi/node_modules/vinyl-fs/node_modules/readable-stream/transform.js",
+    "util": "util",
+    "xtend": "/Users/venkat/proj/repos/kohi/node_modules/xtend/immutable.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/vinyl-fs/node_modules/readable-stream/transform.js": {
+    "./lib/_stream_transform.js": "/Users/venkat/proj/repos/kohi/node_modules/vinyl-fs/node_modules/readable-stream/lib/_stream_transform.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/vinyl-fs/node_modules/readable-stream/lib/_stream_transform.js": {
+    "./_stream_duplex": "/Users/venkat/proj/repos/kohi/node_modules/vinyl-fs/node_modules/readable-stream/lib/_stream_duplex.js",
+    "core-util-is": "/Users/venkat/proj/repos/kohi/node_modules/core-util-is/lib/util.js",
+    "inherits": "/Users/venkat/proj/repos/kohi/node_modules/inherits/inherits.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/vinyl-fs/node_modules/readable-stream/lib/_stream_duplex.js": {
+    "core-util-is": "/Users/venkat/proj/repos/kohi/node_modules/core-util-is/lib/util.js",
+    "inherits": "/Users/venkat/proj/repos/kohi/node_modules/inherits/inherits.js",
+    "./_stream_readable": "/Users/venkat/proj/repos/kohi/node_modules/vinyl-fs/node_modules/readable-stream/lib/_stream_readable.js",
+    "./_stream_writable": "/Users/venkat/proj/repos/kohi/node_modules/vinyl-fs/node_modules/readable-stream/lib/_stream_writable.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/vinyl-fs/node_modules/readable-stream/lib/_stream_readable.js": {
+    "isarray": "/Users/venkat/proj/repos/kohi/node_modules/isarray/index.js",
+    "buffer": "buffer",
+    "events": "events",
+    "stream": "stream",
+    "core-util-is": "/Users/venkat/proj/repos/kohi/node_modules/core-util-is/lib/util.js",
+    "inherits": "/Users/venkat/proj/repos/kohi/node_modules/inherits/inherits.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/vinyl-fs/node_modules/readable-stream/lib/_stream_writable.js": {
+    "buffer": "buffer",
+    "core-util-is": "/Users/venkat/proj/repos/kohi/node_modules/core-util-is/lib/util.js",
+    "inherits": "/Users/venkat/proj/repos/kohi/node_modules/inherits/inherits.js",
+    "stream": "stream"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/glob-stream/index.js": {
+    "through2": "/Users/venkat/proj/repos/kohi/node_modules/glob-stream/node_modules/through2/through2.js",
+    "ordered-read-streams": "/Users/venkat/proj/repos/kohi/node_modules/ordered-read-streams/index.js",
+    "unique-stream": "/Users/venkat/proj/repos/kohi/node_modules/unique-stream/index.js",
+    "glob": "/Users/venkat/proj/repos/kohi/node_modules/glob-stream/node_modules/glob/glob.js",
+    "minimatch": "/Users/venkat/proj/repos/kohi/node_modules/glob-stream/node_modules/minimatch/minimatch.js",
+    "glob2base": "/Users/venkat/proj/repos/kohi/node_modules/glob2base/index.js",
+    "path": "path"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/glob-stream/node_modules/through2/through2.js": {
+    "readable-stream/transform": "/Users/venkat/proj/repos/kohi/node_modules/glob-stream/node_modules/readable-stream/transform.js",
+    "util": "util",
+    "xtend": "/Users/venkat/proj/repos/kohi/node_modules/xtend/immutable.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/glob-stream/node_modules/readable-stream/transform.js": {
+    "./lib/_stream_transform.js": "/Users/venkat/proj/repos/kohi/node_modules/glob-stream/node_modules/readable-stream/lib/_stream_transform.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/glob-stream/node_modules/readable-stream/lib/_stream_transform.js": {
+    "./_stream_duplex": "/Users/venkat/proj/repos/kohi/node_modules/glob-stream/node_modules/readable-stream/lib/_stream_duplex.js",
+    "core-util-is": "/Users/venkat/proj/repos/kohi/node_modules/core-util-is/lib/util.js",
+    "inherits": "/Users/venkat/proj/repos/kohi/node_modules/inherits/inherits.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/glob-stream/node_modules/readable-stream/lib/_stream_duplex.js": {
+    "core-util-is": "/Users/venkat/proj/repos/kohi/node_modules/core-util-is/lib/util.js",
+    "inherits": "/Users/venkat/proj/repos/kohi/node_modules/inherits/inherits.js",
+    "./_stream_readable": "/Users/venkat/proj/repos/kohi/node_modules/glob-stream/node_modules/readable-stream/lib/_stream_readable.js",
+    "./_stream_writable": "/Users/venkat/proj/repos/kohi/node_modules/glob-stream/node_modules/readable-stream/lib/_stream_writable.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/glob-stream/node_modules/readable-stream/lib/_stream_readable.js": {
+    "isarray": "/Users/venkat/proj/repos/kohi/node_modules/isarray/index.js",
+    "buffer": "buffer",
+    "events": "events",
+    "stream": "stream",
+    "core-util-is": "/Users/venkat/proj/repos/kohi/node_modules/core-util-is/lib/util.js",
+    "inherits": "/Users/venkat/proj/repos/kohi/node_modules/inherits/inherits.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/glob-stream/node_modules/readable-stream/lib/_stream_writable.js": {
+    "buffer": "buffer",
+    "core-util-is": "/Users/venkat/proj/repos/kohi/node_modules/core-util-is/lib/util.js",
+    "inherits": "/Users/venkat/proj/repos/kohi/node_modules/inherits/inherits.js",
+    "stream": "stream"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/ordered-read-streams/index.js": {
+    "stream": "stream",
+    "util": "util"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/unique-stream/index.js": {
+    "stream": "stream"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/glob-stream/node_modules/glob/glob.js": {
+    "fs": "fs",
+    "minimatch": "/Users/venkat/proj/repos/kohi/node_modules/glob-stream/node_modules/minimatch/minimatch.js",
+    "inherits": "/Users/venkat/proj/repos/kohi/node_modules/inherits/inherits.js",
+    "events": "events",
+    "path": "path",
+    "assert": "assert",
+    "./sync.js": "/Users/venkat/proj/repos/kohi/node_modules/glob-stream/node_modules/glob/sync.js",
+    "./common.js": "/Users/venkat/proj/repos/kohi/node_modules/glob-stream/node_modules/glob/common.js",
+    "inflight": "/Users/venkat/proj/repos/kohi/node_modules/inflight/inflight.js",
+    "util": "util",
+    "once": "/Users/venkat/proj/repos/kohi/node_modules/once/once.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/glob-stream/node_modules/minimatch/minimatch.js": {
+    "path": "path",
+    "brace-expansion": "/Users/venkat/proj/repos/kohi/node_modules/brace-expansion/index.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/glob-stream/node_modules/glob/sync.js": {
+    "fs": "fs",
+    "minimatch": "/Users/venkat/proj/repos/kohi/node_modules/glob-stream/node_modules/minimatch/minimatch.js",
+    "./glob.js": "/Users/venkat/proj/repos/kohi/node_modules/glob-stream/node_modules/glob/glob.js",
+    "util": "util",
+    "path": "path",
+    "assert": "assert",
+    "./common.js": "/Users/venkat/proj/repos/kohi/node_modules/glob-stream/node_modules/glob/common.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/glob-stream/node_modules/glob/common.js": {
+    "path": "path",
+    "minimatch": "/Users/venkat/proj/repos/kohi/node_modules/glob-stream/node_modules/minimatch/minimatch.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/glob2base/index.js": {
+    "path": "path",
+    "find-index": "/Users/venkat/proj/repos/kohi/node_modules/find-index/index.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/vinyl-fs/node_modules/vinyl/index.js": {
+    "path": "path",
+    "clone": "/Users/venkat/proj/repos/kohi/node_modules/vinyl-fs/node_modules/clone/clone.js",
+    "clone-stats": "/Users/venkat/proj/repos/kohi/node_modules/clone-stats/index.js",
+    "./lib/cloneBuffer": "/Users/venkat/proj/repos/kohi/node_modules/vinyl-fs/node_modules/vinyl/lib/cloneBuffer.js",
+    "./lib/isBuffer": "/Users/venkat/proj/repos/kohi/node_modules/vinyl-fs/node_modules/vinyl/lib/isBuffer.js",
+    "./lib/isStream": "/Users/venkat/proj/repos/kohi/node_modules/vinyl-fs/node_modules/vinyl/lib/isStream.js",
+    "./lib/isNull": "/Users/venkat/proj/repos/kohi/node_modules/vinyl-fs/node_modules/vinyl/lib/isNull.js",
+    "./lib/inspectStream": "/Users/venkat/proj/repos/kohi/node_modules/vinyl-fs/node_modules/vinyl/lib/inspectStream.js",
+    "stream": "stream"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/vinyl-fs/node_modules/vinyl/lib/cloneBuffer.js": {
+    "buffer": "buffer"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/vinyl-fs/node_modules/vinyl/lib/isBuffer.js": {
+    "buffer": "buffer"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/vinyl-fs/node_modules/vinyl/lib/isStream.js": {
+    "stream": "stream"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/vinyl-fs/node_modules/vinyl/lib/inspectStream.js": {
+    "./isStream": "/Users/venkat/proj/repos/kohi/node_modules/vinyl-fs/node_modules/vinyl/lib/isStream.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/vinyl-fs/lib/src/getContents/index.js": {
+    "through2": "/Users/venkat/proj/repos/kohi/node_modules/vinyl-fs/node_modules/through2/through2.js",
+    "./readDir": "/Users/venkat/proj/repos/kohi/node_modules/vinyl-fs/lib/src/getContents/readDir.js",
+    "./bufferFile": "/Users/venkat/proj/repos/kohi/node_modules/vinyl-fs/lib/src/getContents/bufferFile.js",
+    "./streamFile": "/Users/venkat/proj/repos/kohi/node_modules/vinyl-fs/lib/src/getContents/streamFile.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/vinyl-fs/lib/src/getContents/bufferFile.js": {
+    "graceful-fs": "/Users/venkat/proj/repos/kohi/node_modules/vinyl-fs/node_modules/graceful-fs/graceful-fs.js",
+    "strip-bom": "/Users/venkat/proj/repos/kohi/node_modules/vinyl-fs/node_modules/strip-bom/index.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/vinyl-fs/node_modules/graceful-fs/graceful-fs.js": {
+    "./fs.js": "/Users/venkat/proj/repos/kohi/node_modules/vinyl-fs/node_modules/graceful-fs/fs.js",
+    "assert": "assert",
+    "./polyfills.js": "/Users/venkat/proj/repos/kohi/node_modules/vinyl-fs/node_modules/graceful-fs/polyfills.js",
+    "util": "util"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/vinyl-fs/node_modules/graceful-fs/fs.js": {
+    "module": "module",
+    "vm": "vm",
+    "util": "util",
+    "path": "path",
+    "constants": "constants",
+    "buffer": "buffer",
+    "stream": "stream",
+    "events": "events"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/vinyl-fs/node_modules/graceful-fs/polyfills.js": {
+    "./fs.js": "/Users/venkat/proj/repos/kohi/node_modules/vinyl-fs/node_modules/graceful-fs/fs.js",
+    "constants": "constants"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/vinyl-fs/node_modules/strip-bom/index.js": {
+    "is-utf8": "/Users/venkat/proj/repos/kohi/node_modules/is-utf8/is-utf8.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/vinyl-fs/lib/src/getContents/streamFile.js": {
+    "graceful-fs": "/Users/venkat/proj/repos/kohi/node_modules/vinyl-fs/node_modules/graceful-fs/graceful-fs.js",
+    "strip-bom": "/Users/venkat/proj/repos/kohi/node_modules/vinyl-fs/node_modules/strip-bom/index.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/vinyl-fs/lib/src/getStats.js": {
+    "through2": "/Users/venkat/proj/repos/kohi/node_modules/vinyl-fs/node_modules/through2/through2.js",
+    "graceful-fs": "/Users/venkat/proj/repos/kohi/node_modules/vinyl-fs/node_modules/graceful-fs/graceful-fs.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/vinyl-fs/lib/dest/index.js": {
+    "defaults": "/Users/venkat/proj/repos/kohi/node_modules/defaults/index.js",
+    "path": "path",
+    "through2": "/Users/venkat/proj/repos/kohi/node_modules/vinyl-fs/node_modules/through2/through2.js",
+    "mkdirp": "/Users/venkat/proj/repos/kohi/node_modules/mkdirp/index.js",
+    "graceful-fs": "/Users/venkat/proj/repos/kohi/node_modules/vinyl-fs/node_modules/graceful-fs/graceful-fs.js",
+    "./writeContents": "/Users/venkat/proj/repos/kohi/node_modules/vinyl-fs/lib/dest/writeContents/index.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/vinyl-fs/lib/dest/writeContents/index.js": {
+    "fs": "fs",
+    "./writeDir": "/Users/venkat/proj/repos/kohi/node_modules/vinyl-fs/lib/dest/writeContents/writeDir.js",
+    "./writeStream": "/Users/venkat/proj/repos/kohi/node_modules/vinyl-fs/lib/dest/writeContents/writeStream.js",
+    "./writeBuffer": "/Users/venkat/proj/repos/kohi/node_modules/vinyl-fs/lib/dest/writeContents/writeBuffer.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/vinyl-fs/lib/dest/writeContents/writeDir.js": {
+    "mkdirp": "/Users/venkat/proj/repos/kohi/node_modules/mkdirp/index.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/vinyl-fs/lib/dest/writeContents/writeStream.js": {
+    "../../src/getContents/streamFile": "/Users/venkat/proj/repos/kohi/node_modules/vinyl-fs/lib/src/getContents/streamFile.js",
+    "graceful-fs": "/Users/venkat/proj/repos/kohi/node_modules/vinyl-fs/node_modules/graceful-fs/graceful-fs.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/vinyl-fs/lib/dest/writeContents/writeBuffer.js": {
+    "graceful-fs": "/Users/venkat/proj/repos/kohi/node_modules/vinyl-fs/node_modules/graceful-fs/graceful-fs.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/glob-watcher/index.js": {
+    "gaze": "/Users/venkat/proj/repos/kohi/node_modules/glob-watcher/node_modules/gaze/lib/gaze.js",
+    "events": "events"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/glob-watcher/node_modules/gaze/lib/gaze.js": {
+    "util": "util",
+    "events": "events",
+    "fs": "fs",
+    "path": "path",
+    "globule": "/Users/venkat/proj/repos/kohi/node_modules/glob-watcher/node_modules/globule/lib/globule.js",
+    "./helper": "/Users/venkat/proj/repos/kohi/node_modules/glob-watcher/node_modules/gaze/lib/helper.js",
+    "timers": "timers"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/glob-watcher/node_modules/globule/lib/globule.js": {
+    "fs": "fs",
+    "path": "path",
+    "lodash": "/Users/venkat/proj/repos/kohi/node_modules/glob-watcher/node_modules/lodash/dist/lodash.js",
+    "glob": "/Users/venkat/proj/repos/kohi/node_modules/glob-watcher/node_modules/glob/glob.js",
+    "minimatch": "/Users/venkat/proj/repos/kohi/node_modules/glob-watcher/node_modules/minimatch/minimatch.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/glob-watcher/node_modules/glob/glob.js": {
+    "graceful-fs": "/Users/venkat/proj/repos/kohi/node_modules/glob-watcher/node_modules/graceful-fs/graceful-fs.js",
+    "minimatch": "/Users/venkat/proj/repos/kohi/node_modules/glob-watcher/node_modules/minimatch/minimatch.js",
+    "inherits": "/Users/venkat/proj/repos/kohi/node_modules/glob-watcher/node_modules/inherits/inherits.js",
+    "events": "events",
+    "path": "path",
+    "assert": "assert"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/glob-watcher/node_modules/graceful-fs/graceful-fs.js": {
+    "fs": "fs",
+    "constants": "constants"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/glob-watcher/node_modules/minimatch/minimatch.js": {
+    "lru-cache": "/Users/venkat/proj/repos/kohi/node_modules/lru-cache/lib/lru-cache.js",
+    "sigmund": "/Users/venkat/proj/repos/kohi/node_modules/sigmund/sigmund.js",
+    "path": "path"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/glob-watcher/node_modules/gaze/lib/helper.js": {
+    "path": "path"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/gulp-cache/index.js": {
+    "cache-swap": "/Users/venkat/proj/repos/kohi/node_modules/cache-swap/index.js",
+    "vinyl": "/Users/venkat/proj/repos/kohi/node_modules/gulp-cache/node_modules/vinyl/index.js",
+    "object-assign": "/Users/venkat/proj/repos/kohi/node_modules/object-assign/index.js",
+    "object.omit": "/Users/venkat/proj/repos/kohi/node_modules/object.omit/index.js",
+    "object.pick": "/Users/venkat/proj/repos/kohi/node_modules/object.pick/index.js",
+    "gulp-util": "/Users/venkat/proj/repos/kohi/node_modules/gulp-util/index.js",
+    "./lib/TaskProxy": "/Users/venkat/proj/repos/kohi/node_modules/gulp-cache/lib/TaskProxy.js",
+    "readable-stream/transform": "/Users/venkat/proj/repos/kohi/node_modules/gulp-cache/node_modules/readable-stream/transform.js",
+    "./package.json": "/Users/venkat/proj/repos/kohi/node_modules/gulp-cache/package.json"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/gulp-cache/node_modules/vinyl/index.js": {
+    "path": "path",
+    "clone": "/Users/venkat/proj/repos/kohi/node_modules/clone/clone.js",
+    "clone-stats": "/Users/venkat/proj/repos/kohi/node_modules/clone-stats/index.js",
+    "./lib/cloneBuffer": "/Users/venkat/proj/repos/kohi/node_modules/gulp-cache/node_modules/vinyl/lib/cloneBuffer.js",
+    "./lib/isBuffer": "/Users/venkat/proj/repos/kohi/node_modules/gulp-cache/node_modules/vinyl/lib/isBuffer.js",
+    "./lib/isStream": "/Users/venkat/proj/repos/kohi/node_modules/gulp-cache/node_modules/vinyl/lib/isStream.js",
+    "./lib/isNull": "/Users/venkat/proj/repos/kohi/node_modules/gulp-cache/node_modules/vinyl/lib/isNull.js",
+    "./lib/inspectStream": "/Users/venkat/proj/repos/kohi/node_modules/gulp-cache/node_modules/vinyl/lib/inspectStream.js",
+    "stream": "stream",
+    "replace-ext": "/Users/venkat/proj/repos/kohi/node_modules/replace-ext/index.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/gulp-cache/node_modules/vinyl/lib/cloneBuffer.js": {
+    "buffer": "buffer"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/gulp-cache/node_modules/vinyl/lib/isBuffer.js": {
+    "buffer": "buffer"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/gulp-cache/node_modules/vinyl/lib/isStream.js": {
+    "stream": "stream"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/gulp-cache/node_modules/vinyl/lib/inspectStream.js": {
+    "./isStream": "/Users/venkat/proj/repos/kohi/node_modules/gulp-cache/node_modules/vinyl/lib/isStream.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/object.omit/index.js": {
+    "is-extendable": "/Users/venkat/proj/repos/kohi/node_modules/is-extendable/index.js",
+    "for-own": "/Users/venkat/proj/repos/kohi/node_modules/for-own/index.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/for-own/index.js": {
+    "for-in": "/Users/venkat/proj/repos/kohi/node_modules/for-in/index.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/object.pick/index.js": {
+    "isobject": "/Users/venkat/proj/repos/kohi/node_modules/isobject/index.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/isobject/index.js": {
+    "isarray": "/Users/venkat/proj/repos/kohi/node_modules/isobject/node_modules/isarray/index.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/gulp-cache/lib/TaskProxy.js": {
+    "crypto": "crypto",
+    "object-assign": "/Users/venkat/proj/repos/kohi/node_modules/object-assign/index.js",
+    "object.omit": "/Users/venkat/proj/repos/kohi/node_modules/object.omit/index.js",
+    "bluebird": "/Users/venkat/proj/repos/kohi/node_modules/bluebird/js/release/bluebird.js",
+    "try-json-parse": "/Users/venkat/proj/repos/kohi/node_modules/try-json-parse/index.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/bluebird/js/release/bluebird.js": {
+    "./promise": "/Users/venkat/proj/repos/kohi/node_modules/bluebird/js/release/promise.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/bluebird/js/release/promise.js": {
+    "./util": "/Users/venkat/proj/repos/kohi/node_modules/bluebird/js/release/util.js",
+    "./es5": "/Users/venkat/proj/repos/kohi/node_modules/bluebird/js/release/es5.js",
+    "./async": "/Users/venkat/proj/repos/kohi/node_modules/bluebird/js/release/async.js",
+    "./errors": "/Users/venkat/proj/repos/kohi/node_modules/bluebird/js/release/errors.js",
+    "./thenables": "/Users/venkat/proj/repos/kohi/node_modules/bluebird/js/release/thenables.js",
+    "./promise_array": "/Users/venkat/proj/repos/kohi/node_modules/bluebird/js/release/promise_array.js",
+    "./context": "/Users/venkat/proj/repos/kohi/node_modules/bluebird/js/release/context.js",
+    "./debuggability": "/Users/venkat/proj/repos/kohi/node_modules/bluebird/js/release/debuggability.js",
+    "./finally": "/Users/venkat/proj/repos/kohi/node_modules/bluebird/js/release/finally.js",
+    "./catch_filter": "/Users/venkat/proj/repos/kohi/node_modules/bluebird/js/release/catch_filter.js",
+    "./nodeback": "/Users/venkat/proj/repos/kohi/node_modules/bluebird/js/release/nodeback.js",
+    "./method": "/Users/venkat/proj/repos/kohi/node_modules/bluebird/js/release/method.js",
+    "./bind": "/Users/venkat/proj/repos/kohi/node_modules/bluebird/js/release/bind.js",
+    "./cancel": "/Users/venkat/proj/repos/kohi/node_modules/bluebird/js/release/cancel.js",
+    "./direct_resolve": "/Users/venkat/proj/repos/kohi/node_modules/bluebird/js/release/direct_resolve.js",
+    "./synchronous_inspection": "/Users/venkat/proj/repos/kohi/node_modules/bluebird/js/release/synchronous_inspection.js",
+    "./join": "/Users/venkat/proj/repos/kohi/node_modules/bluebird/js/release/join.js",
+    "./map.js": "/Users/venkat/proj/repos/kohi/node_modules/bluebird/js/release/map.js",
+    "./call_get.js": "/Users/venkat/proj/repos/kohi/node_modules/bluebird/js/release/call_get.js",
+    "./using.js": "/Users/venkat/proj/repos/kohi/node_modules/bluebird/js/release/using.js",
+    "./timers.js": "/Users/venkat/proj/repos/kohi/node_modules/bluebird/js/release/timers.js",
+    "./generators.js": "/Users/venkat/proj/repos/kohi/node_modules/bluebird/js/release/generators.js",
+    "./nodeify.js": "/Users/venkat/proj/repos/kohi/node_modules/bluebird/js/release/nodeify.js",
+    "./promisify.js": "/Users/venkat/proj/repos/kohi/node_modules/bluebird/js/release/promisify.js",
+    "./props.js": "/Users/venkat/proj/repos/kohi/node_modules/bluebird/js/release/props.js",
+    "./race.js": "/Users/venkat/proj/repos/kohi/node_modules/bluebird/js/release/race.js",
+    "./reduce.js": "/Users/venkat/proj/repos/kohi/node_modules/bluebird/js/release/reduce.js",
+    "./settle.js": "/Users/venkat/proj/repos/kohi/node_modules/bluebird/js/release/settle.js",
+    "./some.js": "/Users/venkat/proj/repos/kohi/node_modules/bluebird/js/release/some.js",
+    "./filter.js": "/Users/venkat/proj/repos/kohi/node_modules/bluebird/js/release/filter.js",
+    "./each.js": "/Users/venkat/proj/repos/kohi/node_modules/bluebird/js/release/each.js",
+    "./any.js": "/Users/venkat/proj/repos/kohi/node_modules/bluebird/js/release/any.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/bluebird/js/release/util.js": {
+    "./es5": "/Users/venkat/proj/repos/kohi/node_modules/bluebird/js/release/es5.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/bluebird/js/release/async.js": {
+    "./schedule": "/Users/venkat/proj/repos/kohi/node_modules/bluebird/js/release/schedule.js",
+    "./queue": "/Users/venkat/proj/repos/kohi/node_modules/bluebird/js/release/queue.js",
+    "./util": "/Users/venkat/proj/repos/kohi/node_modules/bluebird/js/release/util.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/bluebird/js/release/schedule.js": {
+    "./util": "/Users/venkat/proj/repos/kohi/node_modules/bluebird/js/release/util.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/bluebird/js/release/errors.js": {
+    "./es5": "/Users/venkat/proj/repos/kohi/node_modules/bluebird/js/release/es5.js",
+    "./util": "/Users/venkat/proj/repos/kohi/node_modules/bluebird/js/release/util.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/bluebird/js/release/thenables.js": {
+    "./util": "/Users/venkat/proj/repos/kohi/node_modules/bluebird/js/release/util.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/bluebird/js/release/promise_array.js": {
+    "./util": "/Users/venkat/proj/repos/kohi/node_modules/bluebird/js/release/util.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/bluebird/js/release/debuggability.js": {
+    "./errors": "/Users/venkat/proj/repos/kohi/node_modules/bluebird/js/release/errors.js",
+    "./util": "/Users/venkat/proj/repos/kohi/node_modules/bluebird/js/release/util.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/bluebird/js/release/finally.js": {
+    "./util": "/Users/venkat/proj/repos/kohi/node_modules/bluebird/js/release/util.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/bluebird/js/release/catch_filter.js": {
+    "./util": "/Users/venkat/proj/repos/kohi/node_modules/bluebird/js/release/util.js",
+    "./es5": "/Users/venkat/proj/repos/kohi/node_modules/bluebird/js/release/es5.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/bluebird/js/release/nodeback.js": {
+    "./util": "/Users/venkat/proj/repos/kohi/node_modules/bluebird/js/release/util.js",
+    "./errors": "/Users/venkat/proj/repos/kohi/node_modules/bluebird/js/release/errors.js",
+    "./es5": "/Users/venkat/proj/repos/kohi/node_modules/bluebird/js/release/es5.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/bluebird/js/release/method.js": {
+    "./util": "/Users/venkat/proj/repos/kohi/node_modules/bluebird/js/release/util.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/bluebird/js/release/cancel.js": {
+    "./util": "/Users/venkat/proj/repos/kohi/node_modules/bluebird/js/release/util.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/bluebird/js/release/join.js": {
+    "./util": "/Users/venkat/proj/repos/kohi/node_modules/bluebird/js/release/util.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/bluebird/js/release/map.js": {
+    "./util": "/Users/venkat/proj/repos/kohi/node_modules/bluebird/js/release/util.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/bluebird/js/release/call_get.js": {
+    "./util": "/Users/venkat/proj/repos/kohi/node_modules/bluebird/js/release/util.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/bluebird/js/release/using.js": {
+    "./util": "/Users/venkat/proj/repos/kohi/node_modules/bluebird/js/release/util.js",
+    "./errors": "/Users/venkat/proj/repos/kohi/node_modules/bluebird/js/release/errors.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/bluebird/js/release/timers.js": {
+    "./util": "/Users/venkat/proj/repos/kohi/node_modules/bluebird/js/release/util.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/bluebird/js/release/generators.js": {
+    "./errors": "/Users/venkat/proj/repos/kohi/node_modules/bluebird/js/release/errors.js",
+    "./util": "/Users/venkat/proj/repos/kohi/node_modules/bluebird/js/release/util.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/bluebird/js/release/nodeify.js": {
+    "./util": "/Users/venkat/proj/repos/kohi/node_modules/bluebird/js/release/util.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/bluebird/js/release/promisify.js": {
+    "./util": "/Users/venkat/proj/repos/kohi/node_modules/bluebird/js/release/util.js",
+    "./nodeback": "/Users/venkat/proj/repos/kohi/node_modules/bluebird/js/release/nodeback.js",
+    "./errors": "/Users/venkat/proj/repos/kohi/node_modules/bluebird/js/release/errors.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/bluebird/js/release/props.js": {
+    "./util": "/Users/venkat/proj/repos/kohi/node_modules/bluebird/js/release/util.js",
+    "./es5": "/Users/venkat/proj/repos/kohi/node_modules/bluebird/js/release/es5.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/bluebird/js/release/race.js": {
+    "./util": "/Users/venkat/proj/repos/kohi/node_modules/bluebird/js/release/util.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/bluebird/js/release/reduce.js": {
+    "./util": "/Users/venkat/proj/repos/kohi/node_modules/bluebird/js/release/util.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/bluebird/js/release/settle.js": {
+    "./util": "/Users/venkat/proj/repos/kohi/node_modules/bluebird/js/release/util.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/bluebird/js/release/some.js": {
+    "./util": "/Users/venkat/proj/repos/kohi/node_modules/bluebird/js/release/util.js",
+    "./errors": "/Users/venkat/proj/repos/kohi/node_modules/bluebird/js/release/errors.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/gulp-cache/node_modules/readable-stream/transform.js": {
+    "./lib/_stream_transform.js": "/Users/venkat/proj/repos/kohi/node_modules/gulp-cache/node_modules/readable-stream/lib/_stream_transform.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/gulp-cache/node_modules/readable-stream/lib/_stream_transform.js": {
+    "./_stream_duplex": "/Users/venkat/proj/repos/kohi/node_modules/gulp-cache/node_modules/readable-stream/lib/_stream_duplex.js",
+    "core-util-is": "/Users/venkat/proj/repos/kohi/node_modules/core-util-is/lib/util.js",
+    "inherits": "/Users/venkat/proj/repos/kohi/node_modules/inherits/inherits.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/gulp-cache/node_modules/readable-stream/lib/_stream_duplex.js": {
+    "process-nextick-args": "/Users/venkat/proj/repos/kohi/node_modules/process-nextick-args/index.js",
+    "core-util-is": "/Users/venkat/proj/repos/kohi/node_modules/core-util-is/lib/util.js",
+    "inherits": "/Users/venkat/proj/repos/kohi/node_modules/inherits/inherits.js",
+    "./_stream_readable": "/Users/venkat/proj/repos/kohi/node_modules/gulp-cache/node_modules/readable-stream/lib/_stream_readable.js",
+    "./_stream_writable": "/Users/venkat/proj/repos/kohi/node_modules/gulp-cache/node_modules/readable-stream/lib/_stream_writable.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/gulp-cache/node_modules/readable-stream/lib/_stream_readable.js": {
+    "process-nextick-args": "/Users/venkat/proj/repos/kohi/node_modules/process-nextick-args/index.js",
+    "isarray": "/Users/venkat/proj/repos/kohi/node_modules/gulp-cache/node_modules/isarray/index.js",
+    "events": "events",
+    "stream": "stream",
+    "buffer": "buffer",
+    "buffer-shims": "/Users/venkat/proj/repos/kohi/node_modules/buffer-shims/index.js",
+    "core-util-is": "/Users/venkat/proj/repos/kohi/node_modules/core-util-is/lib/util.js",
+    "inherits": "/Users/venkat/proj/repos/kohi/node_modules/inherits/inherits.js",
+    "util": "util"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/buffer-shims/index.js": {
+    "buffer": "buffer"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/gulp-cache/node_modules/readable-stream/lib/_stream_writable.js": {
+    "process-nextick-args": "/Users/venkat/proj/repos/kohi/node_modules/process-nextick-args/index.js",
+    "core-util-is": "/Users/venkat/proj/repos/kohi/node_modules/core-util-is/lib/util.js",
+    "inherits": "/Users/venkat/proj/repos/kohi/node_modules/inherits/inherits.js",
+    "util-deprecate": "/Users/venkat/proj/repos/kohi/node_modules/util-deprecate/node.js",
+    "stream": "stream",
+    "buffer": "buffer",
+    "buffer-shims": "/Users/venkat/proj/repos/kohi/node_modules/buffer-shims/index.js"
+  },
+  "/Users/venkat/proj/repos/kohi/lib/plugins/gulp/GulpSpec.coffee": {
+    "rekuire": "/Users/venkat/proj/repos/kohi/node_modules/rekuire/lib/main.js"
+  },
+  "/Users/venkat/proj/repos/kohi/lib/plugins/gulp/GulpAction.coffee": {
+    "rekuire": "/Users/venkat/proj/repos/kohi/node_modules/rekuire/lib/main.js",
+    "through": "/Users/venkat/proj/repos/kohi/node_modules/through/index.js"
+  },
+  "/Users/venkat/proj/repos/kohi/lib/plugins/gulp/CountFiles.coffee": {
+    "q": "/Users/venkat/proj/repos/kohi/node_modules/q/q.js",
+    "rekuire": "/Users/venkat/proj/repos/kohi/node_modules/rekuire/lib/main.js"
+  },
+  "/Users/venkat/proj/repos/kohi/lib/plugins/gulp/GulpThrough.coffee": {
+    "through-gulp": "/Users/venkat/proj/repos/kohi/node_modules/through-gulp/index.js",
+    "events": "events",
+    "q": "/Users/venkat/proj/repos/kohi/node_modules/q/q.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/through-gulp/index.js": {
+    "util": "util",
+    "stream": "stream",
+    "underscore": "/Users/venkat/proj/repos/kohi/node_modules/through-gulp/node_modules/underscore/underscore.js",
+    "./noop/implement": "/Users/venkat/proj/repos/kohi/node_modules/through-gulp/noop/implement.js"
+  },
+  "/Users/venkat/proj/repos/kohi/lib/plugins/GulpPlugin.coffee": {
+    "rekuire": "/Users/venkat/proj/repos/kohi/node_modules/rekuire/lib/main.js",
+    "./Plugin": "/Users/venkat/proj/repos/kohi/lib/plugins/Plugin.coffee"
+  },
+  "/Users/venkat/proj/repos/kohi/lib/plugins/NodePlugin.coffee": {
+    "rekuire": "/Users/venkat/proj/repos/kohi/node_modules/rekuire/lib/main.js",
+    "./Plugin": "/Users/venkat/proj/repos/kohi/lib/plugins/Plugin.coffee",
+    "path": "path"
+  },
+  "/Users/venkat/proj/repos/kohi/lib/plugins/node/NodeConvention.coffee": {
+    "rekuire": "/Users/venkat/proj/repos/kohi/node_modules/rekuire/lib/main.js",
+    "path": "path"
+  },
+  "/Users/venkat/proj/repos/kohi/lib/plugins/PackagePlugin.coffee": {
+    "./Plugin": "/Users/venkat/proj/repos/kohi/lib/plugins/Plugin.coffee",
+    "rekuire": "/Users/venkat/proj/repos/kohi/node_modules/rekuire/lib/main.js",
+    "fs": "fs",
+    "lodash": "/Users/venkat/proj/repos/kohi/node_modules/lodash/lodash.js"
+  },
+  "/Users/venkat/proj/repos/kohi/lib/plugins/package/PackageOptions.coffee": {
+    "lodash": "/Users/venkat/proj/repos/kohi/node_modules/lodash/lodash.js",
+    "rekuire": "/Users/venkat/proj/repos/kohi/node_modules/rekuire/lib/main.js",
+    "path": "path"
+  },
+  "/Users/venkat/proj/repos/kohi/lib/plugins/package/UpdatePkgTask.coffee": {
+    "rekuire": "/Users/venkat/proj/repos/kohi/node_modules/rekuire/lib/main.js",
+    "./UpdatePkgAction": "/Users/venkat/proj/repos/kohi/lib/plugins/package/UpdatePkgAction.coffee",
+    "deep-equal": "/Users/venkat/proj/repos/kohi/node_modules/deep-equal/index.js"
+  },
+  "/Users/venkat/proj/repos/kohi/lib/plugins/package/UpdatePkgAction.coffee": {
+    "rekuire": "/Users/venkat/proj/repos/kohi/node_modules/rekuire/lib/main.js"
+  },
+  "/Users/venkat/proj/repos/kohi/node_modules/deep-equal/index.js": {
+    "./lib/keys.js": "/Users/venkat/proj/repos/kohi/node_modules/deep-equal/lib/keys.js",
+    "./lib/is_arguments.js": "/Users/venkat/proj/repos/kohi/node_modules/deep-equal/lib/is_arguments.js"
+  },
+  "/Users/venkat/proj/repos/kohi/lib/plugins/SourceSetsPlugin.coffee": {
+    "./Plugin": "/Users/venkat/proj/repos/kohi/lib/plugins/Plugin.coffee",
+    "rekuire": "/Users/venkat/proj/repos/kohi/node_modules/rekuire/lib/main.js"
+  },
+  "/Users/venkat/proj/repos/kohi/test/fixtures/proj1/build/gen/CoffeescriptPlugin.coffee": {
+    "rekuire": "/Users/venkat/proj/repos/kohi/node_modules/rekuire/lib/main.js"
+  },
+  "/Users/venkat/proj/repos/kohi/test/fixtures/proj1/build/gen/SassPlugin.coffee": {
+    "rekuire": "/Users/venkat/proj/repos/kohi/node_modules/rekuire/lib/main.js"
+  },
+  "/Users/venkat/proj/repos/kohi/test/fixtures/proj1/build/gen/LessPlugin.coffee": {
+    "rekuire": "/Users/venkat/proj/repos/kohi/node_modules/rekuire/lib/main.js"
+  },
+  "/Users/venkat/proj/repos/kohi/test/fixtures/proj1/build/gen/CoffeescriptConvention.coffee": {
+    "rekuire": "/Users/venkat/proj/repos/kohi/node_modules/rekuire/lib/main.js"
+  },
+  "/Users/venkat/proj/repos/kohi/test/fixtures/proj1/build/gen/LessConvention.coffee": {
+    "rekuire": "/Users/venkat/proj/repos/kohi/node_modules/rekuire/lib/main.js"
+  },
+  "/Users/venkat/proj/repos/kohi/test/fixtures/proj1/build/gen/SassConvention.coffee": {
+    "rekuire": "/Users/venkat/proj/repos/kohi/node_modules/rekuire/lib/main.js"
+  },
+  "/Users/venkat/proj/repos/kohi/lib/util/require-install.coffee": {
+    "child_process": "child_process"
+  },
+  "/Users/venkat/proj/repos/kohi/test/fixtures/proj1/build/gen/BabelPlugin.coffee": {
+    "rekuire": "/Users/venkat/proj/repos/kohi/node_modules/rekuire/lib/main.js"
+  }
+}

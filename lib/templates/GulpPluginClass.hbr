@@ -1,6 +1,10 @@
-rek = require 'rekuire'
-{{super}} = rek '{{super}}'
+Plugin = undefined
+try
+  rek = require 'rekuire'
+  Plugin = rek '{{super}}'
+catch
+  Plugin = require('kohi').{{super}}
 
-class {{name}}Plugin extends {{super}}
+class {{name}}Plugin extends Plugin
 
 module.exports = {{name}}Plugin

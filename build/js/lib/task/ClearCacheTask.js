@@ -16,14 +16,22 @@ ClearCacheTask = (function(superClass) {
   }
 
   ClearCacheTask._addProperties({
-    required: ['target']
+    optional: ['target']
   });
 
   ClearCacheTask.prototype.onAfterEvaluate = function() {
+    var dir;
     if (this.dirs == null) {
       this.dirs = [];
     }
-    this.dirs.push(this.project.tasks.get(this.target).task.cacheDir);
+    if (this.target) {
+      dir = this.project.tasks.get(this.target).task.cacheDir;
+    } else {
+      dir(this.project.cacheDir);
+    }
+    if (dir != null) {
+      this.dirs.push(dir);
+    }
     return ClearCacheTask.__super__.onAfterEvaluate.call(this);
   };
 

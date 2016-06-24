@@ -21,7 +21,7 @@ class ExecAction extends Action
               e 
       @println stdout if stdout?
       @println stderr if stderr?
-      resolve()
+      resolve stdout, stderr
 
 module.exports = ExecAction
     

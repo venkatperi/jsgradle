@@ -10,8 +10,8 @@ pluginRegex = /(\w+)Plugin\.coffee/
 class PluginsRegistry extends Collection
 
   @_addProperties
-    required: ['project']
-    
+    required : [ 'project' ]
+
   constructor : ( opts = {} )->
     super _.extend {}, opts, convertName : ( x ) -> _.lowerFirst x
     @_loadInternal()
@@ -28,9 +28,10 @@ class PluginsRegistry extends Collection
   _loadGulpPlugins : =>
     for own k,v of conf.get('plugins') when v.uses is 'GulpCompilePlugin'
       upper = _.upperFirst k
-      dest = @project.fileResolver.file conf.get 'project:build:genDir'
+      dest = @project.file conf.get 'project:build:genDir'
       destFile = path.join dest, "#{upper}Plugin.coffee"
-      @project.templates.generate 'GulpPluginClass', name: upper, super: v.uses, destFile
+      @project.templates.generate 'GulpPluginClass',
+        name : upper, super : v.uses, destFile
       plugin = require destFile
       @add upper, plugin
 

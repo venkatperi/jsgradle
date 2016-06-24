@@ -43,12 +43,14 @@ class Script extends FactoryBuilderSupport
     @reporters = [ new ConsoleReporter() ]
     @listenTo @
     super opts
-    @buildDir = opts.buildDir or conf.get('script:build:dir')
+    buildDir = opts.buildDir or conf.get('script:build:dir')
+    @buildDir = path.resolve process.cwd(), buildDir
+    process.chdir @buildDir 
     @continueOnError = opts.continueOnError or conf.get 'project:build:continueOnError'
     @tasks = opts.tasks
     @_registerFactories()
     @mode ?= 'debug'
-    @on 'error', ( err ) =>  
+    @on 'error', ( err ) =>
       if @mode is 'debug'
         console.log err.stack
 
@@ -116,8 +118,9 @@ class Script extends FactoryBuilderSupport
     out.eolThen('').eol().white("Total time: #{@totalTime.pretty}").eol()
 
   _configure : =>
-    Q.try =>
-      @evaluate @contents, coffee : true
+    #Q.try =>
+    @evaluate @contents, coffee : true
+    .then =>
       @project._tasksToExecute = @tasks if @tasks?.length
       @project.configure()
     .fail ( err ) =>

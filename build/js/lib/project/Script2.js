@@ -73,6 +73,7 @@ Script = (function(superClass) {
   });
 
   function Script(opts) {
+    var buildDir;
     if (opts == null) {
       opts = {};
     }
@@ -92,7 +93,9 @@ Script = (function(superClass) {
     this.reporters = [new ConsoleReporter()];
     this.listenTo(this);
     Script.__super__.constructor.call(this, opts);
-    this.buildDir = opts.buildDir || conf.get('script:build:dir');
+    buildDir = opts.buildDir || conf.get('script:build:dir');
+    this.buildDir = path.resolve(process.cwd(), buildDir);
+    process.chdir(this.buildDir);
     this.continueOnError = opts.continueOnError || conf.get('project:build:continueOnError');
     this.tasks = opts.tasks;
     this._registerFactories();
@@ -207,12 +210,11 @@ Script = (function(superClass) {
   };
 
   Script.prototype._configure = function() {
-    return Q["try"]((function(_this) {
+    return this.evaluate(this.contents, {
+      coffee: true
+    }).then((function(_this) {
       return function() {
         var ref1;
-        _this.evaluate(_this.contents, {
-          coffee: true
-        });
         if ((ref1 = _this.tasks) != null ? ref1.length : void 0) {
           _this.project._tasksToExecute = _this.tasks;
         }

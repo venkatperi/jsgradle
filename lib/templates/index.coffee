@@ -1,7 +1,7 @@
 handlebars = require 'handlebars'
 rek = require 'rekuire'
 conf = rek 'conf'
-{writeFileMkdirSync, readFileSync} = rek 'fileOps'
+{isFileSync, writeFileMkdirSync, readFileSync} = rek 'fileOps'
 cache = require('guava-cache')
 path = require 'path'
 {EventEmitter} = require 'events'
@@ -25,6 +25,7 @@ class Template extends EventEmitter
     @get(name)(context)
 
   generate : ( name, context, outPath ) =>
-    writeFileMkdirSync outPath, @render(name, context)
+    unless isFileSync outPath
+      writeFileMkdirSync outPath, @render(name, context)
 
 module.exports = Template

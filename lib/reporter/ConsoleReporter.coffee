@@ -16,12 +16,12 @@ class ConsoleReporter extends Reporter
       out.ifNewline("> Configuring...")
       .grey(" #{time}").eol()
 
-  onScriptAfterEvaluateStart : ( script ) =>
-    out.eolThen 'After evaluate... '
+  #onScriptAfterEvaluateStart : ( script ) =>
+  #  out.eolThen 'After evaluate... '
 
-  onScriptAfterEvaluateEnd : ( script, time ) =>
-    out.ifNewline("> After evaluate...")
-    .grey(" #{time}").eol()
+  #onScriptAfterEvaluateEnd : ( script, time ) =>
+  #  out.ifNewline("> After evaluate...")
+  #  .grey(" #{time}").eol()
 
   onProjectAfterEvaluateEnd : ( project, names ) =>
     if project.failed
@@ -31,9 +31,9 @@ class ConsoleReporter extends Reporter
         .red(" #{t.task.messages} ")
         .eol()
 
-  onProjectExecuteStart : ( project ) =>
-    names = project.taskQueueNames
-    out.grey "Executing #{names.length} task(s): #{names.join ', '}"
+  #onProjectExecuteStart : ( project ) =>
+  #  names = project.taskQueueNames
+  #  out.grey "Executing #{names.length} task(s): #{names.join ', '}"
 
   onTaskExecuteStart : ( task ) =>
     out.eolThen task.displayName

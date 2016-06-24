@@ -1,6 +1,10 @@
-rek = require 'rekuire'
-SourceMapConvention = rek 'SourceMapConvention'
+Convention = undefined
+try
+  rek = require 'rekuire'
+  Convention = rek 'SourceMapConvention'
+catch
+  Convention = require('kohi').SourceMapConvention
 
-class CoffeescriptConvention extends SourceMapConvention
+class CoffeescriptConvention extends Convention
 
 module.exports = CoffeescriptConvention

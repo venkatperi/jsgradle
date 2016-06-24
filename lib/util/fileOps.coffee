@@ -22,6 +22,17 @@ isType = ( type ) -> ( name ) ->
 isDir = isType 'Directory'
 isFile = isType 'File'
 
+isTypeSync = ( type ) -> ( name ) ->
+  try
+    stats = fs.statSync name
+    return stats[ "is#{type}" ]()
+  catch err
+    throw err unless err.code is 'ENOENT'
+    false
+    
+isDirSync = isTypeSync 'Directory'
+isFileSync = isTypeSync 'File'
+
 copyFile = ( src, dest, opts = {} ) ->
   defer = Q.defer()
   _stat = if opts.dereference then stat else lstat
@@ -100,6 +111,8 @@ module.exports = {
   changeExt
   isDir
   isFile
+  isDirSync
+  isFileSync
   readFileSync : fs.readFileSync
   writeFileSync : fs.writeFileSync
   rmdir

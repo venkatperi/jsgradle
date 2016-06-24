@@ -15,10 +15,7 @@ ConsoleReporter = (function(superClass) {
   function ConsoleReporter() {
     this.onTaskExecuteEnd = bind(this.onTaskExecuteEnd, this);
     this.onTaskExecuteStart = bind(this.onTaskExecuteStart, this);
-    this.onProjectExecuteStart = bind(this.onProjectExecuteStart, this);
     this.onProjectAfterEvaluateEnd = bind(this.onProjectAfterEvaluateEnd, this);
-    this.onScriptAfterEvaluateEnd = bind(this.onScriptAfterEvaluateEnd, this);
-    this.onScriptAfterEvaluateStart = bind(this.onScriptAfterEvaluateStart, this);
     this.onScriptConfigureEnd = bind(this.onScriptConfigureEnd, this);
     this.onScriptConfigureStart = bind(this.onScriptConfigureStart, this);
     this.onError = bind(this.onError, this);
@@ -39,14 +36,6 @@ ConsoleReporter = (function(superClass) {
     }
   };
 
-  ConsoleReporter.prototype.onScriptAfterEvaluateStart = function(script) {
-    return out.eolThen('After evaluate... ');
-  };
-
-  ConsoleReporter.prototype.onScriptAfterEvaluateEnd = function(script, time) {
-    return out.ifNewline("> After evaluate...").grey(" " + time).eol();
-  };
-
   ConsoleReporter.prototype.onProjectAfterEvaluateEnd = function(project, names) {
     if (project.failed) {
       out.eolThen().white('The following tasks failed in `afterEvaluate`');
@@ -54,12 +43,6 @@ ConsoleReporter = (function(superClass) {
         return out.eolThen("" + t.displayName).red(" " + t.task.messages + " ").eol();
       });
     }
-  };
-
-  ConsoleReporter.prototype.onProjectExecuteStart = function(project) {
-    var names;
-    names = project.taskQueueNames;
-    return out.grey("Executing " + names.length + " task(s): " + (names.join(', ')));
   };
 
   ConsoleReporter.prototype.onTaskExecuteStart = function(task) {

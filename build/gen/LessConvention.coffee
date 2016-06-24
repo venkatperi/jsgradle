@@ -1,6 +1,10 @@
-rek = require 'rekuire'
-SourceMapConvention = rek 'SourceMapConvention'
+Convention = undefined
+try
+  rek = require 'rekuire'
+  Convention = rek 'SourceMapConvention'
+catch
+  Convention = require('kohi').SourceMapConvention
 
-class LessConvention extends SourceMapConvention
+class LessConvention extends Convention
 
 module.exports = LessConvention

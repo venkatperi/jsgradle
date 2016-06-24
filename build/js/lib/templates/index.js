@@ -1,4 +1,4 @@
-var EventEmitter, Template, cache, conf, handlebars, path, readFileSync, ref, rek, writeFileMkdirSync,
+var EventEmitter, Template, cache, conf, handlebars, isFileSync, path, readFileSync, ref, rek, writeFileMkdirSync,
   bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
   extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
   hasProp = {}.hasOwnProperty;
@@ -9,7 +9,7 @@ rek = require('rekuire');
 
 conf = rek('conf');
 
-ref = rek('fileOps'), writeFileMkdirSync = ref.writeFileMkdirSync, readFileSync = ref.readFileSync;
+ref = rek('fileOps'), isFileSync = ref.isFileSync, writeFileMkdirSync = ref.writeFileMkdirSync, readFileSync = ref.readFileSync;
 
 cache = require('guava-cache');
 
@@ -53,7 +53,9 @@ Template = (function(superClass) {
   };
 
   Template.prototype.generate = function(name, context, outPath) {
-    return writeFileMkdirSync(outPath, this.render(name, context));
+    if (!isFileSync(outPath)) {
+      return writeFileMkdirSync(outPath, this.render(name, context));
+    }
   };
 
   return Template;

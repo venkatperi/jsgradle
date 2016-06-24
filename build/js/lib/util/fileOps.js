@@ -1,4 +1,4 @@
-var Q, changeExt, copyFile, fs, isDir, isFile, isType, lstat, mkdirp, path, readFile, rmdir, stat, unlink, writeFile, writeFileMkdir, writeFileMkdirSync;
+var Q, changeExt, copyFile, fs, isDir, isDirSync, isFile, isFileSync, isType, isTypeSync, lstat, mkdirp, path, readFile, rmdir, stat, unlink, writeFile, writeFileMkdir, writeFileMkdirSync;
 
 path = require('path');
 
@@ -38,6 +38,26 @@ isType = function(type) {
 isDir = isType('Directory');
 
 isFile = isType('File');
+
+isTypeSync = function(type) {
+  return function(name) {
+    var err, error, stats;
+    try {
+      stats = fs.statSync(name);
+      return stats["is" + type]();
+    } catch (error) {
+      err = error;
+      if (err.code !== 'ENOENT') {
+        throw err;
+      }
+      return false;
+    }
+  };
+};
+
+isDirSync = isTypeSync('Directory');
+
+isFileSync = isTypeSync('File');
 
 copyFile = function(src, dest, opts) {
   var _stat, defer, target;
@@ -147,6 +167,8 @@ module.exports = {
   changeExt: changeExt,
   isDir: isDir,
   isFile: isFile,
+  isDirSync: isDirSync,
+  isFileSync: isFileSync,
   readFileSync: fs.readFileSync,
   writeFileSync: fs.writeFileSync,
   rmdir: rmdir

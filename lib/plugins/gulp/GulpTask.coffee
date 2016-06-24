@@ -2,13 +2,13 @@ _ = require 'lodash'
 rek = require 'rekuire'
 CachingTask = rek 'lib/task/CachingTask'
 gulp = require 'gulp'
-cache = require 'gulp-cache'
 GulpSpec = rek 'GulpSpec'
 GulpAction = require './GulpAction'
 conf = rek 'conf'
 path = require 'path'
 {changeExt} = rek 'fileOps'
 CountFiles = rek 'CountFiles'
+requireInstall = rek 'require-install'
 
 class GulpTask extends CachingTask
 
@@ -39,13 +39,15 @@ class GulpTask extends CachingTask
 
       dest = @targetDir
       throw new Error "No destinations" unless dest
-      
+
       counter = new CountFiles()
       counter.on 'count', ( count ) =>
         @stats.cached = @stats.files - count
+        
+      plugin = requireInstall(@package)(@options)
+      plugin.on 'error', ( err ) -> throw err
 
       gulp.task @path, =>
-        plugin = require(@package)(@options)
 
         gulp.src modified, srcOpts
         .pipe counter.plugin

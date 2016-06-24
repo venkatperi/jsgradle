@@ -28,6 +28,10 @@ nconf.defaults
         dirs : [ 'lib' ]
         includes : [ '' ]
         excludes : [ '' ]
+      babel :
+        from :
+          srcDir : '.'
+          includes : [ 'index.js', '{src,lib}/**/*.js' ]
       coffeescript :
         from :
           srcDir : '.'
@@ -44,6 +48,8 @@ nconf.defaults
         dir : buildDir
         coffeescript :
           dir : "#{buildDir}/js"
+        babel :
+          dir : "#{buildDir}/js"
         sass :
           dir : "#{buildDir}/public/style"
         less :
@@ -54,23 +60,28 @@ nconf.defaults
   plugins :
     coffeescript :
       uses : 'GulpCompilePlugin'
-      package: 'gulp-coffee'
+      package : 'gulp-coffee'
       base : '.'
       options :
         bare : true
         header : false
+    babel :
+      uses : 'GulpCompilePlugin'
+      package : 'gulp-babel'
+      options :
+        presets : [ 'es2015' ]
     sass :
       uses : 'GulpCompilePlugin'
-      package: 'gulp-sass'
+      package : 'gulp-sass'
       options :
         style : 'compressed'
     less :
       uses : 'GulpCompilePlugin'
-      package: 'gulp-less'
+      package : 'gulp-less'
 
-  module.exports =
-    nconf : nconf
-    get : ( key, def ) -> nconf.get(key) or def
+module.exports =
+  nconf : nconf
+  get : ( key, def ) -> nconf.get(key) or def
 
 
 

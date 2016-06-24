@@ -51,7 +51,7 @@ ExecAction = (function(superClass) {
         if (stderr != null) {
           _this.println(stderr);
         }
-        return resolve();
+        return resolve(stdout, stderr);
       };
     })(this));
   };
